@@ -1,0 +1,62 @@
+<script>
+    function ConfirmDelete() {
+        var x = confirm("Are you sure you want to remove?");
+        if (x)
+            return true;
+        else
+            return false;
+    }
+</script>
+<div class="primary">
+    <button class="action submit primary" onclick="window.open('<?php /* @escapeNotVerified */
+    echo $block->getActionUrl('create') ?>','_self')" title="<?php /* @escapeNotVerified */
+    echo __('Add User') ?>"><span "><?php /* @escapeNotVerified */
+        echo __('Add User') ?></span></button>
+</div>
+<?php $listUser = $block->getListUser(); ?>
+<?php if ($listUser && $listUser->getSize()): ?>
+    <br/>
+    <div class="table-wrapper orders-history">
+        <table class="data table table-order-items history" id="my-orders-table">
+            <caption class="table-caption"><?php echo __('Grid Record') ?></caption>
+            <tbody>
+            <?php foreach ($listUser as $user): ?>
+                <?php $userId = $user->getId(); ?>
+                <tr>
+                    <td class="user-image"><img
+                                src='<?php echo $this->getViewFileUrl('Tigren_CompanyAccount::images/profile.png'); ?>'
+                                alt="image-icon" width="80" height="80"/>
+                    </td>
+                    <td class="col-fullname">
+                        <div class="col fullname">
+                            <b><?php echo $user->getFirstname() . ' ' . $user->getLastname() ?></b>
+                        </div>
+                        <div><?php echo $user->getEmail() ?></div>
+                    </td>
+                    <td class="col actions col-actions" data-th="<?php echo $block->escapeHtml(__('Actions')) ?>">
+                        <ul class="sub-user">
+                            <li>
+                                <a href="<?php echo $block->getActionUrl('edit', $userId) ?>" class="action view">
+                                    <span><?php echo __('Edit') ?></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $block->getActionUrl('delete', $userId) ?>"
+                                   onclick="return ConfirmDelete();" class="action delete">
+                                    <span><?php echo __('Delete') ?></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); // for display pager block which we create in block file.   ?></div>
+    <?php endif ?>
+<?php else: ?>
+    <div style="margin-top: 10px" class="message info empty"><span><?php echo __('There are no other users.'); ?></span>
+    </div>
+<?php endif ?>

@@ -1,0 +1,57 @@
+<?php
+/**@var \Tigren\CompanyAccount\Block\Adminhtml\Account\Edit\Tab\Customer\ActionCustomerTab $block**/
+?>
+<button  data-ui-id="widget-button-1"
+         onclick="jQuery('#new-customer-form-validate').modal('openModal')"
+         class="action-default scalable"
+         type="button"
+         title="New"
+         id="add_customer_button">
+    <span>New Customer</span>
+</button>
+<?php if(($block->getAccount() != null && $block->getAccount()->getId()) || $block->getAccountId()){ ?>
+    <button  data-ui-id="widget-button-2"
+             onclick="jQuery('#new-assign-customer-form-validate').modal('openModal')"
+             class="action-default scalable"
+             type="button"
+             title="Assign"
+             id="assign_customer_button">
+        <span>Assign Customer</span>
+    </button>
+<?php } ?>
+<?php echo $block->getNewCustomerAction()->toHtml() ?>
+<?php if(($block->getAccount() != null && $block->getAccount()->getId()) || $block->getAccountId()){ ?>
+    <?php echo $block->getAssignCustomerActionTabBlock()->toHtml() ?>
+<?php } ?>
+<script>
+    require([
+        "jquery",
+        "mage/mage",
+        "Tigren_CompanyAccount/js/action-dialog",
+        "Tigren_CompanyAccount/js/action-assign-dialog"
+    ],function($) {
+        $(function(){
+            <?php if(($block->getAccount() != null && $block->getAccount()->getId()) || $block->getAccountId()){ ?>
+                $('#new-customer-form-validate').customerActionDialog(
+                    {
+                        'addNewCustomerModalUrl' : "<?php echo $block->getUrl('companyaccount/account/popupNewCustomer/') ?>",
+                        'accountId' : <?php echo ($block->getAccount()) ? $block->getAccount()->getId() : $block->getAccountId() ?>
+                    }
+                );
+                $('#new-assign-customer-form-validate').customerAssignActionDialog(
+                    {
+                        'assignCustomerModalUrl' : "<?php echo $block->getUrl('companyaccount/account/popupAssignCustomer/', ['account_id' => ($block->getAccount()) ? $block->getAccount()->getId() : $block->getAccountId()]) ?>",
+                        'accountId' : <?php echo ($block->getAccount()) ? $block->getAccount()->getId() : $block->getAccountId() ?>
+                    }
+                );
+            <?php }else{ ?>
+                $('#new-customer-form-validate').customerActionDialog(
+                    {
+                        'addNewCustomerModalUrl' : "<?php echo $block->getUrl('companyaccount/account/popupNewCustomer/') ?>",
+                        'accountId' : null
+                    }
+                );
+            <?php } ?>
+        });
+    });
+</script>

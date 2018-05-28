@@ -1,0 +1,23 @@
+{
+    "name": "tigren/module-companyaccount",
+    "description": "",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Mage2Gen",
+            "email": "info@mage2gen.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "type": "magento2-module",
+    "version": "1.3.0",
+    "autoload": {
+        "psr-4": {
+            "Tigren\\CompanyAccount\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <container name="root" label="Root">
+        <block class="Tigren\CompanyAccount\Block\Adminhtml\Account\Edit\Tab\Addresses"
+               name="account_edit_tab_account_addresses"
+               template="Tigren_CompanyAccount::account/address/form.phtml">
+            <block class="Tigren\CompanyAccount\Block\Adminhtml\Account\Edit\Tab\AddressesGrid"
+                   name="account_edit_tab_account_addresses_grid"/>
+        </block>
+    </container>
+</layout>

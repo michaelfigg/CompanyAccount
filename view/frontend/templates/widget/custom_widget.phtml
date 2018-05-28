@@ -1,0 +1,18 @@
+<style>
+    .custom-widget {
+        background: #ff0;
+        padding: 30px;
+        border-radius: 5px;
+        width: <?php echo $this->getData('width') ?>;
+        align: <?php echo $this->getData('aligment') ?>;
+    }
+</style>
+ 
+ 
+<div class="custom-widget">
+    <h1><?php echo $this->getData('title'); ?></h1>
+    <?php if ($this->getData('enable_url') == 1): ?>
+        <?php $url = $this->getData('url') ?>
+            <a href="<?php echo $this->getData('url'); ?>"><?php echo $this->getData('url_label'); ?></a>
+    <?php endif; ?>
+</div>

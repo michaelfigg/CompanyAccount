@@ -1,0 +1,10 @@
+#account_edit_tab_account_addresses .entry-edit #form-validate .ui-tabs-panel .fieldset{
+    float: left;
+}
+.fieldset-left{
+    width: 49%;
+}
+.fieldset-right{
+    width: 50%;
+    float: right;
+}

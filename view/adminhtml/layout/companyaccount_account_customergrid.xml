@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+ <!--@copyright Copyright (c) 2016 www.tigren.com-->
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <container name="root" label="Root">
+        <block class="Tigren\CompanyAccount\Block\Adminhtml\Account\Edit\Tab\Customers" name="account_edit_tab_customergrid"/>
+        <block class="Magento\Backend\Block\Widget\Grid\Serializer" name="customergrid_grid_serializer">
+            <arguments>
+                <argument name="input_names" xsi:type="array">
+                    <item name="0" xsi:type="string">position</item>
+                    <item name="1" xsi:type="string">is_admin</item>
+                </argument>
+                <argument name="grid_block" xsi:type="string">account_edit_tab_customergrid</argument>
+                <argument name="callback" xsi:type="string">getSelectedCustomerIds</argument>
+                <argument name="input_element_name" xsi:type="string">customer_ids</argument>
+                <argument name="reload_param_name" xsi:type="string">customer_ids</argument>
+            </arguments>
+        </block>
+    </container>
+</layout>

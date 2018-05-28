@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <referenceBlock name="customer_account_dashboard_address" remove="true" />
+            <referenceBlock name="customer_account_dashboard_info" remove="true" />
+            <block class="Tigren\CompanyAccount\Block\Account\Dashboard\Info"
+                   name="company-dashboard-info"
+                   template="Tigren_CompanyAccount::account/dashboard/info.phtml"
+                   cacheable="false"/>
+            <block class="Tigren\CompanyAccount\Block\Account\Dashboard\Address"
+                   name="company-dashboard-address"
+                   template="Tigren_CompanyAccount::account/dashboard/address.phtml" />
+        </referenceContainer>
+        <referenceBlock name="customer_account_dashboard_top">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Tigren_CompanyAccount::order/recent.phtml</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

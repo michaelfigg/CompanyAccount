@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Tigren_CompanyAccount::companyaccount" title="Company Account" module="Tigren_CompanyAccount" sortOrder="100"
+            parent="Magento_Customer::customer" action="companyaccount/account" resource="Magento_Customer::customer"/>
+    </menu>
+</config>

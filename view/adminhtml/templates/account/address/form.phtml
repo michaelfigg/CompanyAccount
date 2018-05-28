@@ -1,0 +1,271 @@
+<?php
+    /** @var Tigren\CompanyAccount\Block\Adminhtml\Account\Edit\Tab\Addresses $block **/
+?>
+<div class="admin__scope-old" id="account_edit_tab_account_addresses" style="margin-top: -45px;">
+<div class="entry-edit form-inline">
+    <form class="admin__scope-old"
+          action="<?php echo $block->getPostActionUrl() ?>"
+          method="post"
+          id="form-validate"
+          enctype="multipart/form-data"
+          data-hasrequired="* Required Fields"
+          novalidate="novalidate">
+        <div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+            <fieldset class="fieldset fieldset-left">
+                <legend class="legend"><span>Contact Information</span></legend><br>
+                <div class="field field-name-firstname required">
+                    <label class="label" for="firstname">
+                        <span>First Name</span>
+                    </label>
+
+                    <div class="control">
+                        <input value="" type="text" id="firstname" name="firstname" title="First Name" class="input-text required-entry" data-validate="{required:true}" aria-required="true">
+                    </div>
+                </div>
+                <div class="field field-name-lastname required">
+                    <label class="label" for="lastname">
+                        <span>Last Name</span>
+                    </label>
+
+                    <div class="control">
+                        <input value="" type="text" id="lastname" name="lastname" title="Last Name" class="input-text required-entry" data-validate="{required:true}" aria-required="true">
+                    </div>
+                </div>
+
+
+                <div class="field company ">
+                    <label for="address_company" class="label">
+                        <span>Company</span>
+                    </label>
+                    <div class="control">
+                        <input value="" type="text" name="address_company" id="address_company" title="Company" class="input-text ">
+                    </div>
+                </div>
+
+
+                <div class="field telephone required">
+                    <label for="telephone" class="label">
+        <span>
+            Phone Number        </span>
+                    </label>
+                    <div class="control">
+                        <input value="" type="text" name="telephone" id="telephone" value="" title="Phone Number" class="input-text " data-validate="{required:true}" aria-required="true">
+                    </div>
+                </div>
+
+
+            </fieldset>
+            <fieldset class="fieldset fieldset-right">
+                <legend class="legend"><span>Address</span></legend><br>
+                <div class="field street required">
+                    <label for="street_1" class="label">
+                        <span>Street Address</span>
+                    </label>
+                    <div class="control">
+                        <input value="" type="text" name="street[]" value="" title="Street Address" id="street_1" class="input-text required-entry" aria-required="true">
+                        <div class="nested" style="display: none">
+                            <div class="field additional">
+                                <label class="label" for="street_2">
+                                    <span>Street Address 2</span>
+                                </label>
+                                <div class="control">
+                                    <input type="text" name="street[]" value="" title="Street Address 2" id="street_2" class="input-text " aria-required="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field city required">
+                    <label class="label" for="city"><span>City</span></label>
+                    <div class="control">
+                        <input type="text" name="city" value="" title="City" class="input-text required-entry" id="city" aria-required="true">
+                    </div>
+                </div>
+
+                <div class="field region required">
+                    <label class="label" for="region_id">
+                        <span><?= $block->escapeHtml(__('State/Province')) ?></span>
+                    </label>
+                    <div class="control" id="view-region">
+                        <?= $block->getRegionHtmlSelect() ?>
+                    </div>
+                </div>
+                <div class="field zip required">
+                    <label class="label" for="zip">
+                        <span><?= $block->escapeHtml(__('Zip/Postal Code')) ?></span>
+                    </label>
+                    <div class="control">
+                        <input type="text"
+                               name="postcode"
+                               value=""
+                               title="<?= $block->escapeHtmlAttr(__('Zip/Postal Code')) ?>"
+                               id="zip"
+                               class="input-text validate-zip-international <?= $block->escapeHtmlAttr($this->helper('Magento\Customer\Helper\Address')->getAttributeValidationClass('postcode')) ?>">
+                    </div>
+                </div>
+                <div class="field country required">
+                    <label class="label" for="country"><span><?= $block->escapeHtml(__('Country')) ?></span></label>
+                    <div class="control">
+                        <?= $block->getCountryHtmlSelect(null) ?>
+                    </div>
+                </div>
+
+                <div class="field choice set billing">
+                    <label class="label" for="primary_billing">
+                        <span><?= $block->escapeHtml(__('Use as company billing address')) ?></span>
+                    </label>
+                    <input type="checkbox" id="primary_billing" name="is_billing" value="1" class="checkbox" >
+                </div>
+
+            </fieldset>
+            <div style="clear: both"></div>
+            <div class="actions-toolbar" id="view-edit-address" style="text-align: right">
+                <input type="hidden" name="address_id" id="address_id" value="" >
+                <input type="hidden" name="account_id" id="account_id" value="<?= $block->getAccountId() ?>" >
+                <div class="primary">
+                    <button style="display: none" type="button" id="delete-address" data-action="delete-address" title="Detete Address">
+                        <span>Detete Address</span>
+                    </button>
+                    <button type="submit" class="action save primary" data-action="save-address" title="Save Address">
+                        <span>Save Account Address</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div style="clear: both"></div>
+    <div id="select-addresses-title" style="text-align: center;margin: 10px">
+        <strong style="font-size: 20px;">View all addresses</strong>
+    </div>
+    <div id="view-all-addresses">
+        <?php echo $block->getChildHtml('account_edit_tab_account_addresses_grid') ?>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'domReady!',
+        'mage/mage',
+        'mage/backend/form',
+        'mage/backend/validation'
+    ], function($){
+        'use strict';
+        var element = $('#account_edit_tab_account_addresses');
+        var tab = $('.admin__page-nav-item');
+        tab.on('click', function(){
+           if(tab.hasClass('ui-tabs-active'))
+                if($('.ui-tabs-active').attr('data-ui-id') == 'companyaccount-account-edit-tabs-tab-item-addresses')
+                    element.css({'display' : 'block'});
+                else
+                    element.css({'display' : 'none'});
+
+        });
+        element.appendTo("#container");
+        if($('#form-validate #country').val() == 'US')
+            $('#view-region').html('<?php echo $block->getRegionHtmlSelect() ?>');
+        else {
+            var html = "<input type='text' id='state' name='region' value='' class='input-text'/>";
+            $('#view-region').html(html);
+        }
+        $('#form-validate #country').on('change', function(){
+            if($('#form-validate #country').val() == 'US')
+                $('#view-region').html('<?php echo $block->getRegionHtmlSelect() ?>');
+            else {
+                var html = "<input type='text' id='state' name='region' value='' class='input-text'/>";
+                $('#view-region').html(html);
+            }
+        });
+
+        $('#form-validate').mage('validation', {
+            submitHandler: function (form) {
+                event.preventDefault();
+                $.ajax({
+                    url: $('#form-validate').attr('action'),
+                    data: $('#form-validate').serializeArray(),
+                    type: 'GET',
+                    datatype: 'json',
+                    beforeSend: function () {
+                        var body = $('body').loader();
+                        body.loader('show');
+                    },
+                    success: function (response) {
+                        var body = $('body').loader();
+                        body.loader('hide');
+                        $("#form-validate").trigger('reset');
+                        $('#account_edit_tab_account_addresses').remove();
+                        $('#container').append(response);
+                    }
+                });
+                return false;
+            }
+        });
+
+        $('#delete-address').on('click', function(){
+            $.ajax({
+                url: $('#delete-address').attr('data-url-delete'),
+                data: {},
+                type: 'GET',
+                datatype: 'json',
+                beforeSend: function () {
+                    var body = $('body').loader();
+                    body.loader('show');
+                },
+                success: function (response) {
+                    var body = $('body').loader();
+                    body.loader('hide');
+                    $("#form-validate").trigger('reset');
+                    $('#account_edit_tab_account_addresses').remove();
+                    $('#container').append(response);
+                }
+            });
+        });
+    });
+
+    function rowAddressCallBack(grid, event){
+        var $ = jQuery;
+        var trElement = Event.findElement(event, 'tr');
+        $.ajax({
+            url: trElement.title,
+            data: {},
+            type: 'GET',
+            datatype: 'json',
+            beforeSend: function () {
+                var body = $('body').loader();
+                body.loader('show');
+            },
+            success: function (response) {
+                var body = $('body').loader();
+                body.loader('hide');
+                $("#form-validate").trigger('reset');
+                $('#container').append(response);
+                if(!response.error){
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 800);
+                    $('#form-validate #firstname').val(response.firstname);
+                    $('#form-validate #lastname').val(response.lastname);
+                    $('#form-validate #address_company').val(response.company);
+                    $('#form-validate #telephone').val(response.telephone);
+                    $('#form-validate #street_1').val(response.street);
+                    $('#form-validate #city').val(response.city);
+                    if(response.region_id > 0)
+                        $('#form-validate #state').val(response.region_id);
+                    else{
+                        var html = "<input type='text' id='state' name='region' value='"+response.region+"' class='input-text'/>";
+                        $('#view-region').html(html);
+                    }
+                    $('#form-validate #zip').val(response.postcode);
+                    $('#form-validate #country').val(response.country_id);
+                    if(response.is_billing == 1)
+                        $('#form-validate #primary_billing').prop('checked', true);
+                    $('#form-validate #account_id').val(response.account_id);
+                    $('#form-validate #address_id').val(response.address_id);
+                    $('#form-validate #delete-address').css({'display' : 'inline-block'});
+                    $('#form-validate #delete-address').attr('data-url-delete', '<?php echo $block->getUrl("companyaccount/account/deleteAddress/") ?>'+'?address_id='+response.address_id);
+                }
+            }
+        });
+    }
+</script>

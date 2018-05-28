@@ -1,0 +1,62 @@
+<form class="admin__scope-old"
+      action=""
+      method="post"
+      id="new-customer-form-validate"
+      enctype="multipart/form-data"
+      autocomplete="off"
+      novalidate="novalidate">
+    <fieldset class="fieldset admin__fieldset ">
+        <legend class="legend"><span>Personal Information</span></legend><br>
+
+        <div class="admin__field field required _required with-note">
+            <label class="label admin__field-label" for="new_firstname">
+                <span>First Name</span>
+            </label>
+
+            <div class="admin__field-control control">
+                <input type="text" id="new_firstname" name="firstname" value="" title="First Name" class="input-text required-entry" data-validate="{required:true}" autocomplete="off" aria-required="true">
+            </div>
+        </div>
+        <div class="admin__field field required _required with-note">
+            <label class="label admin__field-label" for="new_lastname">
+                <span>Last Name</span>
+            </label>
+
+            <div class="admin__field-control control">
+                <input type="text" id="new_lastname" name="lastname" value="" title="Last Name" class="input-text required-entry" data-validate="{required:true}" autocomplete="off" aria-required="true">
+            </div>
+        </div>
+
+        <div class="admin__field field with-note">
+            <input type="checkbox" name="is_subscribed" title="Sign Up for Newsletter" value="1" id="new_is_subscribed" class="checkbox">
+            <label for="new_is_subscribed" class="label admin__field-label"><span>Sign Up for Newsletter</span></label>
+        </div>
+        <div class="admin__field field with-note">
+            <input type="checkbox" name="is_admin" id="new_is-admin" data-role="is-admin" value="1" title="Is Admin" class="checkbox">
+            <label class="label admin__field-label" for="new_is-admin"><span>Is Admin</span></label>
+        </div>
+
+    </fieldset>
+    <fieldset class="fieldset admin__fieldset " data-hasrequired="* Required Fields">
+        <legend class="legend"><span>Sign-in Information</span></legend><br>
+        <div class="admin__field field required _required with-note">
+            <label for="new_email_address" class="label admin__field-label"><span>Email</span></label>
+            <div class="admin__field-control control">
+                <input type="email" name="email" autocomplete="email" id="new_email_address" value="" title="Email" class="input-text" data-validate="{required:true, 'validate-email':true}" aria-required="true">
+            </div>
+        </div>
+        <div class="admin__field field required _required with-note">
+            <label for="new_password" class="label admin__field-label"><span>Password</span></label>
+            <div class="admin__field-control control">
+                <input type="password" name="password" id="new_password" title="Password" class="input-text" data-password-min-length="8" data-password-min-character-sets="3" data-validate="{required:true, 'validate-customer-password':true}" autocomplete="off" aria-required="true">
+            </div>
+
+        </div>
+        <div class="admin__field field required _required with-note">
+            <label for="new_password-confirmation" class="label admin__field-label"><span>Confirm Password</span></label>
+            <div class="admin__field-control control">
+                <input type="password" name="password_confirmation" title="Confirm Password" id="new_password-confirmation" class="input-text" data-validate="{required:true, equalTo:'#new_password'}" autocomplete="off" aria-required="true">
+            </div>
+        </div>
+    </fieldset>
+</form>

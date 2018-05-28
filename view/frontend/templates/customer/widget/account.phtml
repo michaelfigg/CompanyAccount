@@ -1,0 +1,45 @@
+<?php
+    $listAccounts = $block->getAllAccount();
+?>
+
+<!--<div class="field choice company">-->
+<!--    <input type="checkbox" name="is_company" title="Register as a Company" id="is_company" class="checkbox">-->
+<!--    <label for="is_company" class="label"><span>Register as a Company</span></label>-->
+<!--</div>-->
+
+<?php /*if(count($listAccounts)){*/ ?>
+<!--    <div class="field field-company-account required">-->
+<!--        <label class="label">-->
+<!--            <span>Company Name</span>-->
+<!--        </label>-->
+<!--        <div class="control">-->
+<!--            --><?php //foreach ($listAccounts as $account){ ?>
+<!--                <input type="checkbox" id="company---><!--" name="company[]" value="--><!--" title="--><!--" class="input-text required-entry" data-validate="{required:true}" autocomplete="off" aria-required="true"> <label for="company---><!--">--><!--</label><br/>-->
+<!--            --><?php //} ?>
+<!--        </div>-->
+<!--    </div>-->
+<?php /*}else{*/ ?>
+    <div class="field field-company-account required" id="add_company">
+        <label class="label" for="company">
+            <span>Company Name</span>
+        </label>
+        <div class="control">
+            <input type="text" id="company" name="company" value="" title="Company Account" class="input-text required-entry" data-validate="{required:true}" autocomplete="off" aria-required="true">
+        </div>
+    </div>
+<?php /*}*/ ?>
+<!--<script>-->
+<!--    require([-->
+<!--        'jquery',-->
+<!--        'mage/mage'-->
+<!--    ], function($) {-->
+<!--    	var field_account = $('.field-company-account');-->
+<!--        $('#is_company').change(function () {-->
+<!--        	if (this.checked) {-->
+<!--        		field_account.show();-->
+<!--        	} else {-->
+<!--        		field_account.hide();-->
+<!--        	}-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->

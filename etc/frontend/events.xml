@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="customer_login">
+        <observer name="customer_login_observer" instance="Tigren\CompanyAccount\Observer\Customer\CustomerLogin" />
+    </event>
+    <event name="customer_register_success">
+        <observer name="save_company_data" instance="Tigren\CompanyAccount\Observer\Customer\RegisterSuccess" />
+    </event>
+    <event name="user_create_success">
+        <observer name="assign_admin_account" instance="Tigren\CompanyAccount\Observer\Customer\CreateUserSuccess" />
+    </event>
+    <event name="layout_generate_blocks_after">
+        <observer name="remove_block" instance="Tigren\CompanyAccount\Observer\RemoveBlock" />
+    </event>
+</config>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+ <!--@copyright Copyright (c) 2016 www.tigren.com-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Tigren_CompanyAccount::css/form.css"/>
+    </head>
+    <body>
+        <referenceContainer name="left">
+            <block class="Tigren\CompanyAccount\Block\Adminhtml\Account\Edit\Tabs" name="companyaccount_account_edit_tabs">
+            </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Tigren\CompanyAccount\Block\Adminhtml\Account\Edit" name="companyaccount_account_edit"/>
+        </referenceContainer>
+    </body>
+</page>

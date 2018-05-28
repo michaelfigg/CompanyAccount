@@ -1,0 +1,101 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\Customer\Block\Account\Dashboard\Address $block */
+?>
+<div class="block block-dashboard-addresses">
+    <div class="block-title">
+        <strong><?= $block->escapeHtml(__('Account Information')) ?></strong>
+    </div>
+    <div class="block-content">
+        <div class="box box-billing-address">
+            <div class="box-content">
+                <address>
+                    <?= $block->getAccountInfo() ?>
+                </address>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block block-dashboard-addresses">
+    <div class="block-title">
+        <strong><?= $block->escapeHtml(__('Legal Address')) ?></strong>
+    </div>
+    <div class="block-content">
+        <div class="box box-billing-address">
+            <div class="box-content">
+                <address>
+                    <?= $block->getLegalAddress() ?>
+                </address>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block block-dashboard-addresses">
+    <div class="block-title">
+        <strong><?= $block->escapeHtml(__('Contacts')) ?></strong>
+    </div>
+    <div class="block-content">
+        <div class="box box-billing-address">
+          <strong class="box-title">
+              <span><?= $block->escapeHtml(__('Company Administrator')) ?></span>
+          </strong>
+            <div class="box-content">
+                <address>
+                  <select id="accountId">
+                    <option>Select Admin</option>
+                    <?php foreach ($block->getAllAdminAccount() as $admin): ?>
+                        <option value = "<?php echo $admin['entity_id']; ?>"><?php echo $admin['lastname']." ".$admin['firstname']; ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                  <br/>
+                  <br/>
+                  <div id="dataResponse"></div>
+                </address>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block block-dashboard-addresses">
+    <div class="block-title">
+        <strong><?= $block->escapeHtml(__('Payment Information')) ?></strong>
+    </div>
+    <div class="block-content">
+        <div class="box box-billing-address">
+          <strong class="box-title">
+              <span><?= $block->escapeHtml(__('Available Payment Methods')) ?></span>
+          </strong>
+            <div class="box-content">
+                <address>
+                    <!-- <?= $block->getPrimaryBillingAddressHtml() ?> -->
+                </address>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+require(['jquery'],function(){
+    jQuery(document).ready(function() {
+        jQuery('#accountId').change(function(){
+            var value = jQuery(this).val();
+            var url = "<?php echo $block->getBaseUrl().'companyaccount/result/result/' ?>";
+            jQuery.ajax({
+            url: url,
+            type: 'POST',
+            data: {value:value},
+            showLoader: true,
+            cache: false
+        }).done(function(response) {
+            jQuery('#dataResponse').html(response);
+      });
+        return false;
+        });
+    });
+});
+</script>

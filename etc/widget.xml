@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* @copyright Copyright (c) 2016 www.magebuzz.com
+*/
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="custom_widget" class="Tigren\CompanyAccount\Block\Widget\CustomWidget">
+     <label>Custom block widget</label>
+     <description>Demo Block widget</description>
+     <parameters>
+        <parameter name="title" xsi:type="text" visible="true" required="true" sort_order="0" >
+          <label>Title</label>
+        </parameter> 
+ 
+        <parameter name="enable_url" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="20" >
+          <label>Add URL like</label>
+          <description>Enable or disable link </description>
+        </parameter>
+     </parameters>
+    </widget>
+</widgets>

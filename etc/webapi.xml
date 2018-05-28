@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/accounts/:company" method="GET">
+        <service class="Tigren\CompanyAccount\Api\AccountManagementInterface" method="getByCompany" />
+        <resources>
+            <resource ref="Magento_Customer::manage" />
+        </resources>
+    </route>
+    <route url="/V1/account/:accountId" method="GET">
+        <service class="Tigren\CompanyAccount\Api\AccountManagementInterface" method="getById" />
+        <resources>
+            <resource ref="Magento_Customer::manage" />
+        </resources>
+    </route>
+    <route url="/V1/accounts" method="GET">
+        <service class="Tigren\CompanyAccount\Api\AccountManagementInterface" method="getList" />
+        <resources>
+            <resource ref="Magento_Customer::manage" />
+        </resources>
+    </route>
+    <route url="/V1/account/save" method="POST">
+        <service class="Tigren\CompanyAccount\Api\AccountManagementInterface" method="save" />
+        <resources>
+            <resource ref="Magento_Customer::manage" />
+        </resources>
+    </route>
+    <route url="/V1/account/delete/:accountId" method="DELETE">
+        <service class="Tigren\CompanyAccount\Api\AccountManagementInterface" method="delete" />
+        <resources>
+            <resource ref="Magento_Customer::manage" />
+        </resources>
+    </route>
+    <route url="/V1/account/assign/:accountId/:customerId" method="POST">
+        <service class="Tigren\CompanyAccount\Api\AccountManagementInterface" method="assign" />
+        <resources>
+            <resource ref="Magento_Customer::manage" />
+        </resources>
+    </route>
+    <route url="/V1/account/customer" method="POST">
+        <service class="Tigren\CompanyAccount\Api\AccountManagementInterface" method="createAccount" />
+        <resources>
+            <resource ref="Magento_Customer::manage" />
+        </resources>
+    </route>
+
+    <!--Address Curl-->
+    <route url="/V1/account/address/byAccount/:accountId" method="GET">
+        <service class="Tigren\CompanyAccount\Api\AccountAddressManagementInterface" method="getByAccount" />
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route url="/V1/account/address/byId/:addressId" method="GET">
+        <service class="Tigren\CompanyAccount\Api\AccountAddressManagementInterface" method="getById" />
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route url="/V1/account/addresses" method="GET">
+        <service class="Tigren\CompanyAccount\Api\AccountAddressManagementInterface" method="getAllAddress" />
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route url="/V1/account/address/delete/:addressId" method="DELETE">
+        <service class="Tigren\CompanyAccount\Api\AccountAddressManagementInterface" method="delete" />
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route url="/V1/account/address/save" method="POST">
+        <service class="Tigren\CompanyAccount\Api\AccountAddressManagementInterface" method="save" />
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+    <route url="/V1/account/address/save" method="PUT">
+        <service class="Tigren\CompanyAccount\Api\AccountAddressManagementInterface" method="save" />
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+    <route url="/V1/account/address/toBilling/:addressId" method="POST">
+        <service class="Tigren\CompanyAccount\Api\AccountAddressManagementInterface" method="changeToBillingAddress" />
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+</routes>

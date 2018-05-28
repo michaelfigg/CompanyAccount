@@ -1,0 +1,33 @@
+<?php
+/** @var \Tigren\CompanyAccount\Block\Adminhtml\Account\Edit\Tab\Customers $block */
+/** @var \Tigren\CompanyAccount\Block\Adminhtml\Account\Edit\CustomerGrid $blockGrid */
+$blockGrid = $block->getBlockGrid();
+$gridJsObjectName = $blockGrid->getJsObjectName();
+
+?>
+<?php echo $block->getActionCustomerTabBlock()->toHtml() ?>
+<?php  echo $block->getGridHtml(); ?>
+<input type="hidden" name="account_customers" id="in_account_customers" value="" />
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Tigren_CompanyAccount/account/assign-customer": {
+                "selectedCustomers": <?php /* @escapeNotVerified */ echo $block->getCustomersJson(); ?>,
+                "gridJsObjectName": <?php /* @escapeNotVerified */ echo '"' . $gridJsObjectName . '"' ?: '{}'; ?>
+            }
+        }
+    }
+</script>
+<!-- @todo remove when "UI components" will support such initialization -->
+<script type="text/javascript">
+    require([
+        "jquery"
+    ],function($) {
+        var isAdminField = $('.col-is_admin input');
+        if(isAdminField.length){
+            $(isAdminField).each(function(element) {
+                $('#'+isAdminField[element].id).attr('id', isAdminField[element].id + '_is_admin');
+            });
+        }
+    });
+</script>
