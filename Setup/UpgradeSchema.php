@@ -96,7 +96,6 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 ]
             );
         }
-
         if (version_compare($context->getVersion(), '1.3.1', '<')) {
             $table = $setup->getTable('tigren_comaccount_account');
             $connection = $setup->getConnection();
@@ -109,6 +108,124 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'default' => '',
                     'nullable' => true,
                     'comment' =>'Company Logo'
+                ]
+            );
+        }
+        if (version_compare($context->getVersion(), '1.3.2', '<')) {
+            $table = $setup->getTable('tigren_comaccount_account');
+            $connection = $setup->getConnection();
+            $connection->addColumn(
+                $table,
+                'pay_on_account',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_BOOLEAN,
+                    null,
+                    'default' => 1,
+                    'nullable' => true,
+                    'comment' =>'Pay On Account'
+                ]
+            );
+            $connection->addColumn(
+                $table,
+                'account_group_id',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    null,
+                    'default' => null,
+                    'nullable' => true,
+                    'comment' =>'Account Group ID'
+                ]
+            );
+            $connection->addColumn(
+                $table,
+                'public_notes',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    null,
+                    'default' => null,
+                    'nullable' => true,
+                    'comment' =>'Public Notes'
+                ]
+            );
+            $connection->addColumn(
+                $table,
+                'manager_first_name',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    null,
+                    'default' => null,
+                    'nullable' => true,
+                    'comment' =>'Manager First Name'
+                ]
+            );
+            $connection->addColumn(
+                $table,
+                'manager_last_name',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    null,
+                    'default' => null,
+                    'nullable' => true,
+                    'comment' =>'Manager Last Name'
+                ]
+            );
+            $connection->addColumn(
+                $table,
+                'manager_telephone',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    null,
+                    'default' => null,
+                    'nullable' => true,
+                    'comment' =>'Manager Telephone'
+                ]
+            );
+            $connection->addColumn(
+                $table,
+                'manager_email',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    null,
+                    'default' => null,
+                    'nullable' => true,
+                    'comment' =>'Manager Email'
+                ]
+            );
+            $connection->addColumn(
+                $table,
+                'manager_profile',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    null,
+                    'default' => null,
+                    'nullable' => true,
+                    'comment' =>'Manager Profile'
+                ]
+            );
+        }
+        if (version_compare($context->getVersion(), '1.3.3', '<')) {
+            $table = $setup->getTable('tigren_comaccount_account_address');
+            $connection = $setup->getConnection();
+            $connection->addColumn(
+                $table,
+                'is_shipping_default',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+                    6,
+                    'default' => 0,
+                    'nullable' => false,
+                    'comment' =>'Is Shipping Default Address'
+                ]
+            );
+            $connection->addColumn(
+                $table,
+                'email',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    255,
+                    'default' => null,
+                    'nullable' => true,
+                    'comment' =>'Address Email'
                 ]
             );
         }

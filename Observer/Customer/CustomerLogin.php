@@ -31,8 +31,8 @@ class CustomerLogin implements ObserverInterface
         $customerEvent = $observer->getEvent()->getCustomer();
         $customerId = $customerEvent->getId();
         $customer = $this->_customerRepositoryInterface->getById($customerId);
-        if($customer->getCustomAttribute('pricerules_group') != null) {
-            $attr = $customer->getCustomAttribute('pricerules_group')->getValue();
+        if($customer->getCustomAttribute('account_id') != null) {
+            $attr = $customer->getCustomAttribute('account_id')->getValue();
             $this->_sessionManager->setPricerulesGroup($attr);
         }
         if(empty($customer->getCustomAttribute('is_active'))){

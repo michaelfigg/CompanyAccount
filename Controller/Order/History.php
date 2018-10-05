@@ -48,13 +48,13 @@ class History extends \Magento\Framework\App\Action\Action implements OrderInter
             $this->_redirect('customer/account/login');
             return ;
         }
-        if (!$this->helper->isInAvailableAccount($this->getCustomerId())) {
-            $this->_redirect('customer/account');
-            return ;
-        }
+//        if (!$this->helper->isInAvailableAccount($this->getCustomerId())) {
+//            $this->_redirect('customer/account');
+//            return ;
+//        }
         /** @var \Magento\Framework\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->set(__('My Company Orders'));
+        $resultPage->getConfig()->getTitle()->set(__('My Orders'));
         return $resultPage;
     }
 

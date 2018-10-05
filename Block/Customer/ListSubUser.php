@@ -27,7 +27,8 @@ class ListSubUser extends Template
         \Tigren\CompanyAccount\Helper\Data $helper,
         CustomerSession $customerSession,
         array $data = []
-    ) {
+    )
+    {
         $this->_customerCollectionFactory = $customerCollectionFactory;
         $this->helper = $helper;
         $this->_customerSession = $customerSession;
@@ -70,16 +71,21 @@ class ListSubUser extends Template
         if (!$this->_subUsers) {
             $this->_subUsers = $this->_customerCollectionFactory->create()
                 ->addAttributeToSelect('*')
-                ->addAttributeToFilter('account_id',$accountId);
-                //->addAttributeToFilter('entity_id',['neq' => $customerId]);
+                ->addAttributeToFilter('account_id', $accountId);
+            //->addAttributeToFilter('entity_id',['neq' => $customerId]);
         }
         return $this->_subUsers;
     }
 
-    public function getActionUrl($action,$userId=null)
+    public function isAdminOfAccount($customerId)
     {
-        $actionUrl = $this->getUrl('companyaccount/account/'.$action);
-        $url = $userId ? $actionUrl.'?id='.$userId : $actionUrl;
+        return $this->helper->isAdminOfAccount($customerId);
+    }
+
+    public function getActionUrl($action, $userId = null)
+    {
+        $actionUrl = $this->getUrl('companyaccount/account/' . $action);
+        $url = $userId ? $actionUrl . '?id=' . $userId : $actionUrl;
         return $url;
     }
 }

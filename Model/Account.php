@@ -14,6 +14,8 @@ class Account extends \Magento\Framework\Model\AbstractModel
 
     protected $_cacheTag = 'companyaccount_account';
 
+    const STATUS_ENABLED = 1;
+    const STATUS_DISABLED = 0;
     /**
      * Prefix of model name
      *
@@ -36,4 +38,8 @@ class Account extends \Magento\Framework\Model\AbstractModel
         $this->_init('Tigren\CompanyAccount\Model\ResourceModel\Account');
     }
 
+    public function getAvailableStatuses()
+    {
+        return [self::STATUS_ENABLED => __('Enabled'), self::STATUS_DISABLED => __('Disabled')];
+    }
 }

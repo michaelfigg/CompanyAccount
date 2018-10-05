@@ -1,0 +1,83 @@
+<div class="block block-dashboard-menu">
+    <div class="block-content">
+        <div class="block-inner">
+            <ul>
+                <li>
+                    <a href="<?php echo $this->getUrl('customer/account/edit')?>" class="menu-item">
+                        <div class="icon-img">
+                                <img src="<?php echo $block->getViewFileUrl('Tigren_CompanyAccount::images/my-profile.png') ?>">
+                            </div>
+                        <div class="box-content">
+                                <h6><?= __('My Profile')?></h6>
+                                <p><?= __('View and edit your profile info')?></p>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo $this->getUrl('companyaccount/order/history')?>" class="menu-item">
+                        <div class="icon-img">
+                            <img src="<?php echo $block->getViewFileUrl('Tigren_CompanyAccount::images/orders.png') ?>">
+                        </div>
+                        <div class="box-content">
+                            <h6><?= __('My Orders')?></h6>
+                            <p><?= __('Track, return or buy new items')?></p>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo $this->getUrl('apiquote')?>" class="menu-item">
+                        <div class="icon-img">
+                            <img src="<?php echo $block->getViewFileUrl('Tigren_CompanyAccount::images/quote.png') ?>">
+                        </div>
+                        <div class="box-content">
+                            <h6><?= __('My Quotes')?></h6>
+                            <p><?= __('View your quotes')?></p>
+                        </div>
+                    </a>
+                </li>
+
+            </ul>
+
+            <ul>
+                <li>
+                    <a href="<?php echo $this->getUrl('companyaccount/account/address/')?>" class="menu-item">
+                        <div class="icon-img">
+                            <img src="<?php echo $block->getViewFileUrl('Tigren_CompanyAccount::images/address.png') ?>">
+                        </div>
+                        <div class="box-content">
+                            <h6><?= __('Addresses')?></h6>
+                            <p><?= __('Edit addresses and delivery Add, delete or edit users preferences')?></p>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo $this->getUrl('companyaccount/account/listuser/')?>" class="menu-item">
+                        <div class="icon-img">
+                            <img src="<?php echo $block->getViewFileUrl('Tigren_CompanyAccount::images/manage-users.png') ?>">
+                        </div>
+                        <div class="box-content">
+                            <h6><?= __('Manage Users')?></h6>
+                            <p><?= __('Add, delete or edit users')?></p>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo $this->getUrl('companyaccount/account/profile/')?>" class="menu-item">
+                        <div class="icon-img">
+                            <img src="<?php echo $block->getViewFileUrl('Tigren_CompanyAccount::images/company.png') ?>">
+                        </div>
+                        <div class="box-content">
+                            <h6><?= __('Company Details')?></h6>
+                            <p><?= __('View and edit your company details')?></p>
+                        </div>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>

@@ -20,14 +20,14 @@
                    title="<?php /* @escapeNotVerified */
                    echo __('Change User') ?>" class="radio"/>
             <label class="label" for="change-user"><span><?php /* @escapeNotVerified */
-                    echo __('Is Home') ?></span></label>
+                    echo __('I am a Home User') ?></span></label>
         </div>
         <div class="field choice">
             <input type="radio" checked="checked" name="changerole" id="change-company" data-role="change-company" value="1"
                    title="<?php /* @escapeNotVerified */
                    echo __('Change Company') ?>" class="radio"/>
             <label class="label" for="change-company"><span><?php /* @escapeNotVerified */
-                    echo __('Is Business') ?></span></label>
+                    echo __('I am a Business User') ?></span></label>
         </div>
         <input type="hidden" name="success_url" value="<?= $block->escapeUrl($block->getSuccessUrl()) ?>">
         <input type="hidden" name="error_url" value="<?= $block->escapeUrl($block->getErrorUrl()) ?>">

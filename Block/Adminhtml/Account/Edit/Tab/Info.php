@@ -77,6 +77,66 @@ class Info extends Generic
                 'title' => __('Tax Number'),
             ]
         );
+
+        $fieldset->addField(
+            'pay_on_account', 'select', [
+                'name' => 'pay_on_account',
+                'label' => __('Pay On Account'),
+                'title' => __('Pay On Account'),
+                'values' => array(
+                    array('value' => '0', 'label' => 'Disable'),
+                    array('value' => '1', 'label' => 'Enable')
+                ),
+            ]
+        );
+
+        $fieldset->addField(
+            'public_notes', 'text', [
+                'name' => 'public_notes',
+                'label' => __('Public Notes'),
+                'title' => __('Public Notes'),
+            ]
+        );
+
+        $fieldset->addField(
+            'manager_first_name', 'text', [
+                'name' => 'manager_first_name',
+                'label' => __('Manager First Name'),
+                'title' => __('Manager First Name'),
+            ]
+        );
+
+        $fieldset->addField(
+            'manager_last_name', 'text', [
+                'name' => 'manager_last_name',
+                'label' => __('Manager Last Name'),
+                'title' => __('Manager Last Name'),
+            ]
+        );
+
+        $fieldset->addField(
+            'manager_telephone', 'text', [
+                'name' => 'manager_telephone',
+                'label' => __('Manager Telephone'),
+                'title' => __('Manager Telephone'),
+            ]
+        );
+
+        $fieldset->addField(
+            'manager_email', 'text', [
+                'name' => 'manager_email',
+                'label' => __('Manager Email'),
+                'title' => __('Manager Email'),
+            ]
+        );
+
+        $fieldset->addField(
+            'manager_profile', 'text', [
+                'name' => 'manager_profile',
+                'label' => __('Manager Profile'),
+                'title' => __('Manager Profile'),
+            ]
+        );
         
         if (!$this->_storeManager->hasSingleStore()) {
             $field = $fieldset->addField(

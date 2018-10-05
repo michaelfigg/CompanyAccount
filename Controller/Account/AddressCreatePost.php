@@ -72,8 +72,12 @@ class AddressCreatePost extends Action
                 $model->setUpdatedAt($this->_datetime->gmtDate());
                 $model->setId(NULL)->save();
 
-                if(!empty($data['is_billing']))
+                if(!empty($data['is_billing'])){
                     $this->_accountAddressManagement->changeToBillingAddress($model->getId());
+                }
+                if(!empty($data['is_shipping_default'])){
+                    $this->_accountAddressManagement->changeToShippingDefaultAddress($model->getId());
+                }
 
                 $this->messageManager->addSuccess('The address was saved successfully');
                 $resultRedirect->setPath('companyaccount/account/address/');

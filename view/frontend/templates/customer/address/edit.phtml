@@ -1,13 +1,13 @@
 <?php
-    $addressData = $block->getAddressData();
+$addressData = $block->getAddressData();
 ?>
-<form class="form-address-edit" action="<?= $block->getPostActionUrl() ?>" method="post" id="form-validate" enctype="multipart/form-data" data-hasrequired="* Required Fields" novalidate="novalidate">
-    <fieldset class="fieldset">
-        <legend class="legend"><span>Contact Information</span></legend><br>
+<form class="form-edit-account form-address-edit" action="<?= $block->getPostActionUrl() ?>" method="post" id="form-validate" enctype="multipart/form-data" data-hasrequired="* Required Fields" novalidate="novalidate">
+    <fieldset class="fieldset info">
+        <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Contact Information') ?></span></legend><br>
         <?= $block->getBlockHtml('formkey') ?>
         <div class="field field-name-firstname required">
             <label class="label" for="firstname">
-                <span>First Name</span>
+                <span><?php /* @escapeNotVerified */ echo __('First Name') ?></span>
             </label>
 
             <div class="control">
@@ -16,7 +16,7 @@
         </div>
         <div class="field field-name-lastname required">
             <label class="label" for="lastname">
-                <span>Last Name</span>
+                <span><?php /* @escapeNotVerified */ echo __('Last Name') ?></span>
             </label>
 
             <div class="control">
@@ -25,9 +25,9 @@
         </div>
 
 
-        <div class="field company ">
+        <div class="field company required">
             <label for="company" class="label">
-                <span>Company</span>
+                <span><?php /* @escapeNotVerified */ echo __('Company') ?></span>
             </label>
             <div class="control">
                 <input value="<?= ($addressData) ? $addressData->getCompany() : '' ?>" type="text" name="company" id="company" title="Company" class="input-text ">
@@ -37,21 +37,30 @@
 
         <div class="field telephone required">
             <label for="telephone" class="label">
-        <span>
-            Phone Number        </span>
+                <span><?php /* @escapeNotVerified */ echo __('Phone') ?></span>
             </label>
             <div class="control">
                 <input value="<?= ($addressData) ? $addressData->getTelephone() : '' ?>" type="text" name="telephone" id="telephone" value="" title="Phone Number" class="input-text">
             </div>
         </div>
 
+        <div class="field required email">
+            <label for="email" class="label"><span><?php /* @escapeNotVerified */
+                    echo __('Email') ?></span></label>
+            <div class="control">
+                <input type="text" name="email" id="email"
+                       value="<?= ($addressData) ? $addressData->getEmail() : '' ?>" title="<?php /* @escapeNotVerified */
+                echo __('Email') ?>" class="input-text" data-validate="{required:true}">
+            </div>
+        </div>
+
 
     </fieldset>
-    <fieldset class="fieldset">
-        <legend class="legend"><span>Address</span></legend><br>
+    <fieldset class="fieldset address">
+        <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Address') ?></span></legend><br>
         <div class="field street required">
             <label for="street_1" class="label">
-                <span>Street Address</span>
+                <span><?php /* @escapeNotVerified */ echo __('Street Address') ?></span>
             </label>
             <div class="control">
                 <input value="<?= ($addressData) ? $addressData->getStreet() : '' ?>" type="text" name="street[]" value="" title="Street Address" id="street_1" class="input-text required-entry" aria-required="true">
@@ -69,7 +78,7 @@
         </div>
 
         <div class="field city required">
-            <label class="label" for="city"><span>City</span></label>
+            <label class="label" for="city"><span><?php /* @escapeNotVerified */ echo __('City') ?></span></label>
             <div class="control">
                 <input type="text" name="city" value="<?= ($addressData) ? $addressData->getCity() : '' ?>" title="City" class="input-text required-entry" id="city" aria-required="true">
             </div>
@@ -116,7 +125,13 @@
         <div class="field choice set billing">
             <input type="checkbox" id="primary_billing" name="is_billing" value="1" class="checkbox" <?= ($addressData && $addressData->getIsBilling()) ? 'checked' : '' ?>>
             <label class="label" for="primary_billing">
-                <span><?= $block->escapeHtml(__('Use as company billing address')) ?></span>
+                <span><?= $block->escapeHtml(__('Set as Default Billing Address')) ?></span>
+            </label>
+        </div>
+        <div class="field choice set shipping">
+            <input type="checkbox" id="primary_shipping" name="is_shipping_default" value="1" class="checkbox" <?= ($addressData && $addressData->getIsShippingDefault()) ? 'checked' : '' ?>>
+            <label class="label" for="primary_shipping">
+                <span><?= $block->escapeHtml(__('Set as Default Shipping Address')) ?></span>
             </label>
         </div>
 
@@ -125,7 +140,7 @@
         <input type="hidden" name="address_id" id="address_id" value="<?php echo $block->getIdAddress() ?>" >
         <div class="primary">
             <button type="submit" class="action save primary" data-action="save-address" title="Save Address">
-                <span>Save</span>
+                <span><?php /* @escapeNotVerified */ echo __('Save') ?></span>
             </button>
         </div>
     </div>

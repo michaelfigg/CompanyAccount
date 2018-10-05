@@ -8,6 +8,7 @@ class RegisterSuccess implements ObserverInterface
 {
 
     protected $helper;
+
     public function __construct(
         \Tigren\CompanyAccount\Helper\Data $helper
     )
@@ -28,8 +29,8 @@ class RegisterSuccess implements ObserverInterface
         if (!empty($company)) {
             $companyName = $company;
             $is_business = 1;
-        }else{
-            $companyName = $firstname.' '.$lastname;
+        } else {
+            $companyName = $firstname . ' ' . $lastname;
             $is_business = 0;
         }
         $this->helper->createAccount($companyName, $customer->getId(), $is_business);

@@ -47,25 +47,34 @@ class Title extends \Magento\Theme\Block\Html\Title
      */
     public function getPageHeading()
     {
-        if($this->getCurrentPage() == 'sales_order_view' || $this->getCurrentPage() == 'companyaccount_order_view' || $this->getCurrentPage() == 'returns_rma_order'){
-            if($this->getCurrentPage() == 'sales_order_view' || $this->getCurrentPage() == 'returns_rma_order'){
+        if ($this->getCurrentPage() == 'sales_order_view' || $this->getCurrentPage() == 'companyaccount_order_view' || $this->getCurrentPage() == 'returns_rma_order') {
+            if ($this->getCurrentPage() == 'sales_order_view' || $this->getCurrentPage() == 'returns_rma_order') {
                 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
                 $escaper = $objectManager->create('Magento\Framework\Escaper')->escapeHtml($this->pageConfig->getTitle()->getShortHeading());
                 if (strlen(strstr($escaper, 'Order #')) > 0) {
                     $incrementId = substr($escaper, 8, 100);
                     $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
                     $order = $objectManager->create('\Magento\Sales\Model\Order')->loadByIncrementId($incrementId);
-                    return 'Order #'.' '.$order->getExtOrderId();
+                    if (!empty($order->getExtOrderId())) {
+                        return 'Order #' . ' ' . $order->getExtOrderId();
+                    } else {
+                        return 'Order #' . ' ' . $incrementId;
+                    }
+
                 }
             }
-            if($this->getCurrentPage() == 'companyaccount_order_view'){
+            if ($this->getCurrentPage() == 'companyaccount_order_view') {
                 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
                 $escaper = $objectManager->create('Magento\Framework\Escaper')->escapeHtml($this->pageConfig->getTitle()->getShortHeading());
                 if (strlen(strstr($escaper, 'Order #')) > 0) {
                     $incrementId = substr($escaper, 7, 100);
                     $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
                     $order = $objectManager->create('\Magento\Sales\Model\Order')->loadByIncrementId($incrementId);
-                    return 'Order #'.' '.$order->getExtOrderId();
+                    if (!empty($order->getExtOrderId())) {
+                        return 'Order #' . ' ' . $order->getExtOrderId();
+                    } else {
+                        return 'Order #' . ' ' . $incrementId;
+                    }
                 }
             }
         }
@@ -75,15 +84,17 @@ class Title extends \Magento\Theme\Block\Html\Title
         return __($this->pageConfig->getTitle()->getShortHeading());
     }
 
-    public function getCurrentPage(){
+    public function getCurrentPage()
+    {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $requestInterface = $objectManager->get('Magento\Framework\App\RequestInterface');
-        $moduleName     = $requestInterface->getModuleName();
+        $moduleName = $requestInterface->getModuleName();
         $controllerName = $requestInterface->getControllerName();
-        $actionName     = $requestInterface->getActionName();
-        $current_page = $moduleName.'_'.$controllerName.'_'.$actionName;
+        $actionName = $requestInterface->getActionName();
+        $current_page = $moduleName . '_' . $controllerName . '_' . $actionName;
         return $current_page;
     }
+
     /**
      * Set own page title
      *

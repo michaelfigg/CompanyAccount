@@ -4,6 +4,7 @@
  * Copyright © 2013-2017 Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Tigren\CompanyAccount\Controller\Account;
 
 use Magento\Customer\Model\AuthenticationInterface;
@@ -96,7 +97,8 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
         CustomerExtractor $customerExtractor,
         \Tigren\CompanyAccount\Helper\Data $helper,
         \Magento\Customer\Model\Customer $customer
-    ) {
+    )
+    {
         parent::__construct($context);
         $this->session = $customerSession;
         $this->customerAccountManagement = $customerAccountManagement;
@@ -104,7 +106,7 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
         $this->formKeyValidator = $formKeyValidator;
         $this->customerExtractor = $customerExtractor;
         $this->_helper = $helper;
-        $this->_customers  = $customer;
+        $this->_customers = $customer;
     }
 
     /**
@@ -152,6 +154,7 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
         $resultRedirect = $this->resultRedirectFactory->create();
         $validFormKey = $this->formKeyValidator->validate($this->getRequest());
         $userId = $this->getRequest()->getParam('userId');
+        $email = $this->getRequest()->getParam('email');
         $job_title = $this->getRequest()->getParam('job_title');
         $phone_number = $this->getRequest()->getParam('phone_number');
         $is_active = $this->getRequest()->getParam('is_active');
@@ -177,7 +180,7 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
                     $isPasswordChanged
                 );
                 $this->dispatchSuccessEvent($customerCandidateDataObject);
-                $this->updateAttributeCustomer($userId,$job_title,$phone_number,$is_active);
+                $this->updateAttributeCustomer($userId, $email, $job_title, $phone_number, $is_active);
                 $this->_eventManager->dispatch(
                     'user_com_edit_save_after',
                     ['request' => $this->getRequest()->getParams(), 'user_id' => $userId]
@@ -206,9 +209,9 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
             } catch (\Exception $e) {
                 $this->messageManager->addException($e, __('We can\'t save the customer.'));
             }
-       }
+        }
 
-        return $resultRedirect->setPath('companyaccount/account/edit?id='.$userId);
+        return $resultRedirect->setPath('companyaccount/account/edit?id=' . $userId);
     }
 
     /**
@@ -216,15 +219,18 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
      *
      * @return ScopeConfigInterface
      */
-    public function updateAttributeCustomer($customerId, $jobTitle, $phoneNumber, $isActive){
+    public function updateAttributeCustomer($customerId, $email, $jobTitle, $phoneNumber, $isActive)
+    {
         $setCustomercustomer = $this->_customers->load($customerId);
         $customerData = $setCustomercustomer->getDataModel();
+        $customerData->setEmail($email);
         $customerData->setCustomAttribute('job_title', $jobTitle);
         $customerData->setCustomAttribute('phone_number', $phoneNumber);
         $customerData->setCustomAttribute('is_active', $isActive);
         $setCustomercustomer->updateData($customerData)->save();
         return $this;
     }
+
     private function getScopeConfig()
     {
         if (!($this->scopeConfig instanceof \Magento\Framework\App\Config\ScopeConfigInterface)) {
@@ -272,7 +278,8 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
     private function populateNewCustomerDataObject(
         \Magento\Framework\App\RequestInterface $inputData,
         \Magento\Customer\Api\Data\CustomerInterface $currentCustomerData
-    ) {
+    )
+    {
         $attributeValues = $this->getCustomerMapper()->toFlatArray($currentCustomerData);
         $customerDto = $this->customerExtractor->extract(
             self::FORM_DATA_EXTRACTOR_CODE,
@@ -361,7 +368,8 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
         }
     }
 
-    public function updateEnterShippingAddress($userId){
+    public function updateEnterShippingAddress($userId)
+    {
         if ((int)$this->getRequest()->getParam('enable_enter_shipping_address') > 0)
             $this->_helper->updateEnterShippingAddress($userId, (int)$this->getRequest()->getParam('enable_enter_shipping_address'));
         else

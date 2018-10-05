@@ -7,5 +7,13 @@
         <referenceContainer name="content">
             <block class="Tigren\CompanyAccount\Block\Company\Profile" name="companyprofile" template="Tigren_CompanyAccount::company/profile.phtml" cacheable="false"/>
         </referenceContainer>
+
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">Company Details</argument>
+            </action>
+        </referenceBlock>
+
+
     </body>
 </page>

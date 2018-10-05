@@ -1,4 +1,5 @@
 <?php
+
 namespace Tigren\CompanyAccount\Model;
 
 use Tigren\CompanyAccount\Api\Data\AccountInterface;
@@ -76,7 +77,10 @@ class AccountManagement implements \Tigren\CompanyAccount\Api\AccountManagementI
     protected $helper;
     protected $_customerCollectionFactory;
     protected $_customers;
-    
+    protected $_resource;
+    protected $_connection;
+    protected $_accountAdminTable;
+
 
     public function __construct(
         \Tigren\CompanyAccount\Model\AccountFactory $accountFactory,
@@ -96,9 +100,14 @@ class AccountManagement implements \Tigren\CompanyAccount\Api\AccountManagementI
         \Magento\Customer\Model\CustomerFactory $customerFactory,
         Registry $registry,
         \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customerCollectionFactory,
-        \Magento\Customer\Model\Customer $customer
-        
-    ) {
+        \Magento\Customer\Model\Customer $customer,
+        \Magento\Framework\App\ResourceConnection $resource
+
+    )
+    {
+        $this->_resource = $resource;
+        $this->_connection = $this->_resource->getConnection('core_write');
+        $this->_accountAdminTable = $this->_resource->getTableName('tigren_comaccount_account_admin');
         $this->accountFactory = $accountFactory;
         $this->helper = $helper;
         $this->stringHelper = $stringHelper;
@@ -116,8 +125,8 @@ class AccountManagement implements \Tigren\CompanyAccount\Api\AccountManagementI
         $this->customerFactory = $customerFactory;
         $this->registry = $registry;
         $this->_customerCollectionFactory = $customerCollectionFactory;
-        $this->_customers = $customer;		
-        
+        $this->_customers = $customer;
+
     }
 
     /**
@@ -146,9 +155,23 @@ class AccountManagement implements \Tigren\CompanyAccount\Api\AccountManagementI
             'company' => $account->getCompany(),
             'telephone' => $account->getTelephone(),
             'tax' => $account->getTax(),
-            'stores' => [$this->helper->getStoreId()]
+            'stores' => [$this->helper->getStoreId()],
+            'logo_image_link' => $account->getLogoImageLink(),
+            'pay_on_account' => $account->getPayOnAccount(),
+            'account_group_id' => $account->getAccountGroupId(),
+            'public_notes' => $account->getPublicNotes(),
+            'manager_first_name' => $account->getManagerFirstName(),
+            'manager_last_name' => $account->getManagerLastName(),
+            'manager_telephone' => $account->getManagerTelephone(),
+            'manager_email' => $account->getManagerEmail(),
+            'manager_profile' => $account->getManagerProfile()
         ];
+
         if (!empty($data['account_id'])) {
+            $customerCollection = $this->customerFactory->create()->getCollection()
+                ->addAttributeToSelect("*")
+                ->addAttributeToFilter("account_id", ["eq" => $data['account_id']])->load();
+
             $accountModel->load($data['account_id']);
             if (!$accountModel->getId()) {
                 throw new NoSuchEntityException(
@@ -156,7 +179,17 @@ class AccountManagement implements \Tigren\CompanyAccount\Api\AccountManagementI
                 );
             }
         }
+
         $accountModel->setData($data)->save();
+        if (!empty($data['account_id']) && !empty($customerCollection)) {
+            foreach ($customerCollection as $cus) {
+                $customer = $this->customerFactory->create();
+                $customer->load($cus->getId());
+                $customerData = $customer->getDataModel();
+                $customerData->setCustomAttribute('account_id', $data['account_id']);
+                $customer->updateData($customerData)->save();
+            }
+        }
         return $accountModel;
     }
 
@@ -179,7 +212,7 @@ class AccountManagement implements \Tigren\CompanyAccount\Api\AccountManagementI
     /**
      * {@inheritdoc}
      */
-    public function assign($accountId,$customerId)
+    public function assign($accountId, $customerId)
     {
         $account = $this->accountFactory->create();
         $account->load($accountId);
@@ -189,11 +222,11 @@ class AccountManagement implements \Tigren\CompanyAccount\Api\AccountManagementI
             );
             return false;
         }
-        $this->helper->assignToAccount($accountId,$customerId);
+        $this->helper->assignToAccount($accountId, $customerId);
         return true;
     }
 
-    /**
+    /**getList
      * {@inheritdoc}
      */
     public function getList()
@@ -216,7 +249,7 @@ class AccountManagement implements \Tigren\CompanyAccount\Api\AccountManagementI
         $result = [];
         $collection = $this->accountFactory->create()->getCollection();
         if ($company) {
-            $collection->addFieldToFilter('company',$company);
+            $collection->addFieldToFilter('company', $company);
         }
         if (count($collection)) {
             foreach ($collection as $account) {
@@ -230,10 +263,11 @@ class AccountManagement implements \Tigren\CompanyAccount\Api\AccountManagementI
      * {@inheritdoc}
      */
     public function createAccount(
-        CustomerInterface $customer, 
-        $password = null, 
+        CustomerInterface $customer,
+        $password = null,
         $redirectUrl = ''
-    ) {
+    )
+    {
         $accountId = $customer->getAccountId();
         if (!$accountId) {
             throw new InputException(
@@ -258,7 +292,7 @@ class AccountManagement implements \Tigren\CompanyAccount\Api\AccountManagementI
 
         $customer->setCustomAttribute('account_id', $customer->getAccountId());
 
-        return $this->createAccountWithPasswordHash($customer, $hash, $redirectUrl,$customer->getAccountId());
+        return $this->createAccountWithPasswordHash($customer, $hash, $redirectUrl, $customer->getAccountId());
     }
 
     protected function checkPasswordStrength($password)
@@ -333,7 +367,7 @@ class AccountManagement implements \Tigren\CompanyAccount\Api\AccountManagementI
         return $this->encryptor->getHash($password, true);
     }
 
-    protected function createAccountWithPasswordHash(CustomerInterface $customer, $hash, $redirectUrl = '',$accountId)
+    protected function createAccountWithPasswordHash(CustomerInterface $customer, $hash, $redirectUrl = '', $accountId)
     {
         // This logic allows an existing customer to be added to a different store.  No new account is created.
         // The plan is to move this logic into a new method called something like 'registerAccountWithStore'
@@ -402,8 +436,29 @@ class AccountManagement implements \Tigren\CompanyAccount\Api\AccountManagementI
         $newLinkToken = $this->mathRandom->getUniqueHash();
         $this->changeResetPasswordLinkToken($customer, $newLinkToken);
         $this->sendEmailConfirmation($customer, $redirectUrl);
+        $this->assignAdmin($accountId, $customer->getId());
 
         return $customer;
+    }
+
+    public function assignAdmin($accountId, $userId)
+    {
+        $select = $this->getSelect()->from(['acd' => $this->_accountAdminTable], 'admin_id')
+            ->where('acd.account_id = ' . $accountId . ' AND admin_id=' . $userId);
+        $admin_id = $this->_connection->fetchOne($select);
+        if (empty($admin_id)) {
+            try {
+                $dataInsert = ['admin_id' => $userId, 'account_id' => $accountId];
+                $this->_connection->insert($this->_accountAdminTable, $dataInsert);
+            } catch (\Exception $e) {
+
+            }
+        }
+    }
+
+    public function getSelect()
+    {
+        return $this->_connection->select();
     }
 
     /**
@@ -525,7 +580,7 @@ class AccountManagement implements \Tigren\CompanyAccount\Api\AccountManagementI
         }
         $collection = $this->_customerCollectionFactory->create()
             ->addAttributeToSelect('*')
-            ->addAttributeToFilter('account_id',$accountId);
+            ->addAttributeToFilter('account_id', $accountId);
         foreach ($collection as $customer) {
             $result[] = $this->customerRepository->getById($customer->getId());
         }

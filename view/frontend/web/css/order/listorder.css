@@ -1,0 +1,209 @@
+.orders-search-company{
+    border: 1px solid #fff;
+    margin-bottom: 8%;
+    width: 100%;
+}
+.tag-top{
+    width: 100%;
+    overflow: hidden;
+}
+.tag-top-left{
+    float: left;
+    width: 25%;
+    display: flex;
+    display: -ms-flexbox;
+}
+.tag-top-left .field .label{
+    margin-right: 15px;
+}
+.tag-top-left .field .label span{
+    margin-top: 5px;
+    display: block;
+}
+
+.field-search-all{
+    width: 50%;
+}
+.orders-input-group{
+    width: 20%;
+    float: left
+}
+.orders-search-buttom{
+    width: 15%;
+    float: left
+}
+input.orders-required-entry{
+    float: left;
+}
+.field-overview-required{
+    width: 100%;
+    float: left;
+}
+.date_range_buttom{
+    width: 50%;
+    float: right;
+}
+.orders-input{
+    /*width: 35%;*/
+    display: flex;
+    display: -ms-flexbox;
+}
+.orders-input .field{
+    display: flex;
+    display: -ms-flexbox;
+    margin-right: 20px;
+}
+.orders-input .field .label{
+    margin-right: 10px;
+}
+.orders-input .field .label span{
+    margin-top: 5px;
+    display: block;
+}
+.orders-button{
+    /*width: 15%;*/
+    float: right;
+}
+#search_date_range{
+    margin-left: 10px;
+}
+input[type="text"], input[type="password"], input[type="url"], input[type="tel"], input[type="search"], input[type="number"], input[type="datetime"], input[type="email"]{
+    max-width: 180px !important;
+}
+.option-order{
+    max-width: 200px;
+    padding: 10px 10px 10px 0;
+    /*margin: 10px;*/
+}
+.orders-search-company{
+    width: 100%;
+}
+.field-search-all{
+    width: 50%;
+}
+.orders-input-group{
+    width: 20%;
+    float: left
+}
+.orders-search-buttom{
+    width: 15%;
+    float: left
+}
+input.orders-required-entry{
+    float: left;
+}
+.field-overview-required{
+    width: 100%;
+    float: left;
+    display: flex;
+    display: -webkit-flex;
+}
+.date_range_buttom{
+    width: 50%;
+    float: right;
+}
+.orders-input{
+    /*width: 35%;*/
+}
+.orders-button{
+    /*width: 15%;*/
+    float: right;
+}
+#search_date_range{
+    margin-left: 10px;
+}
+input[type="text"], input[type="password"], input[type="url"], input[type="tel"], input[type="search"], input[type="number"], input[type="datetime"], input[type="email"]{
+    max-width: 180px !important;
+}
+.option-order{
+    max-width: 200px;
+    padding: 10px 10px 10px 0;
+    /*margin: 10px;*/
+}
+
+.w3-container:after, .w3-container:before {
+    content: "";
+    display: table;
+    clear: both
+}
+
+.w3-container {
+    padding: 0.01em 16px
+}
+
+.w3-table-all {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    display: table;
+    border: 1px solid #ccc
+}
+
+.w3-table-all tr {
+    border-bottom: 1px solid #ddd
+}
+
+.w3-table-all tr:nth-child(odd) {
+    background-color: #fff
+}
+
+.w3-table-all tr:nth-child(even) {
+    background-color: #f1f1f1
+}
+
+.w3-table-all td, .w3-table-all th {
+    padding: 8px 8px;
+    display: table-cell;
+    text-align: left;
+    vertical-align: top
+}
+
+.w3-table-all th:first-child, .w3-table-all td:first-child {
+    padding-left: 16px
+}
+
+.w3-hoverable tbody tr:hover, .w3-ul.w3-hoverable li:hover {
+    background-color: #ccc
+}
+
+.w3-centered tr th, .w3-centered tr td {
+    text-align: center
+}
+
+.w3-light-grey, .w3-hover-light-grey:hover, .w3-light-gray, .w3-hover-light-gray:hover {
+    color: #000 !important;
+    background-color: #f1f1f1 !important
+}
+.tracking-buttom-back {
+    margin-left: 15px;
+    margin-top: 10px;
+}
+
+.tag-top-right{
+    padding-left: 20px;
+}
+
+@media (max-width: 768px){
+    .tag-top-left {
+        float: inherit;
+        width: 100%;
+        display: inherit;
+        margin-bottom: 15px;
+    }
+    .field-overview-required{
+        display: inherit;
+        margin-bottom: 15px;
+    }
+    .orders-input {
+        margin-bottom: 15px;
+    }
+    #order_content tr {
+        border-bottom: 1px solid #888;
+    }
+
+    .tag-top-right{
+        padding-left: 0;
+    }
+
+
+}

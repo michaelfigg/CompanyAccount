@@ -32,7 +32,7 @@ class Profile extends \Magento\Framework\App\Action\Action
             return $resultRedirect;
         }
         $resultPage = $this->_resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend(__(' Company Profile '));
+        $resultPage->getConfig()->getTitle()->prepend(__(' Company Details '));
         return $resultPage;
     }
 }

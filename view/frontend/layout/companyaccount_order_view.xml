@@ -10,6 +10,9 @@
     <update handle="sales_order_item_renderers"/>
     <update handle="sales_order_item_price"/>
     <update handle="companyaccount_order_info_links"/>
+    <head>
+        <css src="Tigren_CompanyAccount::css/order/order-history.css"/>
+    </head>
     <body>
         <referenceContainer name="page.main.title">
             <block class="Magento\Sales\Block\Order\Info" name="order.status" template="order/order_status.phtml"/>
@@ -19,11 +22,11 @@
             <block class="Magento\Sales\Block\Order\Info\Buttons\Rss" as="buttons.rss" name="sales.order.info.buttons.rss" cacheable="false"/>
         </referenceContainer>
         <referenceContainer name="content">
-            <block class="Magento\Sales\Block\Order\View" name="order.comments" template="order/order_comments.phtml" before="sales.order.info.links"/>
-            <block class="Magento\Sales\Block\Order\View" name="companyaccount.order.view" cacheable="false" after="sales.order.info.links">
-                <block class="Magento\Sales\Block\Order\Items" name="order_items" template="order/items.phtml">
+            <block class="Tigren\CompanyAccount\Block\Order\View" name="order.comments" template="order/order_comments.phtml" before="sales.order.info.links"/>
+            <block class="Tigren\CompanyAccount\Block\Order\View" name="companyaccount.order.view" cacheable="false" after="sales.order.info.links">
+                <block class="Tigren\CompanyAccount\Block\Order\Items" name="company_order_items" template="order/items.phtml">
                     <block class="Magento\Framework\View\Element\RendererList" name="sales.order.items.renderers" as="renderer.list"/>
-                    <block class="Magento\Sales\Block\Order\Totals" name="order_totals" template="order/totals.phtml">
+                    <block class="Tigren\CompanyAccount\Block\Order\Totals" name="order_totals" template="order/totals.phtml">
                         <arguments>
                             <argument name="label_properties" xsi:type="string">colspan="4" class="mark"</argument>
                             <argument name="value_properties" xsi:type="string">class="amount"</argument>
@@ -32,7 +35,7 @@
                     </block>
                 </block>
             </block>
-            <block class="Magento\Sales\Block\Order\Info" as="info" name="sales.order.info" after="sales.order.view"/>
+            <!--<block class="Magento\Sales\Block\Order\Info" as="info" name="sales.order.info" after="sales.order.view"/>-->
         </referenceContainer>
         <block class="Magento\Framework\View\Element\Template" name="additional.product.info" template="Magento_Theme::template.phtml"/>
     </body>

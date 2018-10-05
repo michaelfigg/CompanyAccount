@@ -8,55 +8,6 @@
 
 /** @var \Magento\Customer\Block\Account\Dashboard\Address $block */
 ?>
-<div class="block block-dashboard-addresses">
-    <div class="block-title">
-        <strong><?= $block->escapeHtml(__('Address Book')) ?></strong>
-        <a class="action edit"
-           href="<?= $block->escapeUrl($block->getAddressBookUrl()) ?>"><span><?= $block->escapeHtml(__('Manage Addresses')) ?></span></a>
-    </div>
-    <div class="block-content">
-        <div class="box box-billing-address">
-            <strong class="box-title">
-                <?php if ($block->disableEdit() == 1): ?>
-                    <span><?= $block->escapeHtml(__('Default Billing Address Company')) ?></span>
-                <?php else: ?>
-                    <span><?= $block->escapeHtml(__('Default Billing Address')) ?></span>
-                <?php endif ?>
-            </strong>
-            <div class="box-content">
-                <address>
-                    <?= $block->getPrimaryBillingAddressHtml() ?>
-                </address>
-            </div>
-            <?php if ($block->disableEdit() == 0): ?>
-                <div class="box-actions">
-                    <a class="action edit" href="<?= $block->escapeUrl($block->getPrimaryBillingAddressEditUrl()) ?>"
-                       data-ui-id="default-billing-edit-link"><span><?= $block->escapeHtml(__('Edit Address')) ?></span></a>
-                </div>
-            <?php endif ?>
-        </div>
-        <div class="box box-shipping-address">
-            <strong class="box-title">
-                <?php if ($block->disableEdit() == 1): ?>
-                    <span><?= $block->escapeHtml(__('Default Shipping Address Company')) ?></span>
-                <?php else: ?>
-                    <span><?= $block->escapeHtml(__('Default Shipping Address')) ?></span>
-                <?php endif ?>
-            </strong>
-            <div class="box-content">
-                <address>
-                    <?= $block->getPrimaryShippingAddressHtml() ?>
-                </address>
-            </div>
-            <?php if ($block->disableEdit() == 0): ?>
-                <div class="box-actions">
-                    <a class="action edit" href="<?= $block->escapeUrl($block->getPrimaryShippingAddressEditUrl()) ?>"
-                       data-ui-id="default-shipping-edit-link"><span><?= $block->escapeHtml(__('Edit Address')) ?></span></a>
-                </div>
-            <?php endif ?>
-        </div>
-    </div>
-</div>
 <?php if ($block->disableEdit() == 1): ?>
     <div class="block block-dashboard-addresses">
         <div class="block-title">
@@ -65,9 +16,7 @@
         <div class="block-content">
             <div class="box box-billing-address">
                 <div class="box-content">
-                    <address>
-                        <?= $block->getManagerAccountApi() ?>
-                    </address>
+                    <?= $block->getAccountManager() ?>
                 </div>
             </div>
         </div>

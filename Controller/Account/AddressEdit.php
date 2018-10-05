@@ -35,7 +35,9 @@ class AddressEdit extends \Magento\Customer\Controller\AbstractAccount
     public function execute()
     {
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend(__(' Edit Company Address '));
+        $addressSort = $this->getRequest()->getParam('add');
+        $title = 'Edit Address '.$addressSort;
+        $resultPage->getConfig()->getTitle()->prepend(__($title));
         $companyAddressBlock = $resultPage->getLayout()->getBlock('customer-users-links.company-address');
         if ($companyAddressBlock) {
             $companyAddressBlock->setIsHighlighted(true);

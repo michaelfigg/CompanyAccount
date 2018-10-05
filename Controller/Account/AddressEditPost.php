@@ -66,8 +66,8 @@ class AddressEditPost extends Action
             try{
                 $customerId = $this->_currentCustomer->getCustomerId();
                 $accountId = $this->_companyAccountHelper->getAccountIdByCustomer($customerId);
-
                 $model = $this->_companyAddressFactory->create();
+
                 $model->load($this->getRequest()->getParam('address_id'));
                 $model->setData($this->getRequest()->getParams());
                 $model->setAccountId($accountId);
@@ -79,6 +79,11 @@ class AddressEditPost extends Action
                     $this->_accountAddressManagement->changeToBillingAddress($model->getId());
                 } else {
                     $model->setIsBilling(0)->save();
+                }
+                if(!empty($data['is_shipping_default'])) {
+                    $this->_accountAddressManagement->changeToShippingDefaultAddress($model->getId());
+                } else {
+                    $model->setIsShippingDefault(0)->save();
                 }
 
                 $this->messageManager->addSuccess('The address was saved successfully');

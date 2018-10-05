@@ -82,7 +82,7 @@ class Account extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         }
         return $this;
     }
-    
+
     protected function _beforeSave(AbstractModel $object)
     {
         if ($object->hasData('stores') && !is_array($object->getStores())) {
@@ -111,7 +111,7 @@ class Account extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
                 $connection->insert($this->_accountStoreTable, $storeInsert);
             }
         }
-        
+
         //Save Account Customers
         $customerIds = $object->getCustomerIds() ?: [];
         $oldCustomerIds = $this->getCustomerIds($accountId) ?: [];
@@ -134,14 +134,14 @@ class Account extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $insert = array_diff($adminIds, $oldAdminIds);
         $delete = array_diff($oldAdminIds, $adminIds);
 
-        if (!empty($delete)) {
-            $condition = [
-                'account_id = ?' => $accountId,
-                'admin_id IN (?)' => $delete
-            ];
-            $connection->delete($this->_accountAdminTable, $condition);
-        }
-        
+//        if (!empty($delete)) {
+//            $condition = [
+//                'account_id = ?' => $accountId,
+//                'admin_id IN (?)' => $delete
+//            ];
+//            $connection->delete($this->_accountAdminTable, $condition);
+//        }
+
         if (!empty($insert)) {
             foreach ($insert as $adminId) {
                 $insert = ['admin_id' => $adminId, 'account_id' => $accountId];

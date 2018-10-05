@@ -2,10 +2,10 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <update handle="customer_account"/>
     <body>
-        <referenceContainer name="content">
+        <referenceContainer name="content" htmlTag="div" htmlClass="customer-form-before" label="Form Fields Before" >
             <block class="Tigren\CompanyAccount\Block\Customer\Create" name="account_create" template="Tigren_CompanyAccount::customer/form/create.phtml" cacheable="false">
                 <block name="form.additional.info" as="form_additional_info"/>
-                <block name="customer.form.register.fields.before" as="form_fields_before" label="Form Fields Before" htmlTag="div" htmlClass="customer-form-before"/>
+                <block name="customer.form.register.fields.before" as="form_fields_before" />
             </block>
         </referenceContainer>
     </body>

@@ -120,10 +120,13 @@ class Address extends \Magento\Framework\View\Element\Template
         $data = $collection->addFieldToFilter('address_id', ['in' => $addressId])->addFieldToFilter('is_billing', ['eq' => 1])->getData();
         return $data;
     }
+
     public function getAccountAddressShipping($addressId)
     {
         $collection = $this->addressFactory->create()->getCollection();
-        $data = $collection->addFieldToFilter('address_id', ['in' => $addressId])->setOrder('address_id', 'desc')->getFirstItem()->getData();
+        $data = $collection->addFieldToFilter('address_id', ['in' => $addressId])
+            ->addFieldToFilter('is_shipping_default', ['eq' => 1])
+            ->setOrder('address_id', 'asc')->getFirstItem()->getData();
         return $data;
     }
 
@@ -138,35 +141,42 @@ class Address extends \Magento\Framework\View\Element\Template
         return $enable;
     }
 
-    public function getManagerAccountApi(){
+    public function getAccountManager()
+    {
 
         $accountId = $this->getAccountId();
         $infoManageAccount = $this->accountFactory->create()->getCollection()->addFieldToFilter('account_id', ['eq' => $accountId])->getData();
-        if(empty($infoManageAccount[0]['primary_manager']) && empty($infoManageAccount[0]['secondary_manager'])){
-            $this->Api->getAccountDetail();
-            $infoManageAccount = $this->accountFactory->create()->getCollection()->addFieldToFilter('account_id', ['eq' => $accountId])->getData();
-            if(empty($infoManageAccount[0]['primary_manager']) && empty($infoManageAccount[0]['secondary_manager'])){
-                return 'No Contact';
-            }
-        }
+        if (!empty($infoManageAccount[0]['manager_first_name']) && !empty($infoManageAccount[0]['manager_email'])) {
+            $name = $infoManageAccount[0]['manager_first_name'] . ' ' . $infoManageAccount[0]['manager_last_name'];
+            $managerInfo = '';
 
-        $arrPrimaryManager = explode('&',$infoManageAccount[0]['primary_manager']);
-        $arrSecondaryManager = explode('&',$infoManageAccount[0]['secondary_manager']);
-        $name = '';
-        $email = '';
-        if(!empty($arrPrimaryManager)){
-            $name = $arrPrimaryManager[1].' '.$arrPrimaryManager[3];
-            $email = $arrPrimaryManager[0];
-        }elseif (empty($arrPrimaryManager) && !empty($arrSecondaryManager)){
-            $name = $arrSecondaryManager[1].' '.$arrSecondaryManager[3];
-            $email = $arrSecondaryManager[0];
-        }
-        if(empty($name) && empty($email)){
+            $managerInfo .= '<div class="manager-image">';
+
+
+            if (!empty($infoManageAccount[0]['manager_profile'])) {
+                $managerInfo .= '<image src="' . $infoManageAccount[0]['manager_profile'] . '"/>';
+            }
+
+            $managerInfo .= '</div>';
+
+            $managerInfo .= '<div class="manager-info">';
+
+            $managerInfo .= '<strong>Account Manager</strong>';
+
+            $managerInfo .= 'My name is ' . $name . '<br/>' .
+                'I am your Account Manager.' . '<br/>' .
+                'Contact: ' . $infoManageAccount[0]['manager_email'] . ' or ';
+            if (!empty($infoManageAccount[0]['manager_telephone'])) {
+                $managerInfo .= ' ' . $infoManageAccount[0]['manager_telephone'] . ' ' . '<br/>';
+            }
+
+
+            $managerInfo .= '</div>';
+
+            return $managerInfo;
+        } else {
             return 'No Contact';
         }
-        return 'My name is '.$name.'<br/>'.
-            'I am your account manager.'.'<br/>'.
-            'You can reach me on email '.$email.'.';
     }
 
     /**
@@ -178,12 +188,12 @@ class Address extends \Magento\Framework\View\Element\Template
     {
         if ($this->helper->isInAvailableAccount($this->getCustomerId())) {
             $addressAccount = $this->getAccountAddressShipping($this->getIdAddressAccount());
-            if(!empty($addressAccount)){
-                return $addressAccount['lastname']." ".$addressAccount['firstname']."</br>".
-                    "City : " . $addressAccount['city'] . "</br>"
-                    . "Street : " . $addressAccount['street'] . "</br>"
+            if (!empty($addressAccount)) {
+                return $addressAccount['lastname'] . " " . $addressAccount['firstname'] . "</br>" .
+                    "Street : " . $addressAccount['street'] . "</br>"
+                    . "City : " . $addressAccount['city'] . "</br>"
                     . "Company : " . $addressAccount['company'] . "</br>"
-                    ."Zip/Postal Code : ".$addressAccount['postcode']. "</br>"
+                    . "Zip/Postal Code : " . $addressAccount['postcode'] . "</br>"
                     . "Telephone : " . $addressAccount['telephone'];
             }
             return __('Company have not set a default shipping address.');
@@ -210,12 +220,12 @@ class Address extends \Magento\Framework\View\Element\Template
     {
         if ($this->helper->isInAvailableAccount($this->getCustomerId())) {
             $addressAccount = $this->getAccountAddressBilling($this->getIdAddressAccount());
-            if(!empty($addressAccount)){
-                return $addressAccount[0]['lastname']." ".$addressAccount[0]['firstname']."</br>".
-                    "City : " . $addressAccount[0]['city'] . "</br>"
-                    . "Street : " . $addressAccount[0]['street'] . "</br>"
+            if (!empty($addressAccount)) {
+                return $addressAccount[0]['lastname'] . " " . $addressAccount[0]['firstname'] . "</br>" .
+                    "Street : " . $addressAccount[0]['street'] . "</br>"
+                    . "City : " . $addressAccount[0]['city'] . "</br>"
                     . "Company : " . $addressAccount[0]['company'] . "</br>"
-                    ."Zip/Postal Code : ".$addressAccount[0]['postcode']. "</br>"
+                    . "Zip/Postal Code : " . $addressAccount[0]['postcode'] . "</br>"
                     . "Telephone : " . $addressAccount[0]['telephone'];
             }
             return __('Company have not set a default billing address.');
@@ -272,7 +282,7 @@ class Address extends \Magento\Framework\View\Element\Template
      */
     public function getAddressBookUrl()
     {
-        return $this->getUrl('customer/address/');
+        return $this->getUrl('companyaccount/account/address/');
     }
 
     /**

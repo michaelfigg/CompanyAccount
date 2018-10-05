@@ -10,5 +10,12 @@
         <referenceContainer name="content">
             <block class="Tigren\CompanyAccount\Block\Customer\ListSubUser" name="listusers" template="Tigren_CompanyAccount::customer/account/listuser.phtml" cacheable="false"/>
         </referenceContainer>
+
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">Manage Users</argument>
+            </action>
+        </referenceBlock>
+
     </body>
 </page>

@@ -57,12 +57,11 @@ class View extends Action\Action
             $this->_redirect('customer/account/login');
             return ;
         }
-        if (!$this->helper->isInAvailableAccount($this->getCustomerId())) {
-            $this->_redirect('customer/account');
-            return ;
-        }
+//        if (!$this->helper->isInAvailableAccount($this->getCustomerId())) {
+//            $this->_redirect('customer/account');
+//            return ;
+//        }
         $orderId = (int)$this->_request->getParam('order_id');
-
         if (!$orderId) {
             /** @var \Magento\Framework\Controller\Result\Forward $resultForward */
             $resultForward = $this->resultForwardFactory->create();
@@ -73,7 +72,7 @@ class View extends Action\Action
         /** @var \Magento\Framework\View\Result\Page $resultPage */
 
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->set(__('Order #'.$order->getRealOrderId()));
+        $resultPage->getConfig()->getTitle()->set(__('Order #'.$order->getExtOrderId()));
         $companyOrderBlock = $resultPage->getLayout()->getBlock('customer-users-links.order-users');
         if ($companyOrderBlock) {
             $companyOrderBlock->setIsHighlighted(true);

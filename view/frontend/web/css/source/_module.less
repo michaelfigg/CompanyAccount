@@ -1,0 +1,464 @@
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+
+  a{
+    text-decoration: none;
+    color: #666;
+    &:hover, &:visited{
+      color: #666;
+    }
+  }
+
+  ul{
+    list-style-type: none;
+  }
+
+  .account{
+    .fieldset .legend{
+      margin-left: 0;
+    }
+    .column:not(.sidebar-main) form .actions-toolbar, .column:not(.sidebar-additional) form .actions-toolbar{
+      margin-left: 0;
+    }
+
+    legend.legend {
+      font-weight: 600;
+      color: #000;
+    }
+
+    .field:not(.choice) > .label {
+      font-size: 12px;
+    }
+
+  }
+
+
+  //Dashboard
+  .customer-account-index{
+    .block-title{
+      display: none;
+    }
+    .page-main{
+      padding-top: 0;
+    }
+  }
+
+  .dashboard-top{
+    overflow: hidden;
+  }
+
+  .block-dashboard-info {
+    overflow: hidden;
+    .box-company-info{
+      width: 100% !important;
+    }
+    .box-logo-company {
+      width: 24%;
+      float: left;
+      padding: 0 10px;
+      img{
+        width: 100%;
+      }
+    }
+    .box-company-detail-info {
+      float: left;
+      width: 70%;
+      margin-top: 25px;
+      h2{
+        text-transform: capitalize;
+        font-weight: 600;
+      }
+    }
+
+  }
+
+  .block-dashboard-addresses{
+    overflow: hidden;
+    border: 1px solid #666;
+    padding: 10px;
+    .box-billing-address {
+      width: 100% !important;
+    }
+    .manager-image {
+      width: 18%;
+      float: right;
+    }
+
+    .manager-info {
+      float: left;
+      width: 78%;
+      text-align: right;
+      font-size: 14px;
+      strong{
+        display: block;
+        font-size: 19px;
+        text-transform: capitalize;
+        margin-bottom: 5px;
+      }
+    }
+  }
+
+  .block-dashboard-menu{
+    max-width: 900px;
+    margin: 0 auto;
+    ul{
+      padding: 0;
+      li{
+        overflow: hidden;
+        width: 100%;
+        min-height: 85px;
+        .menu-item{
+          display: block;
+          margin: 0 auto;
+          padding: 15px 10px;
+          border: 1px solid #666;
+        }
+      }
+    }
+    .menu-item{
+      display: block;
+      overflow: hidden;
+      h6 {
+        margin: 0;
+        font-size: 18px;
+        text-transform: capitalize;
+        color: #000;
+        font-weight: 600;
+        line-height: 48px;
+      }
+      p{
+        font-size: 12px;
+      }
+      .icon-img {
+        float: left;
+        width: 30%;
+      }
+      .box-content {
+        width: 70%;
+        float: left;
+      }
+    }
+  }
+
+//  Account Profile
+  .customer-account-edit{
+    .form-edit-account .fieldset.password {
+      display: block;
+    }
+  }
+
+//  companyaccount-account-profile
+  .companyaccount-account-profile{
+    .block-dashboard-addresses{
+      border: 0;
+    }
+    .block-title{
+      strong{
+        font-weight: 600 !important;
+      }
+    }
+    .block-dashboard-info{
+      width: 100%;
+    }
+    .box-company-detail-info{
+      margin: 0;
+    }
+  }
+
+  .box-admin-account{
+
+  }
+
+  .block-contact{
+    clear: both;
+  }
+
+//  manage users
+  .companyaccount-account-listuser{
+    .actions-toolbar {
+      border-bottom: 1px solid #666;
+    }
+    .toolbar-number{
+      display: none;
+    }
+  }
+
+  .table-manage-user{
+    .user-item{
+      padding: 15px;
+      margin-bottom: 15px;
+      border: 2px solid #888;
+      box-sizing: border-box;
+      overflow: hidden;
+      .col-actions .action {
+        display: block;
+        padding: 5px 15px;
+        background: #eee;
+      }
+    }
+  }
+
+  .add-new-address-button {
+    padding: 5px 15px;
+    background: #eee;
+    display: block;
+  }
+
+  .companyaccount-account-address{
+    .actions-toolbar{
+      margin-bottom: 30px;
+    }
+  }
+
+  .block-addresses-default{
+    margin-top: 50px;
+    .box-title span {
+      color: #000;
+      font-size: 18px !important;
+    }
+  }
+
+  .form-address-edit .actions-toolbar .action.primary{
+    padding: 7px 15px;
+  }
+
+
+
+
+
+}
+
+
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+  .account{
+    .fieldset > .field:not(.choice) > .label {
+      text-align: left;
+      width: 20.8%;
+    }
+  }
+
+  //Dashboard
+  .customer-account-index{
+    .block-dashboard-info {
+      float: left;
+      width: 40%;
+    }
+    .block-dashboard-addresses {
+      float: right;
+      width: 45%;
+    }
+  }
+
+  .block-dashboard-menu{
+    ul {
+      display: flex;
+      display: -ms-flexbox;
+      margin-left: -30px;
+      margin-right: -30px;
+      li{
+        padding: 0 30px;
+      }
+    }
+    .menu-item{
+      width: 100%;
+    }
+  }
+
+//  wishlist
+  .wishlist-index-index{
+    .actions-toolbar{
+      border-bottom: 2px solid #ccc;
+    }
+    .products-grid.wishlist{
+      .box-tocart{
+        .field.qty{
+          float: right;
+          width: 50%;
+          padding-right: 0;
+          padding-left: 5px;
+          .control{
+            width: 60% !important;
+          }
+        }
+        .product-item-actions{
+          float: left;
+          width: 50%;
+          margin: 0;
+        }
+      }
+
+    }
+  }
+
+//  profile
+  .form-edit-account{
+    .fieldset.info{
+       > .field:not(.choice) > .label{
+         width: 22.8%;
+       }
+       > .field:not(.choice) > .control {
+        width: 70.2%;
+        float: left;
+      }
+      .field{
+        width: 50%;
+        float: left;
+      }
+    }
+    .fieldset.password{
+      > .field:not(.choice) > .control {
+        width: 50%;
+        float: left;
+      }
+    }
+  }
+
+  //  companyaccount-account-profile
+  .companyaccount-account-profile{
+    .block-dashboard-addresses{
+      width: 45%;
+      float: left;
+    }
+  }
+
+  .box-admin-account {
+    width: 60%;
+    .label{
+      float: left;
+      margin-right: 10px;
+      margin-top: 7px;
+    }
+    .controls{
+      display: inline-block;
+      width: 65%;
+    }
+  }
+
+//manage user
+  .table-manage-user{
+    .user-item{
+      .user-image{
+        display: inline-block;
+        width: 10%;
+        text-align: center;
+      }
+      .col-fullname{
+        display: inline-block;
+        width: 60%;
+      }
+      .col-actions{
+        display: inline-block;
+        float: right;
+      }
+    }
+  }
+
+  .form-edit-user, .form-address-edit, .form-create-user{
+    .legend{
+      .user-permission{
+        margin-left: 20px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+    .fieldset.info .field{
+      width: 50%;
+      float: left;
+      &.email{
+        width: 100%;
+        .label{
+          width: 11.5%;
+        }
+        .control{
+          width: 50%;
+        }
+      }
+    }
+    .fieldset.password, .fieldset.address{
+      .control{
+        width: 50%;
+      }
+    }
+  }
+  .form-address-edit{
+    .fieldset > .field.choice:before, .fieldset > .field.no-label:before {
+      width: 21.8%;
+    }
+  }
+
+  .companyaccount-account-address{
+    .actions-toolbar.top{
+      border-bottom: 1px solid #888;
+    }
+  }
+
+
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m){
+  //Dashboard
+  .block-dashboard-addresses {
+    margin-bottom: 20px !important;
+  }
+  .customer-account-index{
+    .page-main{
+      padding-top: 0;
+    }
+  }
+
+  //  companyaccount-account-profile
+  .box-admin-account .label {
+    margin-bottom: 7px;
+  }
+
+  //manage user
+  .table-manage-user{
+    .user-item{
+      .user-image{
+        display: inline-block;
+        width: 25%;
+        text-align: center;
+      }
+      .col-fullname{
+        display: inline-block;
+        margin-bottom: 15px;
+      }
+      .col-actions{
+        display: inline-block;
+      }
+    }
+  }
+
+
+}
+
+@media (max-width: 1000px){
+  .block-dashboard-menu{
+    ul {
+      margin: 0 !important;
+    }
+  }
+}
+
+@media(max-width: 768px){
+  .wishlist-index-index{
+    .products-grid.wishlist{
+      .box-tocart{
+        .field.qty{
+          width: 100%;
+          float: inherit !important;
+        }
+        .product-item-actions{
+          width: 100% !important;
+        }
+      }
+
+    }
+  }
+}

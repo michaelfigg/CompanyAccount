@@ -11,14 +11,20 @@
 <?php
 //    $enableEnterShippingAddress = $block->getCustomer()->getCustomAttribute('enable_enter_shipping_address')->getValue();
 ?>
-<form class="form form-edit-account" action="<?php /* @escapeNotVerified */
+<form class="form form-edit-user form-edit-account" action="<?php /* @escapeNotVerified */
 echo $block->getUrl('companyaccount/account/editPost') ?>" method="post" id="form-validate"
       enctype="multipart/form-data" data-hasrequired="<?php /* @escapeNotVerified */
 echo __('* Required Fields') ?>" autocomplete="off">
     <fieldset class="fieldset info">
         <?php echo $block->getBlockHtml('formkey') ?>
         <legend class="legend"><span><?php /* @escapeNotVerified */
-                echo __('Account Information') ?></span></legend>
+                echo __($block->getUserTitleEdit()) ?></span>
+            <?php if ($block->isAdminOfAccount() == 1): ?>
+                <span class="user-permission" style="margin-left: 20px"><?php /* @escapeNotVerified */ echo __('Admin') ?></span>
+            <?php else: ?>
+                <span class="user-permission" style="margin-left: 20px"><?php /* @escapeNotVerified */ echo __('User') ?></span>
+            <?php endif; ?>
+        </legend>
         <br>
         <?php echo $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Name')->setObject($block->getCustomer())->toHtml() ?>
 
@@ -49,90 +55,87 @@ echo __('* Required Fields') ?>" autocomplete="off">
             <?php echo $_gender->setGender($block->getCustomer()->getGender())->toHtml() ?>
         <?php endif ?>
         <?php if ($block->isAdminOfAccount() == 0): ?>
-            <div class="field required">
+            <div class="field">
                 <label for="job_title" class="label"><span><?php /* @escapeNotVerified */
                         echo __('Job Title') ?></span></label>
                 <div class="control">
                     <input type="text" name="job_title" id="job_title" value="<?php echo $block->getUserJobTitle(); ?>"
                            title="<?php /* @escapeNotVerified */
-                           echo __('Job Title') ?>" class="input-text" data-validate="{required:true}">
+                           echo __('Job Title') ?>" class="input-text">
                 </div>
             </div>
             <div class="field required">
                 <label for="phone_number" class="label"><span><?php /* @escapeNotVerified */
-                        echo __('Phone Number') ?></span></label>
+                        echo __('Phone') ?></span></label>
                 <div class="control">
                     <input type="text" name="phone_number" id="phone_number"
                            value="<?php echo $block->getUserPhoneNumber(); ?>" title="<?php /* @escapeNotVerified */
-                    echo __('Phone Number') ?>" class="input-text" data-validate="{required:true}">
+                    echo __('Phone') ?>" class="input-text" data-validate="{required:true}">
                 </div>
             </div>
-            <div class="field required">
-                <label for="is_active" class="label"><span><?php /* @escapeNotVerified */
-                        echo __('Active') ?></span></label>
-                <select name="is_active" id="is_active" title="<?php /* @escapeNotVerified */
-                echo __('Active') ?>">
-                    <option value="1"
-                        <?php if ($block->getUserIsActive() == 1): ?>
-                            selected="selected"
-                        <?php endif ?>
-                    >Yes
-                    </option>
-                    <option value="2"
-                        <?php if ($block->getUserIsActive() == 2): ?>
-                            selected="selected"
-                        <?php endif ?>
-                    >No
-                    </option>
-                </select>
-            </div>
         <?php endif ?>
-        <div class="field required">
-            <label for="is_admin" class="label"><span><?php /* @escapeNotVerified */
-                    echo __('Job Role') ?></span></label>
-            <select name="is_admin" id="is-admin" data-role="is-admin" title="<?php /* @escapeNotVerified */
-            echo __('Is Admin') ?>">
-                <option value="0"
-                    <?php if ($block->isAdminOfAccount() == 0): ?> selected="selected"<?php endif; ?>
-                >User
-                </option>
+        <div class="field required" style="display: none">
+            <label for="is_active" class="label"><span><?php /* @escapeNotVerified */
+                    echo __('Active') ?></span></label>
+            <select name="is_active" id="is_active" title="<?php /* @escapeNotVerified */
+            echo __('Active') ?>">
                 <option value="1"
-                    <?php if ($block->isAdminOfAccount() == 1): ?> selected="selected"<?php endif; ?>
-                >Admin
+                    <?php if ($block->getUserIsActive() == 1): ?>
+                        selected="selected"
+                    <?php endif ?>
+                >Yes
+                </option>
+                <option value="2"
+                    <?php if ($block->getUserIsActive() == 2): ?>
+                        selected="selected"
+                    <?php endif ?>
+                >No
                 </option>
             </select>
         </div>
-        <div class="field choice">
-            <input type="checkbox" name="change_email" id="change-email" data-role="change-email" value="1"
-                   title="<?php /* @escapeNotVerified */
-                   echo __('Change Email') ?>" class="checkbox"/>
-            <label class="label" for="change-email"><span><?php /* @escapeNotVerified */
-                    echo __('Change Email') ?></span></label>
+        <div class="field required">
+            <label for="is_admin" class="label"><span><?php /* @escapeNotVerified */
+                    echo __('Permissions') ?></span></label>
+            <div class="control">
+                <select name="is_admin" id="is-admin" data-role="is-admin" title="<?php /* @escapeNotVerified */
+                echo __('Is Admin') ?>">
+                    <option value="0"
+                        <?php if ($block->isAdminOfAccount() == 0): ?> selected="selected"<?php endif; ?>
+                    >User
+                    </option>
+                    <option value="1"
+                        <?php if ($block->isAdminOfAccount() == 1): ?> selected="selected"<?php endif; ?>
+                    >Admin
+                    </option>
+                </select>
+            </div>
         </div>
-        <div class="field choice">
-            <input type="checkbox" name="change_password" id="change-password" data-role="change-password" value="1"
-                   title="<?php /* @escapeNotVerified */
-                   echo __('Change Password') ?>"<?php if ($block->getChangePassword()): ?> checked="checked"<?php endif; ?>
-                   class="checkbox"/>
-            <label class="label" for="change-password"><span><?php /* @escapeNotVerified */
-                    echo __('Change Password') ?></span></label>
+
+        <div class="field required email">
+            <label for="email" class="label"><span><?php /* @escapeNotVerified */
+                    echo __('Email') ?></span></label>
+            <div class="control">
+                <input type="text" name="email" id="email"
+                       value="<?php echo $block->getUserEmail(); ?>" title="<?php /* @escapeNotVerified */
+                echo __('Email') ?>" class="input-text" data-validate="{required:true}">
+            </div>
+        </div>
+        <div style="display: none">
+            <div class="field choice">
+                <input type="checkbox" checked="checked" name="change_email" id="change-email" data-role="change-email" value="1" title="<?= $block->escapeHtmlAttr(__('Change Email')) ?>" class="checkbox" />
+                <label class="label" for="change-email"><span><?= $block->escapeHtml(__('Change Email')) ?></span></label>
+            </div>
+            <div class="field choice">
+                <input type="checkbox" checked="checked" name="change_password" id="change-password" data-role="change-password" value="1" title="<?= $block->escapeHtmlAttr(__('Change Password')) ?>"<?php if ($block->getChangePassword()): ?> checked="checked"<?php endif; ?> class="checkbox" />
+                <label class="label" for="change-password"><span><?= $block->escapeHtml(__('Change Password')) ?></span></label>
+            </div>
         </div>
     </fieldset>
 
-    <fieldset class="fieldset password" data-container="change-email-password">
+    <fieldset class="fieldset password" style="display: block">
         <legend class="legend"><span data-title="change-email-password"><?php /* @escapeNotVerified */
-                echo __('Change Email and Password') ?></span></legend>
+                echo __('Change Password') ?></span></legend>
         <br>
-        <div class="field email required" data-container="change-email">
-            <label class="label" for="email"><span><?php /* @escapeNotVerified */
-                    echo __('Email') ?></span></label>
-            <div class="control">
-                <input type="email" name="email" id="email" autocomplete="email" data-input="change-email"
-                       value="<?php echo $block->escapeHtml($block->getCustomer()->getEmail()) ?>"
-                       title="<?php /* @escapeNotVerified */
-                       echo __('Email') ?>" class="input-text" data-validate="{required:true, 'validate-email':true}"/>
-            </div>
-        </div>
         <div class="field password current required">
             <label class="label" for="current-password"><span><?php /* @escapeNotVerified */
                     echo __('Current Password') ?></span></label>
@@ -218,19 +221,4 @@ echo __('* Required Fields') ?>" autocomplete="off">
         });
 
     });
-</script>
-<script type="text/x-magento-init">
-    {
-        "[data-role=change-email], [data-role=change-password]": {
-            "changeEmailPassword": {
-                "titleChangeEmail": "<?php /* @escapeNotVerified */
-    echo __('Change Email') ?>",
-                "titleChangePassword": "<?php /* @escapeNotVerified */
-    echo __('Change Password') ?>",
-                "titleChangeEmailAndPassword": "<?php /* @escapeNotVerified */
-    echo __('Change Email and Password') ?>"
-            }
-        }
-    }
-
 </script>

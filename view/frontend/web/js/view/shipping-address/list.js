@@ -31,7 +31,6 @@ define([
             this._super()
                 .initChildren();
 
-            console.log(addressList());
             addressList.subscribe(function (changes) {
                     var self = this;
 

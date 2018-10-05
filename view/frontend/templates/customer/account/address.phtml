@@ -7,69 +7,158 @@
             return false;
     }
 </script>
+
+<div class="actions-toolbar top">
+    <div class="primary">
+        <button class="action submit primary" onclick="window.open('<?php /* @escapeNotVerified */
+        echo $block->getActionUrl('addressCreate') ?>','_self')" title="<?php /* @escapeNotVerified */
+        echo __('Add Address') ?>"><span "><?php /* @escapeNotVerified */
+            echo __('Add Address') ?></span></button>
+    </div>
+    <div class="secondary">
+        <a class="action back"
+           href="<?= $block->getUrl('customer/account/') ?>"><span><?= $block->escapeHtml(__('Back')) ?></span></a>
+    </div>
+</div>
+
+<div class="block block-addresses-default">
+    <div class="block-content">
+        <?php if (!empty($block->getBillingAddressCompanyDefault())): ?>
+            <div class="box box-address-billing">
+                <strong class="box-title">
+                    <span><?= $block->escapeHtml(__('Billing Address')) ?></span>
+                </strong>
+                <div class="box-content">
+                    <address>
+                        <?= $block->getBillingAddressCompanyDefault() ?>
+                    </address>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="box box-billing-address">
+                <strong class="box-title"><span><?= $block->escapeHtml(__('Billing Address')) ?></span></strong>
+                <div class="box-content">
+                    <p><?= $block->escapeHtml(__('You have no default billing address in your address book.')) ?></p>
+                </div>
+            </div>
+        <?php endif ?>
+
+        <?php if (!empty($block->getShippingAddressCompanyDefault())): ?>
+            <div class="box box-address-shipping">
+                <strong class="box-title">
+                    <span><?= $block->escapeHtml(__('Shipping Address')) ?></span>
+                </strong>
+                <div class="box-content">
+                    <address>
+                        <?= $block->getShippingAddressCompanyDefault() ?>
+                    </address>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="box box-shipping-address">
+                <strong class="box-title"><span><?= $block->escapeHtml(__('Shipping Address')) ?></span></strong>
+                <div class="box-content">
+                    <p><?= $block->escapeHtml(__('You have no default shipping address in your address book.')) ?></p>
+                </div>
+            </div>
+        <?php endif ?>
+    </div>
+</div>
 <?php $listAddress = $block->getListAddress(); ?>
 <?php if (!$listAddress->getSize()): ?>
     <div style="margin-top: 10px" class="message info empty">
         <span><?php echo __('There are no other addresses.'); ?></span></div>
 <?php endif ?>
 <div class="a-section a-spacing-double-large">
-    <div class="a-row a-spacing-micro">
-        <div class="a-column a-span4 a-spacing-none a-spacing-top-mini address-column">
-            <a id="ya-myab-address-add-link" class="a-link-normal add-new-address-button"
-               href="<?php /* @escapeNotVerified */
-               echo $block->getActionUrl('addressCreate') ?>">
-                <div class="a-box first-desktop-address-tile">
-                    <div class="a-box-inner a-padding-extra-large">
-                        <img class="add-new-address"
-                             src='<?php echo $this->getViewFileUrl('Tigren_CompanyAccount::images/newaddress.jpg'); ?>'
-                             alt="image-icon"/>
-                        <h2 class="a-color-tertiary">Add Address</h2></div>
-                </div>
-            </a>
-        </div>
+    <div class="a-row a-spacing-micro address-row">
         <?php if ($listAddress && $listAddress->getSize()): ?>
+            <?php $add = 1; ?>
             <?php foreach ($listAddress as $address): ?>
-                <div class="a-column a-span4 a-spacing-none a-spacing-top-mini address-column">
+                <div class="address-column">
                     <div id="ya-myab-display-address-block-0" class="a-box a-spacing-none normal-desktop-address-tile">
                         <div class="a-box-inner a-padding-none">
 
                             <div class="a-section address-section-no-default">
                                 <div class="a-row a-spacing-small">
                                     <ul class="a-unordered-list a-nostyle a-vertical">
-                                        <li><span class="a-list-item"><h5 id="address-ui-widgets-FullName"
-                                                                          class="id-addr-ux-search-text  a-text-bold"><?php echo $address->getFirstname() . ' ' . $address->getLastname(); ?></h5></span>
+                                        <li>
+                                            <span class="">
+                                                <h5 class="a-text-bold name">Address <?= $add ?></h5>
+                                            </span>
                                         </li>
-                                        <li><span class="a-list-item"><span id="address-ui-widgets-AddressLineOne"
-                                                                            class="id-addr-ux-search-text"><?php echo $address->getStreet() ?></span></span>
+                                        <li>
+                                            <span class="a-list-item">
+                                                <span class="id-addr-ux-search-text">
+                                                    <?php echo $address->getFirstname() . ' ' . $address->getLastname(); ?>
+                                                </span>
+                                            </span>
                                         </li>
-                                        <li><span class="a-list-item"><span id="address-ui-widgets-CityStatePostalCode"
-                                                                            class="id-addr-ux-search-text"><?php echo $address->getCity() ?></span></span>
+                                        <li>
+                                            <span class="a-list-item">
+                                                <span id="address-ui-widgets-AddressLineOne"
+                                                      class="id-addr-ux-search-text">
+                                                    <?php echo $address->getStreet() ?>
+                                                </span>
+                                            </span>
                                         </li>
-                                        <li><span class="a-list-item"><span id="address-ui-widgets-Country"
-                                                                            class="id-addr-ux-search-text"><?php echo $address->getCompany() ?></span></span>
+                                        <li>
+                                            <span class="a-list-item">
+                                                <span id="address-ui-widgets-City" class="id-addr-ux-search-text">
+                                                    <?php echo $address->getCity() ?>
+                                                </span>
+                                            </span>
                                         </li>
-                                        <li><span class="a-list-item"><span id="address-ui-widgets-PhoneNumber"
-                                                                            class="id-addr-ux-search-text">Phone number: <?php echo $address->getTelephone() ?></span></span>
+                                        <li>
+                                            <span class="a-list-item">
+                                                <span id="address-ui-widgets-CityStatePostalCode"
+                                                      class="id-addr-ux-search-text">
+                                                    <?php echo $block->getCountryName($address->getCountryId()) ?>
+                                                </span>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="a-list-item"><span id="address-ui-widgets-Company"
+                                                                            class="id-addr-ux-search-text">
+                                                <span>
+                                                    <?php echo $address->getCompany() ?>
+                                                </span>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="a-list-item">
+                                                <span id="address-ui-widgets-CityStatePostalCode"
+                                                      class="id-addr-ux-search-text">
+                                                    Zip/Postal Code: <?php echo $address->getPostcode() ?>
+                                                </span>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="a-list-item">
+                                                <span id="address-ui-widgets-PhoneNumber"
+                                                      class="id-addr-ux-search-text">
+                                                    Telephone : <?php echo $address->getTelephone() ?>
+                                                </span>
+                                            </span>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
+                        <div id="ya-myab-edit-address-desktop-row-0" class="a-row edit-address-desktop-link">
+                            <a id="ya-myab-address-edit-btn-0" class="a-link-normal"
+                               href="<?php echo $block->getActionUrl('addressEdit', $address->getId(), $add) ?>">Edit </a>
+                            <a id="ya-myab-address-delete-btn-0"
+                               onclick="return ConfirmDelete();"
+                               class="a-link-normal action delete"
+                               href="<?php echo $block->getActionUrl('deleteAddress', $address->getId()) ?>">
+                                <span class="a-declarative" data-action="a-modal"
+                                      data-a-modal="{&quot;name&quot;:&quot;deleteAddressModal-0&quot;,&quot;width&quot;:&quot;400&quot;,&quot;header&quot;:&quot;Confirm Deletion&quot;}">Delete</span>
+                            </a>
+                        </div>
                     </div>
-                    <div id="ya-myab-edit-address-desktop-row-0" class="a-row edit-address-desktop-link">
 
-                        <a id="ya-myab-address-edit-btn-0" class="a-link-normal"
-                           href="<?php echo $block->getActionUrl('addressEdit', $address->getId()) ?>">Edit </a>
-                        &nbsp; | &nbsp;
-                        <a id="ya-myab-address-delete-btn-0" onclick="return ConfirmDelete();"
-                           class="a-link-normal action delete"
-                           href="<?php echo $block->getActionUrl('deleteAddress', $address->getId()) ?>"><span
-                                    class="a-declarative"
-                                    data-action="a-modal"
-                                    data-a-modal="{&quot;name&quot;:&quot;deleteAddressModal-0&quot;,&quot;width&quot;:&quot;400&quot;,&quot;header&quot;:&quot;Confirm Deletion&quot;}">Delete</span>
-                        </a>
-                    </div>
                 </div>
+                <?php $add++; ?>
             <?php endforeach; ?>
         <?php endif ?>
     </div>

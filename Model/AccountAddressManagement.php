@@ -1,7 +1,9 @@
 <?php
+
 namespace Tigren\CompanyAccount\Model;
 
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Customer\Model\Session as CustomerSession;
 
 class AccountAddressManagement implements \Tigren\CompanyAccount\Api\AccountAddressManagementInterface
 {
@@ -10,18 +12,24 @@ class AccountAddressManagement implements \Tigren\CompanyAccount\Api\AccountAddr
     protected $_accountAddressCollectionFactory;
     protected $_dataObjectHelper;
     protected $_objectManager;
+    protected $_customerSession;
+    protected $helper;
 
     public function __construct(
         \Tigren\CompanyAccount\Model\AccountAddressFactory $accountAddressFactory,
         \Tigren\CompanyAccount\Model\ResourceModel\AccountAddress\CollectionFactory $accountAddressCollectionFactory,
         \Magento\Framework\Api\DataObjectHelper $dataObjectHelper,
-        \Magento\Framework\ObjectManagerInterface $objectManager
+        \Magento\Framework\ObjectManagerInterface $objectManager,
+        CustomerSession $customerSession,
+        \Tigren\CompanyAccount\Helper\Data $helper
     )
     {
-        $this->_accountAddressFactory           = $accountAddressFactory;
+        $this->_accountAddressFactory = $accountAddressFactory;
         $this->_accountAddressCollectionFactory = $accountAddressCollectionFactory;
-        $this->_dataObjectHelper                = $dataObjectHelper;
-        $this->_objectManager                   = $objectManager;
+        $this->_dataObjectHelper = $dataObjectHelper;
+        $this->_objectManager = $objectManager;
+        $this->_customerSession = $customerSession;
+        $this->helper = $helper;
     }
 
     /**
@@ -52,7 +60,7 @@ class AccountAddressManagement implements \Tigren\CompanyAccount\Api\AccountAddr
         $addressCollection = $this->_accountAddressCollectionFactory
             ->create()
             ->addFieldToFilter('account_id', $accountId);
-        if($addressCollection->getSize()){
+        if ($addressCollection->getSize()) {
             foreach ($addressCollection as $address)
                 $addresses[] = $this->getById($address->getId());
         }
@@ -68,7 +76,7 @@ class AccountAddressManagement implements \Tigren\CompanyAccount\Api\AccountAddr
     {
         $addresses = [];
         $addressCollection = $this->_accountAddressCollectionFactory->create();
-        if($addressCollection->getSize()){
+        if ($addressCollection->getSize()) {
             foreach ($addressCollection as $address)
                 $addresses[] = $this->getById($address->getId());
         }
@@ -85,7 +93,7 @@ class AccountAddressManagement implements \Tigren\CompanyAccount\Api\AccountAddr
     public function delete($addressId)
     {
         $address = $this->_accountAddressFactory->create()->load($addressId);
-        if(!$address->getId()){
+        if (!$address->getId()) {
             throw new NoSuchEntityException(
                 __('We can\'t specify an address.')
             );
@@ -103,9 +111,10 @@ class AccountAddressManagement implements \Tigren\CompanyAccount\Api\AccountAddr
      */
     public function changeToBillingAddress($addressId)
     {
-        $addressCollection = $this->_accountAddressCollectionFactory->create();
-        foreach ($addressCollection as $addressItem){
-            if($addressItem->getIsBilling() == 1){
+        $account_id = $this->helper->isInAvailableAccount($this->getCustomerId());
+        $addressCollection = $this->_accountAddressCollectionFactory->create()->addFieldToFilter('account_id', ['eq' => $account_id]);
+        foreach ($addressCollection as $addressItem) {
+            if ($addressItem->getIsBilling() == 1) {
                 $address = $this->_accountAddressFactory->create()->load($addressItem->getId());
                 $address->setIsBilling(0);
                 $address->save();
@@ -113,7 +122,7 @@ class AccountAddressManagement implements \Tigren\CompanyAccount\Api\AccountAddr
         }
 
         $addressUpdate = $this->_accountAddressFactory->create()->load($addressId);
-        if(!$addressUpdate->getId()){
+        if (!$addressUpdate->getId()) {
             throw new NoSuchEntityException(
                 __('We can\'t specify an address.')
             );
@@ -121,6 +130,34 @@ class AccountAddressManagement implements \Tigren\CompanyAccount\Api\AccountAddr
         $addressUpdate->setIsBilling(1);
         $addressUpdate->save();
         return true;
+    }
+
+    public function changeToShippingDefaultAddress($addressId)
+    {
+        $account_id = $this->helper->isInAvailableAccount($this->getCustomerId());
+        $addressCollection = $this->_accountAddressCollectionFactory->create()->addFieldToFilter('account_id', ['eq' => $account_id]);
+        foreach ($addressCollection as $addressItem) {
+            if ($addressItem->getIsShippingDefault() == 1) {
+                $address = $this->_accountAddressFactory->create()->load($addressItem->getId());
+                $address->setIsShippingDefault(0);
+                $address->save();
+            }
+        }
+
+        $addressUpdate = $this->_accountAddressFactory->create()->load($addressId);
+        if (!$addressUpdate->getId()) {
+            throw new NoSuchEntityException(
+                __('We can\'t specify an address.')
+            );
+        }
+        $addressUpdate->setIsShippingDefault(1);
+        $addressUpdate->save();
+        return true;
+    }
+    
+    public function getCustomerId()
+    {
+        return $this->_customerSession->getCustomerId();
     }
 
     /**
@@ -133,9 +170,9 @@ class AccountAddressManagement implements \Tigren\CompanyAccount\Api\AccountAddr
     public function save(\Tigren\CompanyAccount\Api\Data\AccountAddressInterface $address)
     {
         $addressSave = $this->_accountAddressFactory->create();
-        if($address->getAddressId()){
+        if ($address->getAddressId()) {
             $addressSave->load($address->getAddressId());
-            if(!$addressSave->getId()){
+            if (!$addressSave->getId()) {
                 throw new NoSuchEntityException(
                     __('We can\'t specify an address.')
                 );
@@ -162,7 +199,7 @@ class AccountAddressManagement implements \Tigren\CompanyAccount\Api\AccountAddr
         $addressSave->setIsBilling($address->getIsBilling());
         $addressSave->save();
 
-        if($address->getIsBilling())
+        if ($address->getIsBilling())
             $this->changeToBillingAddress($addressSave->getId());
 
         return $addressSave;

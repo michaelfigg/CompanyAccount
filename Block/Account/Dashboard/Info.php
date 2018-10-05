@@ -18,7 +18,8 @@ class Info extends \Magento\Customer\Block\Account\Dashboard\Info
         \Tigren\CompanyAccount\Helper\Data $helperCa,
         \Tigren\CompanyAccount\Model\AccountFactory $accountFactory,
         array $data = []
-    ) {
+    )
+    {
         parent::__construct(
             $context,
             $currentCustomer,
@@ -30,14 +31,19 @@ class Info extends \Magento\Customer\Block\Account\Dashboard\Info
         $this->_accountFactory = $accountFactory;
     }
 
-    public function getAccount(){
+    public function getAccount()
+    {
         $customerId = $this->getCustomer()->getId();
         $accountId = $this->_helperCa->getAccountIdByCustomer($customerId);
         $account = null;
-        if($accountId)
+        if ($accountId)
             $account = $this->_accountFactory->create()->load($accountId);
 
         return $account;
     }
 
+    public function getTitleWelcomeCompany($name)
+    {
+        return 'Welcome to ' . $name . ' dashboard !';
+    }
 }

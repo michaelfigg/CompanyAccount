@@ -5,6 +5,7 @@
         <arguments>
             <argument name="configProviders" xsi:type="array">
                 <item name="companyAccountData" xsi:type="object">Tigren\CompanyAccount\Model\AddressConfigProvider</item>
+                <item name="isInAvailableAccount" xsi:type="object">Tigren\CompanyAccount\Model\IsInAvailableAccount</item>
             </argument>
         </arguments>
     </type>

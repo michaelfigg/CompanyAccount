@@ -45,14 +45,15 @@ class Edit extends \Magento\Customer\Block\Account\Dashboard
         array $data = [],
         \Tigren\CompanyAccount\Helper\Data $helper,
         \Magento\Customer\Model\Customer $customer
-    ) {
+    )
+    {
         $this->_coreRegistry = $registry;
         $this->request = $request;
         $this->customerFactory = $customerFactory;
         $this->_customerCollectionFactory = $customerCollectionFactory;
         $this->_customerSession = $customerSession;
         $this->helper = $helper;
-        $this->_customers  = $customer;
+        $this->_customers = $customer;
         parent::__construct($context, $customerSession, $subscriberFactory, $customerRepository, $customerAccountManagement, $data);
     }
 
@@ -92,27 +93,58 @@ class Edit extends \Magento\Customer\Block\Account\Dashboard
     {
         return $this->request->getParam('id');
     }
+
+    public function getUserEmail()
+    {
+        $user = $this->_customers->load($this->getUserId());
+        if (!empty($user)) {
+            return $user->getEmail();
+        }
+        return null;
+    }
+
+    public function getUserTitleEdit()
+    {
+        $user = $this->_customers->load($this->getUserId());
+        if (!empty($user)) {
+            return 'Edit ' . $user->getName();
+        }
+        return null;
+    }
+
     public function getUserJobTitle()
     {
         $setCustomercustomer = $this->_customers->load($this->getUserId());
         $customerData = $setCustomercustomer->getDataModel();
+        if (empty($customerData->getCustomAttribute('job_title'))) {
+            return null;
+        }
         $jobTitle = $customerData->getCustomAttribute('job_title')->getValue();
         return $jobTitle;
     }
+
     public function getUserPhoneNumber()
     {
         $setCustomercustomer = $this->_customers->load($this->getUserId());
         $customerData = $setCustomercustomer->getDataModel();
+        if (empty($customerData->getCustomAttribute('phone_number'))) {
+            return null;
+        }
         $phoneNumber = $customerData->getCustomAttribute('phone_number')->getValue();
         return $phoneNumber;
     }
+
     public function getUserIsActive()
     {
         $setCustomercustomer = $this->_customers->load($this->getUserId());
         $customerData = $setCustomercustomer->getDataModel();
+        if (empty($customerData->getCustomAttribute('is_active'))) {
+            return null;
+        }
         $isActive = $customerData->getCustomAttribute('is_active')->getValue();
         return $isActive;
     }
+
     /**
      * Return the Customer given the user Id
      *
@@ -155,11 +187,11 @@ class Edit extends \Magento\Customer\Block\Account\Dashboard
 
     public function isAdminOfAccount()
     {
-         if($this->helper->isAdminOfAccount($this->getUserId())){
-             return 1;
-         }else{
-             return 0;
-         }
+        if ($this->helper->isAdminOfAccount($this->getUserId())) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
 }

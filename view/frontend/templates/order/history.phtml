@@ -1,59 +1,275 @@
-<?php $orders = $block->getOrders(); ?>
+<?php
+$orders = $block->getOrders();
+$checkAccount = $block->getAccountId();
+?>
 <?php if (count($orders)): ?>
-<?php echo $block->getChildHtml('info'); ?>
+    <?php echo $block->getChildHtml('info'); ?>
+    <div class="tag-top">
+        <div class="tag-top-left">
+            <div class="field">
+                <?php if (!empty($checkAccount)): ?>
+                    <select id="orderId" class="orderId">
+                        <option value="companyorder">View All Orders for <?php echo $block->getAccountName() ?></option>
+                        <option value="myorder">View My Orders</option>
+                    </select>
+                <?php else: ?>
+                    <select id="orderId" class="orderId" style="display: none">
+                        <option value="myorder">View My Orders</option>
+                    </select>
+                <?php endif ?>
+            </div>
+        </div>
+        <div class="tag-top-right" style="overflow: hidden">
+            <div class="field-overview-required" data-role="filter-form" id="date_range">
+                <div class="orders-input">
+                    <div class="field">
+                        <label class="label"><span><?php /* @escapeNotVerified */echo __('From: ') ?></span></label>
+                        <div class="control">
+                            <input placeholder="dd/mm/yyyy" class="input-text orders-required-entry" type="text" id="date_from"
+                                   name="from"/>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label"><span><?php /* @escapeNotVerified */echo __('To: ') ?></span></label>
+                        <div class="control">
+                            <input placeholder="dd/mm/yyyy" class="input-text orders-required-entry" type="text" id="date_to"
+                                   name="to"/>
+                        </div>
+                    </div>
+                </div>
+                <div id="date_range_buttom orders-button">
+                    <button id="search_date_range"><?php /* @escapeNotVerified */echo __('Search') ?></button>
+                    <button id="reset_date"><?php /* @escapeNotVerified */echo __('Reset') ?></button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="orders-search-company">
+        <!--        <div id="field-search-all">-->
+        <!--            <div class="orders-input-group">-->
+        <!--                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>-->
+        <!--                <input type="text" id="search-orders-all-input" class="form-control" placeholder="Search all orders"/>-->
+        <!--            </div>-->
+        <!--            <div class="orders-search-buttom">-->
+        <!--                <button id="search-all-orders-buttom" class="action search  searchbox-submit">Search</button>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+
+    </div>
+    <div class="clearfix"></div>
+
+    <!--   <div class="option-order">-->
+    <!--       <select id="select-time" >-->
+    <!--        <option value="" id="default">Select past time</option>-->
+    <!--        <option value="6-moths">Past six months</option>-->
+    <!--        <option value="1-year">Past one year</option>-->
+    <!--    </select>-->
+    <!--   </div>-->
+
     <div class="table-wrapper orders-history">
         <table class="data table table-order-items history" id="my-orders-table">
-            <caption class="table-caption"><?php /* @escapeNotVerified */ echo __('Orders') ?></caption>
+            <caption class="table-caption"><?php /* @escapeNotVerified */
+                echo __('Orders') ?></caption>
             <thead>
             <tr>
-                <th scope="col" class="col id"><?php /* @escapeNotVerified */ echo __('Order #') ?></th>
-                <th scope="col" class="col date"><?php /* @escapeNotVerified */ echo __('Date') ?></th>
-                <th scope="col" class="col name"><?php /* @escapeNotVerified */ echo __('Name') ?></th>
-                <th scope="col" class="col email"><?php /* @escapeNotVerified */ echo __('Email') ?></th>
-                <?php /* @noEscape */ echo $block->getChildHtml('extra.column.header');?>
-                <th scope="col" class="col shipping"><?php /* @escapeNotVerified */ echo __('Ship To') ?></th>
-                <th scope="col" class="col total"><?php /* @escapeNotVerified */ echo __('Order Total') ?></th>
-                <th scope="col" class="col status"><?php /* @escapeNotVerified */ echo __('Status') ?></th>
-                <th scope="col" class="col actions">&nbsp;</th>
+                <th scope="col" class="col id"><?php /* @escapeNotVerified */
+                    echo __('Order#') ?></th>
+                <th scope="col" class="col date"><?php /* @escapeNotVerified */
+                    echo __('Date') ?></th>
+                <th scope="col" class="col name"><?php /* @escapeNotVerified */
+                    echo __('Name') ?></th>
+                <th scope="col" class="col email"><?php /* @escapeNotVerified */
+                    echo __('Email') ?></th>
+                <?php /* @noEscape */
+                echo $block->getChildHtml('extra.column.header'); ?>
+                <th scope="col" class="col shipping"><?php /* @escapeNotVerified */
+                    echo __('Ship To') ?></th>
+                <th scope="col" class="col total"><?php /* @escapeNotVerified */
+                    echo __('Total') ?></th>
+                <th scope="col" class="col status"><?php /* @escapeNotVerified */
+                    echo __('Status') ?></th>
+                <th scope="col" class="col status"><?php /* @escapeNotVerified */
+                    echo __('Action') ?></th>
+
             </tr>
             </thead>
-            <tbody>
-                <?php
-                foreach ($orders as $order): ?>
-                        <tr>
-                            <td data-th="<?php echo $block->escapeHtml(__('Order #')) ?>" class="col id"><?php /* @escapeNotVerified */ echo $order->getExtOrderId() ?></td>
-                            <td data-th="<?php echo $block->escapeHtml(__('Date')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $block->formatDate($order->getCreatedAt()) ?></td>
-                            <td data-th="<?php echo $block->escapeHtml(__('Name')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $order->getCustomerFirstName() ?></td>
-                            <td data-th="<?php echo $block->escapeHtml(__('Email')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $order->getCustomerEmail() ?></td>
-                            <?php $extra = $block->getChildBlock('extra.container'); ?>
-                            <?php if ($extra): ?>
-                                <?php $extra->setOrder($order); ?>
-                                <?php /* @noEscape */ echo $extra->getChildHtml() ?>
-                            <?php endif; ?>
-                            <td data-th="<?php echo $block->escapeHtml(__('Ship To')) ?>" class="col shipping"><?php echo $order->getShippingAddress() ? $block->escapeHtml($order->getShippingAddress()->getName()) : '&nbsp;' ?></td>
-                            <td data-th="<?php echo $block->escapeHtml(__('Order Total')) ?>" class="col total"><?php /* @escapeNotVerified */ echo $order->formatPrice($order->getGrandTotal()) ?></td>
-                            <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>" class="col status"><?php /* @escapeNotVerified */ echo $order->getStatusLabel() ?></td>
-                            <td data-th="<?php echo $block->escapeHtml(__('Actions')) ?>" class="col actions">
-                                <a href="<?php /* @escapeNotVerified */ echo $block->getViewUrl($order) ?>" class="action view">
-                                    <span><?php /* @escapeNotVerified */ echo __('View Order') ?></span>
-                                </a>
-                            </td>
-                        </tr>
-
-                    <?php endforeach; ?>
-
+            <tbody id="order_content">
+            <!--Return Content-->
+            <?php foreach ($block->getOrders() as $order): ?>
+                <tr>
+                    <td data-th="<?php echo $block->escapeHtml(__('Order #')) ?>"
+                        class="col id"><?php /* @escapeNotVerified */
+                        echo $order->getExtOrderId() ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Date')) ?>"
+                        class="col date"><?php /* @escapeNotVerified */
+                        echo $block->formatDate($order->getCreatedAt()) ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Name')) ?>"
+                        class="col date"><?php /* @escapeNotVerified */
+                        echo $order->getCustomerFirstName() ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Email')) ?>"
+                        class="col date"><?php /* @escapeNotVerified */
+                        echo $order->getCustomerEmail() ?></td>
+                    <?php $extra = $block->getChildBlock('extra.container'); ?>
+                    <?php if ($extra): ?>
+                        <?php $extra->setOrder($order); ?>
+                        <?php /* @noEscape */
+                        echo $extra->getChildHtml() ?>
+                    <?php endif; ?>
+                    <td data-th="<?php echo $block->escapeHtml(__('Ship To')) ?>"
+                        class="col shipping"><?php echo $order->getShippingAddress() ? $block->escapeHtml($order->getShippingAddress()->getName()) : '&nbsp;' ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Order Total')) ?>"
+                        class="col total"><?php /* @escapeNotVerified */
+                        echo $order->formatPrice($order->getGrandTotal()) ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>"
+                        class="col status"><?php /* @escapeNotVerified */
+                        echo $order->getStatusLabel() ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Actions')) ?>" class="col actions">
+                        <a href="<?php /* @escapeNotVerified */
+                        echo $block->getViewUrl($order) ?>" class="action view">
+                            <span><?php /* @escapeNotVerified */
+                                echo __('View Order') ?></span>
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            <!--End Return Content-->
             </tbody>
         </table>
     </div>
-    <?php if ($block->getPagerHtml()): ?>
-        <div class="order-products-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); // for display pager block which we create in block file.   ?></div>
-    <?php endif ?>
+
 <?php else: ?>
     <div class="message info empty"><span><?php echo __('Your users have placed no orders.'); ?></span></div>
 <?php endif ?>
 
+<script>
+    require([
+        "jquery",
+        "mage/calendar"
+    ], function ($) {
+        jQuery(document).ready(function () {
+            $("#date_range").dateRange({
+                buttonText: "<?php echo __('Select Date') ?>",
+                from: {
+                    id: "date_from"
+                },
+                to: {
+                    id: "date_to"
+                }
+            });
+            //search all orders
+            jQuery('#search-all-orders-buttom').click(function () {
+                jQuery('#default').attr('selected', 'selected');
+                jQuery('#date_from').val('');
+                jQuery('#date_to').val('');
+                var search = jQuery('#search-orders-all-input').val();
+                var role = jQuery('#orderId').val();
+                if (search === '') {
+                    location.reload()
+                }
+                var url = "<?php echo $block->getBaseUrl() . 'companyaccount/result/searchallorder/' ?>";
+                jQuery.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {search: search, role: role},
+                    showLoader: true,
+                    cache: false
+                }).done(function (response) {
+                    jQuery('#order_content').html(response.response);
+                });
+                return false;
+            });
+            //search by select role order
+            $('#orderId').change(function () {
+                jQuery('#search-orders-all-input').val('');
+                jQuery('#default').attr('selected', 'selected');
+                jQuery('#date_from').val('');
+                jQuery('#date_to').val('');
+                var value = $(this).val();
+                var url = "<?php echo $block->getBaseUrl() . 'companyaccount/result/order/';?>";
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {'data': value},
+                    showLoader: true,
+                    cache: false,
+                    // dataType: 'json',
+                }).done(function (response) {
+                    $('#order_content').html(response);
+                });
+                return false;
+            });
+            jQuery('#date_from').click(function () {
+                jQuery('#default').attr('selected', 'selected');
+            });
+            jQuery('#date_to').click(function () {
+                jQuery('#default').attr('selected', 'selected');
+            });
+            //search by date range
+            jQuery('#search_date_range').click(function () {
+                jQuery('#search-orders-all-input').val('');
+                jQuery('#default').attr('selected', 'selected');
+                var from_date = jQuery('#date_from').val();
+                var to_date = jQuery('#date_to').val();
+                var role = jQuery('#orderId').val();
+                if (from_date === '' && to_date === '') {
+                    location.reload();
+                }
+                var url = "<?php echo $block->getBaseUrl() . 'companyaccount/result/daterange/' ?>";
+                jQuery.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {from_date: from_date, to_date: to_date, role: role},
+                    showLoader: true,
+                    cache: false
+                }).done(function (response) {
+                    jQuery('#order_content').html(response.response);
+                });
+                return false;
+            });
+            //search by past time
+            jQuery('#select-time').change(function () {
+                jQuery('#search-orders-all-input').val('');
+                jQuery('#date_from').val('');
+                jQuery('#date_to').val('');
+                var value = jQuery(this).val();
+                var role = jQuery('#orderId').val();
+                if (value === '') {
+                    location.reload();
+                }
+                var url = "<?php echo $block->getBaseUrl() . 'companyaccount/result/pasttime/' ?>";
+                jQuery.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {value: value, role: role},
+                    showLoader: true,
+                    cache: false
+                }).done(function (response) {
+                    jQuery('#order_content').html(response.response);
+                });
+                return false;
+            });
+            //reset
+            jQuery('#reset_date').click(function () {
+                jQuery('#date_from').val('');
+                jQuery('#date_to').val('');
+                var role = jQuery('#orderId').val();
 
-
-
-
-
+                var url = "<?php echo $block->getBaseUrl() . 'companyaccount/result/order/';?>";
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {'data': role},
+                    showLoader: true,
+                    cache: false,
+                    // dataType: 'json',
+                }).done(function (response) {
+                    $('#order_content').html(response);
+                });
+                return false;
+            });
+        });
+    });
+</script>

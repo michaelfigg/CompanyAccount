@@ -9,9 +9,8 @@ use Magento\Framework\Controller\ResultFactory;
 
 class Result extends \Magento\Framework\App\Action\Action
 {
-
-     /**
-     * @var Magento\Framework\View\Result\PageFactory
+    /**
+     * @var PageFactory
      */
     protected $resultPageFactory;
 
@@ -22,8 +21,12 @@ class Result extends \Magento\Framework\App\Action\Action
     protected $_customerFactory;
 
     /**
-     * @param Context     $context
+     * Result constructor.
+     * @param Context $context
      * @param PageFactory $resultPageFactory
+     * @param JsonFactory $resultJsonFactory
+     * @param ResultFactory $resultFactory
+     * @param \Magento\Customer\Model\CustomerFactory $customerFactory
      */
     public function __construct(
         Context $context,
@@ -41,11 +44,15 @@ class Result extends \Magento\Framework\App\Action\Action
         return parent::__construct($context);
     }
 
-
+    /**
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
+     */
     public function execute()
     {
         $adminId = $this->getRequest()->getParam('value');
-        $Admin = $this->_customerFactory->create()->getCollection()->addAttributeToFilter('entity_id', ['in' => $adminId])->setOrder('entity_id', 'asc')->getFirstItem()->getData();
+        $Admin = $this->_customerFactory->create()->getCollection()
+            ->addAttributeToFilter('entity_id', ['in' => $adminId])
+            ->setOrder('entity_id', 'asc')->getFirstItem()->getData();
         $response = $Admin['lastname']." ".$Admin['firstname']."<br/>"
         .$Admin['email'];
         $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);

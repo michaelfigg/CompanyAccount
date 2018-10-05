@@ -83,14 +83,14 @@ define([
 
             this._super();
 
-            if(this.hasCompanyAccountAddress()){
-                if(checkoutData.getSelectedShippingAddress()){
+            if (this.hasCompanyAccountAddress()) {
+                if (checkoutData.getSelectedShippingAddress()) {
                     $.each(customerAddress.getAddressItems(), function (key, item) {
-                        if(item.getKey() == checkoutData.getSelectedShippingAddress())
+                        if (item.getKey() == checkoutData.getSelectedShippingAddress())
                             quote.shippingAddress(item);
                     });
                 }
-            }else
+            } else
                 quote.shippingAddress(null);
 
             if (!quote.isVirtual()) {
@@ -149,12 +149,17 @@ define([
          * check show new address
          */
         hasCompanyAccountAddress: function () {
-            if(window.checkoutConfig.companyAccountData && window.checkoutConfig.companyAccountData.length)
+            if (window.checkoutConfig.companyAccountData && window.checkoutConfig.companyAccountData.length)
                 return true;
             else
                 return false;
         },
-
+        isAccount: function () {
+            if (window.checkoutConfig.checkAccount)
+                return true;
+            else
+                return false;
+        },
         /**
          * @return {*}
          */

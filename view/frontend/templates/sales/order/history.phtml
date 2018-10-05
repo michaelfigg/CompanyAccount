@@ -1,12 +1,4 @@
-<?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 
-// @codingStandardsIgnoreFile
-
-?>
 <?php $_orders = $block->getOrders(); ?>
 <?= $block->getChildHtml('info') ?>
 <?php if ($_orders && count($_orders)): ?>
@@ -55,9 +47,6 @@
             </tbody>
         </table>
     </div>
-    <?php if ($block->getPagerHtml()): ?>
-        <div class="order-products-toolbar toolbar bottom"><?= $block->getPagerHtml() ?></div>
-    <?php endif ?>
 <?php else: ?>
     <div class="message info empty"><span><?= /* @escapeNotVerified */ __('You have placed no orders.') ?></span></div>
 <?php endif ?>

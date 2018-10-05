@@ -1,0 +1,17 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Tigren\CompanyAccount\Block\Account\Dashboard\Info $block */
+?>
+<?php $account = $block->getAccount(); ?>
+
+<?php if ($account): ?>
+    <div class="company-public-notes">
+        <p><?= $account->getPublicNotes() ?></p>
+    </div>
+<?php endif ?>

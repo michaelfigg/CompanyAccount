@@ -161,6 +161,7 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
         $billingAddress = $addressInformation->getBillingAddress();
         $carrierCode = $addressInformation->getShippingCarrierCode();
         $methodCode = $addressInformation->getShippingMethodCode();
+
         if(!empty($address->getSaveInAddressBook())){
             $this->SaveAddressAccount($address->getData());
         }
@@ -208,7 +209,7 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
 
     protected function SaveAddressAccount($data){
         if ($data) {
-            $data['is_billing'] = 1;
+//            $data['is_billing'] = 1;
             try {
                 $customerId = $this->_currentCustomer->getCustomerId();
                 $accountId = $this->_companyAccountHelper->getAccountIdByCustomer($customerId);

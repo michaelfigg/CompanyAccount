@@ -8,23 +8,31 @@
 
 /** @var \Magento\Customer\Block\Account\Dashboard\Address $block */
 ?>
-<div class="block block-dashboard-addresses">
+<div class="block block-dashboard-addresses ">
     <div class="block-title">
         <strong><?= $block->escapeHtml(__('Account Information')) ?></strong>
+        <a href="#" class="action action-edit"><?= $block->escapeHtml(__('Edit')) ?></a>
     </div>
     <div class="block-content">
-        <div class="box box-billing-address">
-            <div class="box-content">
-                <address>
-                    <?= $block->getAccountInfo() ?>
-                </address>
+        <div class="block-dashboard-info">
+            <div class="box-logo-company">
+                <div class="box-content">
+                    <img title=""
+                         alt=""
+                         src="<?= $block->getAccountImage() ?>"
+                         height="40px"/>
+                </div>
             </div>
+            <div class="box-company-detail-info">
+                <?= $block->getAccountInfo() ?>
+            </div>
+
         </div>
     </div>
 </div>
 <div class="block block-dashboard-addresses">
     <div class="block-title">
-        <strong><?= $block->escapeHtml(__('Legal Address')) ?></strong>
+        <strong><?= $block->escapeHtml(__('Company Address')) ?></strong>
     </div>
     <div class="block-content">
         <div class="box box-billing-address">
@@ -36,66 +44,70 @@
         </div>
     </div>
 </div>
-<div class="block block-dashboard-addresses">
+<div class="block block-contact">
     <div class="block-title">
         <strong><?= $block->escapeHtml(__('Contacts')) ?></strong>
     </div>
     <div class="block-content">
-        <div class="box box-billing-address">
-          <strong class="box-title">
-              <span><?= $block->escapeHtml(__('Company Administrator')) ?></span>
-          </strong>
-            <div class="box-content">
+        <div class="box-admin-account">
+            <label class="label">
+                <span><?= $block->escapeHtml(__('Company Administrator')) ?></span>
+            </label>
+            <div class="controls">
                 <address>
-                  <select id="accountId">
-                    <option>Select Admin</option>
-                    <?php foreach ($block->getAllAdminAccount() as $admin): ?>
-                        <option value = "<?php echo $admin['entity_id']; ?>"><?php echo $admin['lastname']." ".$admin['firstname']; ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                  <br/>
-                  <br/>
-                  <div id="dataResponse"></div>
+                    <select id="accountId">
+                        <option>Select Admin</option>
+                        <?php foreach ($block->getAllAdminAccount() as $admin): ?>
+                            <option value = "<?php echo $admin['entity_id']; ?>"><?php echo $admin['lastname']." ".$admin['firstname']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <br/><br/>
+                    <div id="dataResponse"></div>
                 </address>
             </div>
         </div>
     </div>
 </div>
-<div class="block block-dashboard-addresses">
+<div class="block block-payment-info">
     <div class="block-title">
         <strong><?= $block->escapeHtml(__('Payment Information')) ?></strong>
     </div>
     <div class="block-content">
         <div class="box box-billing-address">
-          <strong class="box-title">
-              <span><?= $block->escapeHtml(__('Available Payment Methods')) ?></span>
-          </strong>
-            <div class="box-content">
-                <address>
-                    <!-- <?= $block->getPrimaryBillingAddressHtml() ?> -->
-                </address>
-            </div>
+            <label class="label">
+                <?php if (!empty($block->availablePayOnAccount())): ?>
+                    <span><?= $block->escapeHtml(__('Can Pay on Account')) ?></span>
+                <?php else: ?>
+                    <span><?= $block->escapeHtml(__('Cannot Pay on Account')) ?></span>
+                <?php endif ?>
+            </label>
         </div>
     </div>
 </div>
 
+<div class="actions-toolbar">
+    <div class="secondary">
+        <a class="action back" href="<?php echo $this->getUrl('customer/account')?>"><span><?= $block->escapeHtml(__('Back')) ?></span></a>
+    </div>
+</div>
+
 <script>
-require(['jquery'],function(){
-    jQuery(document).ready(function() {
-        jQuery('#accountId').change(function(){
-            var value = jQuery(this).val();
-            var url = "<?php echo $block->getBaseUrl().'companyaccount/result/result/' ?>";
-            jQuery.ajax({
-            url: url,
-            type: 'POST',
-            data: {value:value},
-            showLoader: true,
-            cache: false
-        }).done(function(response) {
-            jQuery('#dataResponse').html(response);
-      });
-        return false;
+    require(['jquery'],function(){
+        jQuery(document).ready(function() {
+            jQuery('#accountId').change(function(){
+                var value = jQuery(this).val();
+                var url = "<?php echo $block->getBaseUrl().'companyaccount/result/result/' ?>";
+                jQuery.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {value:value},
+                    showLoader: true,
+                    cache: false
+                }).done(function(response) {
+                    jQuery('#dataResponse').html(response);
+                });
+                return false;
+            });
         });
     });
-});
 </script>

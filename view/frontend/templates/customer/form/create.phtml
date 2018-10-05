@@ -17,7 +17,7 @@
 <?php echo $block->getChildHtml('form_fields_before')?>
 <?php /* Extensions placeholder */ ?>
 <?php echo $block->getChildHtml('customer.form.register.extra')?>
-<form class="form create account form-create-account" action="<?php /* @escapeNotVerified */ echo $block->getPostActionUrl() ?>" method="post" id="form-validate" enctype="multipart/form-data" autocomplete="off">
+<form class="form create account form-edit-account form-create-user" action="<?php /* @escapeNotVerified */ echo $block->getPostActionUrl() ?>" method="post" id="form-validate" enctype="multipart/form-data" autocomplete="off">
     <fieldset class="fieldset create info">
         <?= $block->getBlockHtml('formkey') ?>
         <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Personal Information') ?></span></legend><br>
@@ -32,33 +32,37 @@
 <!--            --><?php ///* Extensions placeholder */ ?>
 <!--            --><?php //echo $block->getChildHtml('customer.form.register.newsletter')?>
 <!--        --><?php //endif ?>
-        <div class="field required">
+        <div class="field">
             <label for="job_title" class="label"><span><?php /* @escapeNotVerified */ echo __('Job Title') ?></span></label>
             <div class="control">
-                <input type="text" name="job_title"  id="job_title" title="<?php /* @escapeNotVerified */ echo __('Job Title') ?>" class="input-text" data-validate="{required:true}">
+                <input type="text" name="job_title"  id="job_title" title="<?php /* @escapeNotVerified */ echo __('Job Title') ?>" class="input-text">
             </div>
         </div>
         <div class="field required">
-            <label for="phone_number" class="label"><span><?php /* @escapeNotVerified */ echo __('Phone Number') ?></span></label>
+            <label for="phone_number" class="label"><span><?php /* @escapeNotVerified */ echo __('Phone') ?></span></label>
             <div class="control">
                 <input type="text" name="phone_number"  id="phone_number" title="<?php /* @escapeNotVerified */ echo __('Phone Number') ?>" class="input-text" data-validate="{required:true}">
             </div>
         </div>
         <div class="field required">
-            <label for="is_admin" class="label"><span><?php /* @escapeNotVerified */ echo __('Job Role') ?></span></label>
+            <label for="is_admin" class="label"><span><?php /* @escapeNotVerified */ echo __('Permissions') ?></span></label>
+            <div class="control">
             <select name="is_admin" id="is-admin" data-role="is-admin" title="<?php /* @escapeNotVerified */ echo __('Is Admin') ?>">
                 <option value="0">User</option>
                 <option value="1">Admin</option>
             </select>
+            </div>
 <!--            <input type="checkbox" name="is_admin" id="is-admin" data-role="is-admin" value="1" title="--><?php ///* @escapeNotVerified */ echo __('Is Admin') ?><!--" class="checkbox" />-->
 <!--            <label class="label" for="is-admin"><span>--><?php ///* @escapeNotVerified */ echo __('Is Admin') ?><!--</span></label>-->
         </div>
         <div class="field required">
             <label for="is_active" class="label"><span><?php /* @escapeNotVerified */ echo __('Active') ?></span></label>
+            <div class="control">
             <select name="is_active" id="is_active" title="<?php /* @escapeNotVerified */ echo __('Active') ?>">
                 <option value="1">Yes</option>
                 <option value="2">No</option>
             </select>
+            </div>
         </div>
         <div class="field choice" style="display: none;">
             <input type="checkbox" name="enable_enter_shipping_address" id="enable-enter-shipping-address" data-role="enable-enter-shipping-address" value="1" title="<?php echo __('Enable Enter Shipping Address') ?>" class="checkbox" />

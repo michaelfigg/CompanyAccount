@@ -1,0 +1,23 @@
+<?php if (is_array($block->getOrders()) || is_object($block->getOrders())) :?>
+    <?php foreach ($block->getOrders() as $order): ?>
+    <tr>
+        <td data-th="<?php echo $block->escapeHtml(__('Order #')) ?>" class="col id"><?php /* @escapeNotVerified */ echo $order->getExtOrderId() ?></td>
+        <td data-th="<?php echo $block->escapeHtml(__('Date')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $block->formatDate($order->getCreatedAt()) ?></td>
+        <td data-th="<?php echo $block->escapeHtml(__('Name')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $order->getCustomerFirstName() ?></td>
+        <td data-th="<?php echo $block->escapeHtml(__('Email')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $order->getCustomerEmail() ?></td>
+        <?php $extra = $block->getChildBlock('extra.container'); ?>
+        <?php if ($extra): ?>
+            <?php $extra->setOrder($order); ?>
+            <?php /* @noEscape */ echo $extra->getChildHtml() ?>
+        <?php endif; ?>
+        <td data-th="<?php echo $block->escapeHtml(__('Ship To')) ?>" class="col shipping"><?php echo $order->getShippingAddress() ? $block->escapeHtml($order->getShippingAddress()->getName()) : '&nbsp;' ?></td>
+        <td data-th="<?php echo $block->escapeHtml(__('Order Total')) ?>" class="col total"><?php /* @escapeNotVerified */ echo $order->formatPrice($order->getGrandTotal()) ?></td>
+        <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>" class="col status"><?php /* @escapeNotVerified */ echo $order->getStatusLabel() ?></td>
+        <td data-th="<?php echo $block->escapeHtml(__('Actions')) ?>" class="col actions">
+            <a href="<?php /* @escapeNotVerified */ echo $block->getViewUrl($order) ?>" class="action view">
+                <span><?php /* @escapeNotVerified */ echo __('View Order') ?></span>
+            </a>
+        </td>
+    </tr>
+    <?php endforeach;?>
+<?php endif;?>

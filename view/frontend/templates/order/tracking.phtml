@@ -1,0 +1,26 @@
+<?php
+$tracking = $block->getOrderTracking();
+?>
+<?php if (count($tracking)): ?>
+    <div class="w3-container">
+        <table class="w3-table-all w3-hoverable">
+            <thead>
+            <tr class="w3-light-grey">
+                <th>Title</th>
+                <th>Tracking Number</th>
+            </tr>
+            </thead>
+            <?php foreach ($tracking as $key => $value): ?>
+                <tr>
+                    <td><?php echo $key; ?></td>
+                    <td><?php echo $value ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+<?php else: ?>
+    <div class="message info empty"><span><?php echo __('No Tracking Information Available'); ?></span></div>
+<?php endif ?>
+<div class="tracking-buttom-back">
+    <button><a href="<?php echo $block->getBackUrl() ?>">Back</a></button>
+</div>
