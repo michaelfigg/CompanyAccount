@@ -48,8 +48,8 @@ class History extends \Magento\Framework\View\Element\Template
         \Tigren\CompanyAccount\Block\Account\Dashboard\Info $info,
         \Tigren\CompanyAccount\Block\Order\User $orderUser,
         array $data = []
-    )
-    {
+    ){
+        parent::__construct($context, $data);
         $this->orderUser = $orderUser;
         $this->profile = $profile;
         $this->_orderCollectionFactory = $orderCollectionFactory;
@@ -60,7 +60,6 @@ class History extends \Magento\Framework\View\Element\Template
         $this->_customerFactory = $customerFactory;
         $this->_customerRepositoryInterface = $customerRepositoryInterface;
         $this->info = $info;
-        parent::__construct($context, $data);
     }
 
     /**
@@ -105,11 +104,12 @@ class History extends \Magento\Framework\View\Element\Template
     {
         parent::_prepareLayout();
         if ($this->getOrders()) {
-            $pager = $this->getLayout()->createBlock(
-                'Magento\Theme\Block\Html\Pager',
-                'tigren.companyaccount.record.pager'
-            )
-                ->setAvailableLimit([10 => 10])
+            $pager = $this
+                ->getLayout()
+                ->createBlock(
+                    'Magento\Theme\Block\Html\Pager',
+                    'tigren.companyaccount.record.pager'
+                )->setAvailableLimit([10 => 10])
                 ->setShowPerPage(true)
                 ->setCollection($this->getOrders());
             $this->setChild('pager', $pager);
@@ -151,8 +151,7 @@ class History extends \Magento\Framework\View\Element\Template
     public function getAccountName()
     {
         $accountId = $this->helper->getAccountIdByCustomer($this->getCustomerId());
-        $accountName = $this->helper->getAccountNameById($accountId);
-        return $accountName;
+        return $this->helper->getAccountNameById($accountId);
     }
 
     public function getOrdersUser()

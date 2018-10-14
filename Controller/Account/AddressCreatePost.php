@@ -37,19 +37,19 @@ class AddressCreatePost extends Action
         \Tigren\CompanyAccount\Helper\Data $companyAccountHelper,
         \Tigren\CompanyAccount\Api\AccountAddressManagementInterface $accountAddressManagement,
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
-    ) {
-        $this->checkoutSession              = $session;
-        $this->jsonFactory                  = $jsonFactory;
-        $this->jsonHelper                   = $jsonHelper;
-        $this->logger                       = $logger;
-        $this->_currentCustomer             = $currentCustomer;
-        $this->_datetime                    = $dateTime;
-        $this->_cart                        = $cart;
-        $this->redirectFactory              = $redirectFactory;
-        $this->_companyAccountHelper        = $companyAccountHelper;
-        $this->_accountAddressManagement    = $accountAddressManagement;
-        $this->_formKeyValidator            = $formKeyValidator;
+    ){
         parent::__construct($context);
+        $this->checkoutSession = $session;
+        $this->jsonFactory = $jsonFactory;
+        $this->jsonHelper = $jsonHelper;
+        $this->logger = $logger;
+        $this->_currentCustomer = $currentCustomer;
+        $this->_datetime = $dateTime;
+        $this->_cart = $cart;
+        $this->redirectFactory = $redirectFactory;
+        $this->_companyAccountHelper = $companyAccountHelper;
+        $this->_accountAddressManagement = $accountAddressManagement;
+        $this->_formKeyValidator = $formKeyValidator;
     }
 
     public function execute()
@@ -63,6 +63,7 @@ class AddressCreatePost extends Action
             try{
                 $customerId = $this->_currentCustomer->getCustomerId();
                 $accountId = $this->_companyAccountHelper->getAccountIdByCustomer($customerId);
+                //TODO: Don't use object manager
                 $model = $this->_objectManager->create('\Tigren\CompanyAccount\Model\AccountAddress');
 
                 $model->setData($this->getRequest()->getParams());

@@ -26,6 +26,28 @@ class Title extends \Magento\Theme\Block\Html\Title
      * @var string
      */
     protected $pageTitle;
+    private $escaper;
+    private $orderFactory;
+    private $requestInterface;
+
+    /**
+     * Constructor
+     *
+     * @param \Magento\Framework\View\Element\Context $context
+     * @param array $data
+     */
+    public function __construct(
+        \Magento\Framework\View\Element\Context $context,
+        \Magento\Framework\Escaper $escaper,
+        \Magento\Sales\Model\OrderFactory $orderFactory,
+        \Magento\Framework\App\RequestInterface $requestInterface
+        array $data = []
+    ){
+        parent::__construct($context, $data);
+        $this->escaper = $escaper;
+        $this->orderFactory = $orderFactory;
+        $this->requestInterface = $requestInterface;
+    }
 
     /**
      * Provide own page title or pick it from Head Block
@@ -47,37 +69,21 @@ class Title extends \Magento\Theme\Block\Html\Title
      */
     public function getPageHeading()
     {
-        if ($this->getCurrentPage() == 'sales_order_view' || $this->getCurrentPage() == 'companyaccount_order_view' || $this->getCurrentPage() == 'returns_rma_order') {
-            if ($this->getCurrentPage() == 'sales_order_view' || $this->getCurrentPage() == 'returns_rma_order') {
-                $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-                $escaper = $objectManager->create('Magento\Framework\Escaper')->escapeHtml($this->pageConfig->getTitle()->getShortHeading());
-                if (strlen(strstr($escaper, 'Order #')) > 0) {
-                    $incrementId = substr($escaper, 8, 100);
-                    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-                    $order = $objectManager->create('\Magento\Sales\Model\Order')->loadByIncrementId($incrementId);
-                    if (!empty($order->getExtOrderId())) {
-                        return 'Order #' . ' ' . $order->getExtOrderId();
-                    } else {
-                        return 'Order #' . ' ' . $incrementId;
-                    }
+        $curPage = $this->getCurrentPage();
+        if($curPage == 'sales_order_view' || $curPage == 'returns_rma_order' || $curPage == 'companyaccount_order_view'){
+            $escaped = $this->escaper->escapeHtml($this->pageConfig->getTitle()->getShortHeading());
+            $offset = $curPage == 'companyaccount_order_view' ? 7 : 8; //Why these numbers?
 
+            if (strlen(strstr($escaped, 'Order #')) > 0) {
+                $incrementId = substr($escaped, $offset, 100);
+                $order = $this->orderFactory->create()->loadByIncrementId($incrementId);
+                if (!empty($order->getExtOrderId())) {
+                    return 'Order #' . $order->getExtOrderId();
                 }
-            }
-            if ($this->getCurrentPage() == 'companyaccount_order_view') {
-                $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-                $escaper = $objectManager->create('Magento\Framework\Escaper')->escapeHtml($this->pageConfig->getTitle()->getShortHeading());
-                if (strlen(strstr($escaper, 'Order #')) > 0) {
-                    $incrementId = substr($escaper, 7, 100);
-                    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-                    $order = $objectManager->create('\Magento\Sales\Model\Order')->loadByIncrementId($incrementId);
-                    if (!empty($order->getExtOrderId())) {
-                        return 'Order #' . ' ' . $order->getExtOrderId();
-                    } else {
-                        return 'Order #' . ' ' . $incrementId;
-                    }
-                }
+                return "Order #{$incrementId}";
             }
         }
+
         if (!empty($this->pageTitle)) {
             return __($this->pageTitle);
         }
@@ -86,13 +92,10 @@ class Title extends \Magento\Theme\Block\Html\Title
 
     public function getCurrentPage()
     {
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $requestInterface = $objectManager->get('Magento\Framework\App\RequestInterface');
-        $moduleName = $requestInterface->getModuleName();
-        $controllerName = $requestInterface->getControllerName();
-        $actionName = $requestInterface->getActionName();
-        $current_page = $moduleName . '_' . $controllerName . '_' . $actionName;
-        return $current_page;
+        $moduleName = $this->requestInterface->getModuleName();
+        $controllerName = $this->requestInterface->getControllerName();
+        $actionName = $this->requestInterface->getActionName();
+        return $moduleName . '_' . $controllerName . '_' . $actionName;
     }
 
     /**

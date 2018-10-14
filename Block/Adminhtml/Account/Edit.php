@@ -16,9 +16,9 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
         \Magento\Backend\Block\Widget\Context $context,
         UrlInterface $urlBuilder,
         array $data = []
-    ) {
-        $this->urlBuilder = $urlBuilder;
+    ){
         parent::__construct($context, $data);
+        $this->urlBuilder = $urlBuilder;
     }
 
     /**
@@ -46,21 +46,22 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
         $this->_objectId = 'account_id';
         $this->_blockGroup = 'Tigren_CompanyAccount';
         $this->_controller = 'adminhtml_account';
-
         parent::_construct();
 
         if ($this->_isAllowedAction('Tigren_CompanyAccount::save')) {
             $this->buttonList->update('save', 'label', __('Save Account'));
             $this->buttonList->add(
-                'saveandcontinue', [
-                'label' => __('Save and Continue Edit'),
-                'class' => 'save',
-                'data_attribute' => [
-                    'mage-init' => [
-                        'button' => ['event' => 'saveAndContinueEdit', 'target' => '#edit_form'],
-                    ],
-                ]
-            ], -100
+                'saveandcontinue',
+                [
+                    'label' => __('Save and Continue Edit'),
+                    'class' => 'save',
+                    'data_attribute' => [
+                        'mage-init' => [
+                            'button' => ['event' => 'saveAndContinueEdit', 'target' => '#edit_form'],
+                        ],
+                    ]
+                ],
+                -100
             );
         } else {
             $this->buttonList->remove('save');

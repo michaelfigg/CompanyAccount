@@ -47,11 +47,11 @@ class View extends \Magento\Framework\View\Element\Template
         \Magento\Framework\App\Http\Context $httpContext,
         \Magento\Payment\Helper\Data $paymentHelper,
         array $data = []
-    ) {
+    ){
+        parent::__construct($context, $data);
         $this->_paymentHelper = $paymentHelper;
         $this->_coreRegistry = $registry;
         $this->httpContext = $httpContext;
-        parent::__construct($context, $data);
         $this->_isScopePrivate = true;
     }
 
@@ -60,7 +60,7 @@ class View extends \Magento\Framework\View\Element\Template
      */
     protected function _prepareLayout()
     {
-        $this->pageConfig->getTitle()->set(__('Order # %1', $this->getOrder()->getRealOrderId()));
+        $this->pageConfig->getTitle()->set(__('Order #%1', $this->getOrder()->getRealOrderId()));
         $infoBlock = $this->_paymentHelper->getInfoBlock($this->getOrder()->getPayment(), $this->getLayout());
         $this->setChild('payment_info', $infoBlock);
     }

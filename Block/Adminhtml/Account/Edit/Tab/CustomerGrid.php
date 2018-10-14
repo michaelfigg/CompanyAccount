@@ -20,13 +20,11 @@ class CustomerGrid extends \Magento\Backend\Block\Widget\Grid\Extended
         \Tigren\CompanyAccount\Model\AccountFactory $accountFactory,
         \Tigren\CompanyAccount\Helper\Data $helper,
         array $data = []
-    )
-    {
+    ){
+        parent::__construct($context, $backendHelper, $data);
         $this->_customers = $customers;
         $this->_accountFactory = $accountFactory;
         $this->helper = $helper;
-        parent::__construct($context, $backendHelper, $data);
-        
     }
 
     /**
@@ -232,11 +230,9 @@ class CustomerGrid extends \Magento\Backend\Block\Widget\Grid\Extended
         }
 
         $customerIdArr = [];
-
         foreach ($customerIds as $customerId) {
             $customerIdArr[$customerId] = ['id' => $customerId];
         }
-
         return $customerIdArr;
     }
 

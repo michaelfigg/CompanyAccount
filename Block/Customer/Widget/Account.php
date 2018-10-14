@@ -10,7 +10,6 @@ use Magento\Framework\View\Element\Template\Context;
 
 class Account extends \Magento\Framework\View\Element\Template
 {
-
     protected $_accountManagement;
 
     public function __construct(

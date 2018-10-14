@@ -7,7 +7,6 @@ namespace Tigren\CompanyAccount\Block\Adminhtml\Account\Customers;
 
 class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 {
-
     protected $_customers;
     protected $helper;
 
@@ -17,11 +16,10 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         \Magento\Customer\Model\Customer $customers,
         \Tigren\CompanyAccount\Helper\Data $helper,
         array $data = []
-    ) {
+    ){
+        parent::__construct($context, $backendHelper, $data);
         $this->_customers = $customers;
         $this->helper = $helper;
-
-        parent::__construct($context, $backendHelper, $data);
     }
 
     /**
@@ -45,7 +43,8 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
      */
     protected function _prepareCollection()
     {
-        $collection = $this->getCustomerCollection()->addAttributeToSelect('*')
+        $collection = $this->getCustomerCollection()
+            ->addAttributeToSelect('*')
             ->addFieldToFilter('entity_id',['nin' => $this->helper->getUnAvailableCustomers()]);
         $this->setCollection($collection);
         return parent::_prepareCollection();

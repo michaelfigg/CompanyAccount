@@ -3,7 +3,6 @@
 namespace Tigren\CompanyAccount\Block\Customer;
 
 use Magento\Customer\Model\Session as CustomerSession;
-
 use Magento\Framework\View\Element\Template;
 
 class ListSubUser extends Template
@@ -20,25 +19,22 @@ class ListSubUser extends Template
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param array $data
      */
-
     public function __construct(
         Template\Context $context,
         \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customerCollectionFactory,
         \Tigren\CompanyAccount\Helper\Data $helper,
         CustomerSession $customerSession,
         array $data = []
-    )
-    {
+    ){
+        parent::__construct($context, $data);
         $this->_customerCollectionFactory = $customerCollectionFactory;
         $this->helper = $helper;
         $this->_customerSession = $customerSession;
-        parent::__construct($context, $data);
     }
 
     public function getPagerHtml()
     {
         return $this->getChildHtml('pager');
-
     }
 
     protected function _construct()
@@ -51,14 +47,13 @@ class ListSubUser extends Template
     {
         parent::_prepareLayout();
         if ($this->getListUser()) {
-            $pager = $this->getLayout()->createBlock(
-                'Magento\Theme\Block\Html\Pager',
-                'tigren.companyaccount.record.pager'
-            )
-                ->setCollection($this->getListUser());
-
+            $pager = $this
+                ->getLayout()
+                ->createBlock(
+                    'Magento\Theme\Block\Html\Pager',
+                    'tigren.companyaccount.record.pager'
+                )->setCollection($this->getListUser());
             $this->setChild('pager', $pager);
-
             $this->getListUser()->load();
         }
         return $this;
@@ -85,7 +80,6 @@ class ListSubUser extends Template
     public function getActionUrl($action, $userId = null)
     {
         $actionUrl = $this->getUrl('companyaccount/account/' . $action);
-        $url = $userId ? $actionUrl . '?id=' . $userId : $actionUrl;
-        return $url;
+        return $userId ? "{$actionUrl}?id={$userId}" : $actionUrl;
     }
 }

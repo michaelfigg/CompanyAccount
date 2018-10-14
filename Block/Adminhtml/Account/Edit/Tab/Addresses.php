@@ -4,7 +4,6 @@ namespace Tigren\CompanyAccount\Block\Adminhtml\Account\Edit\Tab;
 
 class Addresses extends \Magento\Directory\Block\Data
 {
-
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Directory\Helper\Data $directoryHelper,
@@ -13,8 +12,7 @@ class Addresses extends \Magento\Directory\Block\Data
         \Magento\Directory\Model\ResourceModel\Region\CollectionFactory $regionCollectionFactory,
         \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $countryCollectionFactory,
         array $data = []
-    )
-    {
+    ){
         parent::__construct(
             $context,
             $directoryHelper,
@@ -28,21 +26,24 @@ class Addresses extends \Magento\Directory\Block\Data
 
     public function getPostActionUrl()
     {
-        if($this->getIdAddress())
+        if($this->getIdAddress()){
             return $this->getUrl('companyaccount/account/addressEditPost');
-        else
-            return $this->getUrl('companyaccount/account/newAddress/');
+        }
+        return $this->getUrl('companyaccount/account/newAddress/');
     }
 
-    public function getAccountId(){
+    public function getAccountId()
+    {
         return $this->getRequest()->getParam('account_id');
     }
 
-    public function getIdAddress(){
+    public function getIdAddress()
+    {
         return ($this->getRequest()->getParam('id')) ? $this->getRequest()->getParam('id') : null;
     }
 
-    public function getAddressData(){
+    public function getAddressData()
+    {
         return null;
     }
 

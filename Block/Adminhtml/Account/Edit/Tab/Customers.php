@@ -51,11 +51,11 @@ class Customers extends \Magento\Backend\Block\Template
         \Magento\Framework\Json\EncoderInterface $jsonEncoder,
         \Tigren\CompanyAccount\Helper\Data $helper,
         array $data = []
-    ) {
+    ){
+        parent::__construct($context, $data);
         $this->registry = $registry;
         $this->jsonEncoder = $jsonEncoder;
         $this->helper = $helper;
-        parent::__construct($context, $data);
     }
 
     /**
@@ -66,7 +66,7 @@ class Customers extends \Magento\Backend\Block\Template
      */
     public function getBlockGrid()
     {
-        if (null === $this->blockGrid) {
+        if ($this->blockGrid === null) {
             $this->blockGrid = $this->getLayout()->createBlock(
                 'Tigren\CompanyAccount\Block\Adminhtml\Account\Edit\Tab\CustomerGrid',
                 'account.customers.grid'
@@ -108,13 +108,14 @@ class Customers extends \Magento\Backend\Block\Template
     }
 
     public function getActionCustomerTabBlock(){
-        if (null === $this->actionCustomerTab) {
+        if ($this->actionCustomerTab === null) {
             $this->actionCustomerTab = $this->getLayout()->createBlock(
                 'Tigren\CompanyAccount\Block\Adminhtml\Account\Edit\Tab\Customer\ActionCustomerTab',
                 'account.customers.action.tab'
             );
-            if(!$this->getAccount())
+            if(!$this->getAccount()){
                 $this->actionCustomerTab->setAccountId($this->getAccountId());
+            }
         }
         return $this->actionCustomerTab;
     }

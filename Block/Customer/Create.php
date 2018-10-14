@@ -33,15 +33,8 @@ class Create extends \Magento\Directory\Block\Data
         \Magento\Customer\Model\Url $customerUrl,
         \Magento\Framework\Module\Manager $moduleManager,
         \Magento\Customer\Model\Session $customerSession,
-        array $data = [])
-    {
-        $this->helper = $helper;
-        $this->_moduleManager = $moduleManager;
-        $this->scopeConfig = $context->getScopeConfig();
-        $this->filterProvider = $filterProvider;
-        $this->coreRegistry = $registry;
-        $this->_customerUrl = $customerUrl;
-        $this->_customerSession = $customerSession;
+        array $data = []
+    ){
         parent::__construct(
             $context,
             $directoryHelper,
@@ -51,12 +44,22 @@ class Create extends \Magento\Directory\Block\Data
             $countryCollectionFactory,
             $data
         );
+        $this->helper = $helper;
+        $this->_moduleManager = $moduleManager;
+        $this->scopeConfig = $context->getScopeConfig();
+        $this->filterProvider = $filterProvider;
+        $this->coreRegistry = $registry;
+        $this->_customerUrl = $customerUrl;
+        $this->_customerSession = $customerSession;
         $this->_isScopePrivate = false;
     }
 
     public function getConfig($path)
     {
-        return $this->_scopeConfig->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->_scopeConfig->getValue(
+            $path,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
     }
 
     public function getPostActionUrl()
@@ -112,9 +115,10 @@ class Create extends \Magento\Directory\Block\Data
      */
     public function getRegion()
     {
-        if (null !== ($region = $this->getFormData()->getRegion())) {
+        $formData = $this->getFormData();
+        if (($region = $formData->getRegion()) !== null) {
             return $region;
-        } elseif (null !== ($region = $this->getFormData()->getRegionId())) {
+        } elseif (($region = $formData->getRegionId()) !== null) {
             return $region;
         }
         return null;
@@ -127,7 +131,6 @@ class Create extends \Magento\Directory\Block\Data
             $data = $form->extractData($request, $scope, false);
             $form->restoreData($data);
         }
-
         return $this;
     }
 

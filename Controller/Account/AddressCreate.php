@@ -22,20 +22,20 @@ class AddressCreate extends \Magento\Customer\Controller\AbstractAccount
         PageFactory $resultPageFactory,
         Registration $registration,
         \Tigren\CompanyAccount\Helper\Data $helper
-    ) {
+    ){
+        parent::__construct($context);
         $this->_customerSession = $customerSession;
         $this->pageFactory = $pageFactory;
         $this->session = $customerSession;
         $this->resultPageFactory = $resultPageFactory;
         $this->registration = $registration;
         $this->helper = $helper;
-        parent::__construct($context);
     }
 
     public function execute()
     {
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend(__(' New Company Address '));
+        $resultPage->getConfig()->getTitle()->prepend(__('New Company Address'));
         $companyAddressBlock = $resultPage->getLayout()->getBlock('customer-users-links.company-address');
         if ($companyAddressBlock) {
             $companyAddressBlock->setIsHighlighted(true);

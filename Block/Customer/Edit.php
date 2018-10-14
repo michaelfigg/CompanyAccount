@@ -45,8 +45,8 @@ class Edit extends \Magento\Customer\Block\Account\Dashboard
         array $data = [],
         \Tigren\CompanyAccount\Helper\Data $helper,
         \Magento\Customer\Model\Customer $customer
-    )
-    {
+    ){
+        parent::__construct($context, $customerSession, $subscriberFactory, $customerRepository, $customerAccountManagement, $data);
         $this->_coreRegistry = $registry;
         $this->request = $request;
         $this->customerFactory = $customerFactory;
@@ -54,7 +54,6 @@ class Edit extends \Magento\Customer\Block\Account\Dashboard
         $this->_customerSession = $customerSession;
         $this->helper = $helper;
         $this->_customers = $customer;
-        parent::__construct($context, $customerSession, $subscriberFactory, $customerRepository, $customerAccountManagement, $data);
     }
 
     public function restoreSessionData(\Magento\Customer\Model\Metadata\Form $form, $scope = null)
@@ -65,7 +64,6 @@ class Edit extends \Magento\Customer\Block\Account\Dashboard
             $data = $form->extractData($request, $scope, false);
             $form->restoreData($data);
         }
-
         return $this;
     }
 
@@ -187,11 +185,7 @@ class Edit extends \Magento\Customer\Block\Account\Dashboard
 
     public function isAdminOfAccount()
     {
-        if ($this->helper->isAdminOfAccount($this->getUserId())) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return $this->helper->isAdminOfAccount($this->getUserId()) ? 1 : 0;
     }
 
 }

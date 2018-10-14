@@ -29,10 +29,9 @@ class ChooserJs extends \Magento\Framework\View\Element\Template
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\Data\Form\Element\Factory $elementFactory,
         array $data = []
-    )
-    {
-        $this->_elementFactory = $elementFactory;
+    ){
         parent::__construct($context, $data);
+        $this->_elementFactory = $elementFactory;
     }
 
     /**

@@ -18,25 +18,23 @@ class OrderAll extends \Magento\Framework\View\Element\Template
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\Registry $registry,
         array $data = []
-    )
-    {
-        $this->_registry = $registry;
+    ){
         parent::__construct($context, $data);
+        $this->_registry = $registry;
     }
 
     protected function _prepareLayout()
     {
         if ($this->getOrders()) {
-            $pager = $this->getLayout()->createBlock(
-                'Magento\Theme\Block\Html\Pager',
-                'tigren.companyaccount.record.pager'
-            )
-                ->setAvailableLimit([10 => 10])
+            $pager = $this
+                ->getLayout()
+                ->createBlock(
+                    'Magento\Theme\Block\Html\Pager',
+                    'tigren.companyaccount.record.pager'
+                )->setAvailableLimit([10 => 10])
                 ->setShowPerPage(true)
                 ->setCollection($this->getOrders());
-
             $this->setChild('pager', $pager);
-
             $this->getOrders()->load();
         }
         return $this;

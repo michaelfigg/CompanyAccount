@@ -38,19 +38,12 @@ class Profile extends \Magento\Framework\View\Element\Template
      * @var Mapper
      */
     protected $addressMapper;
-
     protected $addressFactory;
-
     protected $_customerSession;
-
     protected $helper;
-
     protected $_customerFactory;
-
     protected $_storeManager;
-
     protected $_countryFactory;
-
     protected $_accountFactory;
 
     /**
@@ -75,12 +68,11 @@ class Profile extends \Magento\Framework\View\Element\Template
         \Magento\Directory\Model\CountryFactory $countryFactory,
         \Tigren\CompanyAccount\Model\AccountFactory $accountFactory,
         array $data = []
-    )
-    {
+    ){
+        parent::__construct($context, $data);
         $this->currentCustomer = $currentCustomer;
         $this->currentCustomerAddress = $currentCustomerAddress;
         $this->_addressConfig = $addressConfig;
-        parent::__construct($context, $data);
         $this->addressMapper = $addressMapper;
         $this->addressFactory = $addressFactory;
         $this->_customerSession = $customerSession;
@@ -117,8 +109,7 @@ class Profile extends \Magento\Framework\View\Element\Template
 
     public function getAccountId()
     {
-        $account_id = $this->helper->isInAvailableAccount($this->getCustomerId());
-        return $account_id;
+        return $this->helper->isInAvailableAccount($this->getCustomerId());
     }
 
     public function getAccount()
@@ -126,16 +117,15 @@ class Profile extends \Magento\Framework\View\Element\Template
         $customerId = $this->getCustomer()->getId();
         $accountId = $this->helper->getAccountIdByCustomer($customerId);
         $account = null;
-        if ($accountId)
+        if ($accountId){
             $account = $this->_accountFactory->create()->load($accountId);
-
+        }
         return $account;
     }
 
     public function getAccountImage()
     {
-        $account = $this->getAccount();
-        return $account->getLogoImageLink();
+        return $this->getAccount()->getLogoImageLink();
     }
 
     public function getIdAddressAccount()
@@ -146,7 +136,10 @@ class Profile extends \Magento\Framework\View\Element\Template
     public function getAccountAddress($addressId)
     {
         $collection = $this->addressFactory->create()->getCollection();
-        $data = $collection->addFieldToFilter('address_id', ['in' => $addressId])->addFieldToFilter('is_billing', ['eq' => 1])->getData();
+        $data = $collection
+            ->addFieldToFilter('address_id', ['in' => $addressId])
+            ->addFieldToFilter('is_billing', ['eq' => 1])
+            ->getData();
         return $data;
     }
 
@@ -155,14 +148,14 @@ class Profile extends \Magento\Framework\View\Element\Template
         if ($this->helper->isInAvailableAccount($this->getCustomerId())) {
             $addressAccount = $this->getAccountAddress($this->getIdAddressAccount());
             if (!empty($addressAccount)) {
-                return $addressAccount[0]['lastname'] . " " . $addressAccount[0]['firstname'] . "</br>" .
-                    "Street : " . $addressAccount[0]['street'] . "</br>"
-                    . "City : " . $addressAccount[0]['city'] . "</br>"
-                    . "Company : " . $addressAccount[0]['company'] . "</br>"
-                    . "Zip/Postal Code : " . $addressAccount[0]['postcode'] . "</br>"
-                    . "Telephone : " . $addressAccount[0]['telephone'];
+                return "{$addressAccount[0]['lastname']} {$addressAccount[0]['firstname']}</br>" .
+                    "Street: {$addressAccount[0]['street']}</br>" .
+                    "City: {$addressAccount[0]['city']}</br>" .
+                    "Company: {$addressAccount[0]['company']}</br>" .
+                    "Zip/Postal Code: {$addressAccount[0]['postcode']}</br>" .
+                    "Telephone: {$addressAccount[0]['telephone']}";
             }
-            return __('Company have not set a default billing address.');
+            return __('Your company has not set a default billing address.');
         }
     }
 
@@ -172,12 +165,10 @@ class Profile extends \Magento\Framework\View\Element\Template
             $addressAccount = $this->getAccountAddress($this->getIdAddressAccount());
             $account = $this->getAccount();
             if (!empty($addressAccount)) {
-                $info = '';
-                $info = $account->getCompany() . "</br>"
-                    . $account->getManagerFirstName().' '.$account->getManagerLastName(). "</br>"
-                    . "Email : " . $this->getEmailAccount()['email'] . "</br>"
-                    . "Contact : " . $account->getTelephone();
-
+                $info = $account->getCompany() . "</br>" .
+                    $account->getManagerFirstName() . ' ' . $account->getManagerLastName() . "</br>" .
+                    "Email: " . $this->getEmailAccount()['email'] . "</br>" .
+                    "Contact: " . $account->getTelephone();
                 return $info;
             }
             return __('No information.');
@@ -191,12 +182,12 @@ class Profile extends \Magento\Framework\View\Element\Template
             $account = $this->getAccount();
             if (!empty($addressAccount)) {
                 $country = $this->_countryFactory->create()->loadByCode($addressAccount[0]['country_id']);
-                return $account->getCompany() . "</br>"
-                    . $addressAccount[0]['city'] . "</br>"
-                    . $country->getName() . "</br>"
-                    . $addressAccount[0]['postcode'];
+                return $account->getCompany() . "</br>" .
+                    $addressAccount[0]['city'] . "</br>" .
+                    $country->getName() . "</br>" .
+                    $addressAccount[0]['postcode'];
             }
-            return __('Company have not set a legal address.');
+            return __('Your company has not set a legal address.');
         }
     }
 
@@ -204,7 +195,12 @@ class Profile extends \Magento\Framework\View\Element\Template
     {
         $account_id = $this->helper->getAccountIdByCustomer($this->getCustomerId());
         $arrAdminId = $this->helper->getAdminIds($account_id);
-        $emailAccount = $this->_customerFactory->create()->getCollection()->addAttributeToFilter('entity_id', ['in' => $arrAdminId])->setOrder('entity_id', 'asc')->getFirstItem()->getData();
+        $emailAccount = $this->_customerFactory->create()
+            ->getCollection()
+            ->addAttributeToFilter('entity_id', ['in' => $arrAdminId])
+            ->setOrder('entity_id', 'asc')
+            ->getFirstItem()
+            ->getData();
         return $emailAccount;
     }
 
@@ -212,25 +208,21 @@ class Profile extends \Magento\Framework\View\Element\Template
     {
         $account_id = $this->helper->getAccountIdByCustomer($this->getCustomerId());
         $arrAdminId = $this->helper->getAdminIds($account_id);
-        $customer = $this->_customerFactory->create()->getCollection()->addAttributeToFilter('entity_id', ['in' => $arrAdminId]);
-        return $customer->getData();
+        return $this->_customerFactory->create()
+            ->getCollection()
+            ->addAttributeToFilter('entity_id', ['in' => $arrAdminId])
+            ->getData();
     }
 
     protected function _getAddressHtml($address)
     {
         /** @var \Magento\Customer\Block\Address\Renderer\RendererInterface $renderer */
         $renderer = $this->_addressConfig->getFormatByCode('html')->getRenderer();
-
         return $renderer->renderArray($this->addressMapper->toFlatArray($address));
     }
 
     public function availablePayOnAccount()
     {
-        $pay_on = $this->helper->availablePayOnAccount();
-        if ($pay_on == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->helper->availablePayOnAccount() == 1;
     }
 }

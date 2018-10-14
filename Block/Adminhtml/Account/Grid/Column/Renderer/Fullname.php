@@ -9,7 +9,6 @@ class Fullname extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\Abstra
 {
     public function render(\Magento\Framework\DataObject $row)
     {
-        $fullname = $row->getFirstname() . ' ' . $row->getMiddlename() . ' ' . $row->getLastname();
-        return $fullname;
+        return $row->getFirstname() . ' ' . $row->getMiddlename() . ' ' . $row->getLastname();
     }
 }

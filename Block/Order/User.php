@@ -11,10 +11,10 @@ class User extends \Magento\Sales\Block\Order\History
         \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory,
         \Magento\Customer\Model\Session $customerSession,
         \Tigren\CompanyAccount\Helper\Data $helper,
-        \Magento\Sales\Model\Order\Config $orderConfig, array $data = [])
-    {
-        $this->helper = $helper;
+        \Magento\Sales\Model\Order\Config $orderConfig, array $data = []
+    ){
         parent::__construct($context, $orderCollectionFactory, $customerSession, $orderConfig, $data);
+        $this->helper = $helper;
     }
 
     public function getOrdersUser()

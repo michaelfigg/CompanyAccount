@@ -29,8 +29,8 @@ class Address extends Template
         \Magento\Customer\Block\Address\Book $addressBook,
         \Magento\Directory\Model\CountryFactory $countryFactory,
         array $data = []
-    )
-    {
+    ){
+        parent::__construct($context, $data);
         $this->_addressBook = $addressBook;
         $this->_billingAddressCompany = $billingAddressCompany;
         $this->_shippingAddressCompany = $shippingAddressCompany;
@@ -39,13 +39,11 @@ class Address extends Template
         $this->_customerSession = $customerSession;
         $this->_companyAccountAddressCollectionFactory = $companyAccountAddressCollectionFactory;
         $this->_countryFactory = $countryFactory;
-        parent::__construct($context, $data);
     }
 
     public function getPagerHtml()
     {
         return $this->getChildHtml('pager');
-
     }
 
     protected function _construct()
@@ -58,14 +56,14 @@ class Address extends Template
     {
         parent::_prepareLayout();
         if ($this->getListAddress()) {
-            $pager = $this->getLayout()->createBlock(
-                'Magento\Theme\Block\Html\Pager',
-                'tigren.companyaccount.record.pager'
-            )
-                ->setCollection($this->getListAddress());
+            $pager = $this
+                ->getLayout()
+                ->createBlock(
+                    'Magento\Theme\Block\Html\Pager',
+                    'tigren.companyaccount.record.pager'
+                )->setCollection($this->getListAddress());
 
             $this->setChild('pager', $pager);
-
             $this->getListAddress()->load();
         }
         return $this;
@@ -91,8 +89,7 @@ class Address extends Template
 
     public function getCountryName($countryCode)
     {
-        $country = $this->_countryFactory->create()->loadByCode($countryCode);
-        return $country->getName();
+        return $this->_countryFactory->create()->loadByCode($countryCode)->getName();
     }
 
     public function getBillingAddressCompanyDefault()

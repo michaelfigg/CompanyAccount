@@ -10,7 +10,6 @@ use Magento\Framework\App\ObjectManager;
 
 class Edit extends \Magento\Customer\Block\Address\Edit
 {
-
     protected $_companyAddressFactory;
 
     public function __construct(
@@ -28,8 +27,7 @@ class Edit extends \Magento\Customer\Block\Address\Edit
         \Magento\Customer\Helper\Session\CurrentCustomer $currentCustomer,
         \Magento\Framework\Api\DataObjectHelper $dataObjectHelper,
         AttributeChecker $attributeChecker = null
-    )
-    {
+    ){
         parent::__construct(
             $context,
             $directoryHelper,
@@ -49,23 +47,22 @@ class Edit extends \Magento\Customer\Block\Address\Edit
 
     public function getPostActionUrl()
     {
-        if($this->getIdAddress())
+        if($this->getIdAddress()){
             return $this->getUrl('companyaccount/account/addressEditPost');
-        else
-            return $this->getUrl('companyaccount/account/addressCreatePost');
+        }
+        return $this->getUrl('companyaccount/account/addressCreatePost');
     }
 
     public function getIdAddress(){
-        return ($this->getRequest()->getParam('id')) ? $this->getRequest()->getParam('id') : null;
+        $param = $this->getRequest()->getParam('id');
+        return $param ? $param : null;
     }
 
     public function getAddressData(){
         if($this->getIdAddress()){
-            $companyAccountAddress = $this->_companyAddressFactory->create()->load($this->getIdAddress());
-            return $companyAccountAddress;
+            return $this->_companyAddressFactory->create()->load($this->getIdAddress());
         }
-        else
-            return null;
+        return null;
     }
 
 }

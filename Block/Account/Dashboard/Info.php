@@ -6,7 +6,6 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 class Info extends \Magento\Customer\Block\Account\Dashboard\Info
 {
-
     protected $_helperCa;
     protected $_accountFactory;
 
@@ -18,8 +17,7 @@ class Info extends \Magento\Customer\Block\Account\Dashboard\Info
         \Tigren\CompanyAccount\Helper\Data $helperCa,
         \Tigren\CompanyAccount\Model\AccountFactory $accountFactory,
         array $data = []
-    )
-    {
+    ){
         parent::__construct(
             $context,
             $currentCustomer,
@@ -36,14 +34,12 @@ class Info extends \Magento\Customer\Block\Account\Dashboard\Info
         $customerId = $this->getCustomer()->getId();
         $accountId = $this->_helperCa->getAccountIdByCustomer($customerId);
         $account = null;
-        if ($accountId)
-            $account = $this->_accountFactory->create()->load($accountId);
-
+        if ($accountId) $account = $this->_accountFactory->create()->load($accountId);
         return $account;
     }
 
     public function getTitleWelcomeCompany($name)
     {
-        return 'Welcome to ' . $name . ' dashboard !';
+        return "Welcome to {$name}'s company dashboard!";
     }
 }

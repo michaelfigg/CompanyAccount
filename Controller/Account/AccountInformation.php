@@ -47,12 +47,12 @@ class AccountInformation extends \Magento\Customer\Controller\Account\Edit
         PageFactory $resultPageFactory,
         CustomerRepositoryInterface $customerRepository,
         DataObjectHelper $dataObjectHelper
-    ) {
+    ){
+        parent::__construct($context, $customerSession, $resultPageFactory, $customerRepository, $dataObjectHelper);
         $this->session = $customerSession;
         $this->resultPageFactory = $resultPageFactory;
         $this->customerRepository = $customerRepository;
         $this->dataObjectHelper = $dataObjectHelper;
-        parent::__construct($context, $customerSession, $resultPageFactory, $customerRepository, $dataObjectHelper);
     }
 
     /**

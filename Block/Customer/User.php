@@ -35,12 +35,11 @@ class User extends \Magento\Framework\View\Element\Template
         CustomerSession $customerSession,
         \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface,
         array $data = []
-    )
-    {
+    ){
+        parent::__construct($context, $data);
         $this->_customerSession = $customerSession;
         $this->helper = $helper;
         $this->_customerRepositoryInterface = $customerRepositoryInterface;
-        parent::__construct($context, $data);
     }
 
     /**

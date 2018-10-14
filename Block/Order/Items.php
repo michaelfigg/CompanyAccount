@@ -84,8 +84,9 @@ class Items extends \Magento\Sales\Block\Order\Items
         \Magento\Framework\Module\Manager $moduleManager,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
         \Magento\Sales\Model\ResourceModel\Order\Item\CollectionFactory $itemCollectionFactory = null,
-        array $data = [])
-    {
+        array $data = []
+    ){
+        parent::__construct($context, $registry, $data, $itemCollectionFactory);
         $this->_layout = $context->getLayout();
         $this->_cartHelper = $context->getCartHelper();
         $this->_imageHelper    = $imageHelper;
@@ -95,7 +96,6 @@ class Items extends \Magento\Sales\Block\Order\Items
         $this->addressRenderer = $addressRenderer;
         $this->_moduleManager = $moduleManager;
         $this->_productCollectionFactory = $productCollectionFactory;
-        parent::__construct($context, $registry, $data, $itemCollectionFactory);
     }
 
     /**
@@ -130,7 +130,8 @@ class Items extends \Magento\Sales\Block\Order\Items
      * @param $productId
      * @return \Magento\Catalog\Model\Product
      */
-    public function getProductId($productId) {
+    public function getProductId($productId)
+    {
         return $this->_productFactory->create()->load($productId);
     }
 
@@ -184,7 +185,9 @@ class Items extends \Magento\Sales\Block\Order\Items
      */
     protected function getPriceRender()
     {
-        return $this->getLayout()->getBlock('product.price.render.default')
+        return $this
+            ->getLayout()
+            ->getBlock('product.price.render.default')
             ->setData('is_product_list', true);
     }
 

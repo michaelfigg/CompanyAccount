@@ -9,10 +9,10 @@ class Order extends \Magento\Framework\View\Element\Template
     public function __construct(
         Template\Context $context,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        array $data = [])
-    {
-        $this->_storeManager = $storeManager;
+        array $data = []
+    ){
         parent::__construct($context, $data);
+        $this->_storeManager = $storeManager;
     }
 
     public function getBaseUrl()

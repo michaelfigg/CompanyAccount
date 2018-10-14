@@ -24,11 +24,12 @@ class Customers extends \Magento\Backend\Block\Widget\Grid\Container
      */
     protected function _prepareLayout()
     {
-
         $this->setChild(
             'grid',
-            $this->getLayout()->createBlock('Tigren\CompanyAccount\Block\Adminhtml\Account\Customers\Grid',
-                'tigren.companyaccount.customer.grid')
+            $this->getLayout()->createBlock(
+                'Tigren\CompanyAccount\Block\Adminhtml\Account\Customers\Grid',
+                'tigren.companyaccount.customer.grid'
+            )
         );
         return parent::_prepareLayout();
     }
@@ -40,12 +41,10 @@ class Customers extends \Magento\Backend\Block\Widget\Grid\Container
      */
     protected function _getAddButtonOptions()
     {
-
         $splitButtonOptions[] = [
             'label' => __('Add New'),
             'onclick' => "setLocation('" . $this->_getCreateUrl() . "')"
         ];
-
         return $splitButtonOptions;
     }
 

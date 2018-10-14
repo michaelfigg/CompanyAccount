@@ -17,13 +17,11 @@ class AssignActionCustomerTab extends \Magento\Backend\Block\Widget\Grid\Extende
         \Tigren\CompanyAccount\Model\AccountFactory $accountFactory,
         \Tigren\CompanyAccount\Helper\Data $helperCa,
         array $data = []
-    )
-    {
+    ){
+        parent::__construct($context, $backendHelper, $data);
         $this->_customers = $customers;
         $this->_accountFactory = $accountFactory;
         $this->_helperCa = $helperCa;
-        parent::__construct($context, $backendHelper, $data);
-
     }
 
     protected function _construct()

@@ -13,10 +13,9 @@ namespace Tigren\CompanyAccount\Block\Adminhtml\Account\Widget;
 
 use Magento\Backend\Block\Widget\Grid;
 use Magento\Backend\Block\Widget\Grid\Column;
-use Magento\Backend\Block\Widget\Grid\Extended;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 
-class Chooser extends Extended
+class Chooser extends \Magento\Backend\Block\Widget\Grid\Extended
 {
     protected $_customers;
     protected $helper;
@@ -27,12 +26,10 @@ class Chooser extends Extended
         \Magento\Customer\Model\Customer $customers,
         \Tigren\CompanyAccount\Helper\Data $helper,
         array $data = []
-    )
-    {
+    ){
+        parent::__construct($context, $backendHelper, $data);
         $this->_customers = $customers;
         $this->helper = $helper;
-
-        parent::__construct($context, $backendHelper, $data);
     }
 
     /**
@@ -61,20 +58,11 @@ class Chooser extends Extended
 
     public function _getAfterElementHtml($element)
     {
-        $html = <<<HTML
-    <style>
-         .control .control-value {
-            display: none !important;
-        }
-    </style>
-HTML;
-
+        $html = "<style>.control .control-value { display: none !important; }</style>";
         $chooserHtml = $this->getLayout()
             ->createBlock('Tigren\CompanyAccount\Block\Adminhtml\Account\Widget\ChooserJs')
             ->setElement($element);
-
         $html .= $chooserHtml->toHtml();
-
         return $html;
     }
 
@@ -105,7 +93,7 @@ HTML;
     /**
      * Prepare products collection, defined collection filters (category, product type)
      *
-     * @return Extended
+     * @return \Magento\Backend\Block\Widget\Grid\Extended
      */
     protected function _prepareCollection()
     {
@@ -209,8 +197,7 @@ HTML;
 
     public function _getSelectedCustomerIds()
     {
-        $customers = array_keys($this->getSelectedCustomerIds());
-        return $customers;
+        return array_keys($this->getSelectedCustomerIds());
     }
 
     /**

@@ -17,12 +17,11 @@ class AccountAbstract extends Action
         \Magento\Customer\Model\Session $customerSession,
         PageFactory $pageFactory,
         \Tigren\CompanyAccount\Helper\Data $helper
-    )
-    {
+    ){
+        parent::__construct($context);
         $this->_customerSession = $customerSession;
         $this->pageFactory = $pageFactory;
         $this->helper = $helper;
-        parent::__construct($context);
     }
 
     public function execute()
@@ -33,7 +32,6 @@ class AccountAbstract extends Action
 
     public function dispatch(\Magento\Framework\App\RequestInterface $request)
     {
-        $resultRedirect = $this->resultRedirectFactory->create();
         if (!$this->_customerSession->isLoggedIn()) {
             $this->_redirect('customer/account/login');
             return ;

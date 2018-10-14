@@ -4,7 +4,6 @@ namespace Tigren\CompanyAccount\Block\Adminhtml\Account\Edit\Tab;
 
 class AddressesGrid extends \Magento\Backend\Block\Widget\Grid\Extended
 {
-
     protected $_addressCollectionFactory;
 
     public function __construct(
@@ -12,8 +11,7 @@ class AddressesGrid extends \Magento\Backend\Block\Widget\Grid\Extended
         \Magento\Backend\Helper\Data $backendHelper,
         \Tigren\CompanyAccount\Model\ResourceModel\AccountAddress\CollectionFactory $addressCollectionFactory,
         array $data = []
-    )
-    {
+    ){
         parent::__construct($context, $backendHelper, $data);
         $this->_addressCollectionFactory = $addressCollectionFactory;
     }
@@ -159,5 +157,4 @@ class AddressesGrid extends \Magento\Backend\Block\Widget\Grid\Extended
     {
         return $this->getUrl('companyaccount/account/addressGrid/', ['account_id' => $this->getRequest()->getParam('account_id')]);
     }
-
 }

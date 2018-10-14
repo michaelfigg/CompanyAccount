@@ -31,11 +31,10 @@ class Tracking extends \Magento\Framework\View\Element\Template
         \Magento\Customer\Model\Session $customerSession,
         Registry $registry,
         array $data = []
-    )
-    {
+    ){
+        parent::__construct($context, $data);
         $this->_customerSession = $customerSession;
         $this->registry = $registry;
-        parent::__construct($context, $data);
     }
 
     /**
@@ -51,10 +50,9 @@ class Tracking extends \Magento\Framework\View\Element\Template
         $arrTracking = [];
         $order =  $this->registry->registry('current_order_tracking');
         foreach ($order->getShipmentsCollection() as $shipment) {
-            if(!empty($shipment)){
-                foreach ($shipment->getAllTracks() as $tracking){
-                    $arrTracking[$tracking->getTitle()] = $tracking->getNumber();
-                }
+            if(empty($shipment)) continue;
+            foreach ($shipment->getAllTracks() as $tracking){
+                $arrTracking[$tracking->getTitle()] = $tracking->getNumber();
             }
         }
         return $arrTracking;

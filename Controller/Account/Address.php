@@ -16,11 +16,11 @@ class Address extends \Magento\Framework\App\Action\Action
         \Magento\Customer\Model\Session $customerSession,
         PageFactory $pageFactory,
         \Tigren\CompanyAccount\Helper\Data $helper
-    ) {
+    ){
+        parent::__construct($context);
         $this->_resultPageFactory = $pageFactory;
         $this->_helper = $helper;
-        $this->_sessionCustomer         = $customerSession;
-        parent::__construct($context);
+        $this->_sessionCustomer = $customerSession;
     }
 
     public function execute()

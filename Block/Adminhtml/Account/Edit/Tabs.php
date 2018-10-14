@@ -32,11 +32,10 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
         Registry $registry,
         InlineInterface $translateInline,
         array $data = []
-    )
-    {
+    ){
+        parent::__construct($context, $jsonEncoder, $authSession, $data);
         $this->_coreRegistry = $registry;
         $this->_translateInline = $translateInline;
-        parent::__construct($context, $jsonEncoder, $authSession, $data);
     }
 
     /**
