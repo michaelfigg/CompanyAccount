@@ -46,7 +46,8 @@ class DeleteAddress extends AccountAbstract
         \Magento\Customer\Model\CustomerFactory $customerFactory,
         \Tigren\CompanyAccount\Helper\Data $helper,
         \Tigren\CompanyAccount\Model\AccountAddressFactory $accountAddressFactory
-    ) {
+    ){
+        parent::__construct($context,$customerSession,$pageFactory,$helper);
         $this->pageFactory = $pageFactory;
         $this->customerFactory = $customerFactory;
         $this->url = $url;
@@ -54,8 +55,6 @@ class DeleteAddress extends AccountAbstract
         $this->registry = $registry;
         $this->helper = $helper;
         $this->_accountAddressFactory = $accountAddressFactory;
-        parent::__construct($context,$customerSession,$pageFactory,$helper);
-
     }
 
     public function execute()
@@ -68,7 +67,7 @@ class DeleteAddress extends AccountAbstract
             $customer->delete();
             $this->_messageManager->addSuccess(__('The address was removed successfully'));
         } catch (\Exception $e) {
-            $this->_messageManager->addError(__('Something went wrong when remove this address .'));
+            $this->_messageManager->addError(__('Something went wrong while removing the address'));
         }
         return $resultRedirect->setUrl($this->url->getUrl('companyaccount/account/address'));
     }

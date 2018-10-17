@@ -18,10 +18,10 @@ class ListUser extends \Magento\Framework\App\Action\Action
         \Tigren\CompanyAccount\Helper\Data $helper,
         \Magento\Customer\Model\Session $sessionCustomer
     ) {
-        $this->_resultPageFactory       = $pageFactory;
-        $this->_helper                  = $helper;
-        $this->_sessionCustomer         = $sessionCustomer;
         parent::__construct($context);
+        $this->_resultPageFactory = $pageFactory;
+        $this->_helper = $helper;
+        $this->_sessionCustomer = $sessionCustomer;
     }
 
     public function execute()

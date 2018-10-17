@@ -97,8 +97,7 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
         CustomerExtractor $customerExtractor,
         \Tigren\CompanyAccount\Helper\Data $helper,
         \Magento\Customer\Model\Customer $customer
-    )
-    {
+    ){
         parent::__construct($context);
         $this->session = $customerSession;
         $this->customerAccountManagement = $customerAccountManagement;
@@ -116,14 +115,13 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
      */
     private function getAuthentication()
     {
-
         if (!($this->authentication instanceof AuthenticationInterface)) {
-            return ObjectManager::getInstance()->get(
+            //TODO: Use of object manager
+            $this->authentication = ObjectManager::getInstance()->get(
                 \Magento\Customer\Model\AuthenticationInterface::class
             );
-        } else {
-            return $this->authentication;
         }
+        return $this->authentication;
     }
 
     /**
@@ -135,12 +133,12 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
     private function getEmailNotification()
     {
         if (!($this->emailNotification instanceof EmailNotificationInterface)) {
-            return ObjectManager::getInstance()->get(
+            //TODO: Use of object manager
+            $this->emailNotification = ObjectManager::getInstance()->get(
                 EmailNotificationInterface::class
             );
-        } else {
-            return $this->emailNotification;
         }
+        return $this->emailNotification;
     }
 
     /**
@@ -150,14 +148,20 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
      */
     public function execute()
     {
+        
         /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
+        if(!$this->_helper->isLoggedIn()){
+            return $resultRedirect->setPath('customer/account/login');
+        }
         $validFormKey = $this->formKeyValidator->validate($this->getRequest());
+
         $userId = $this->getRequest()->getParam('userId');
         $email = $this->getRequest()->getParam('email');
         $job_title = $this->getRequest()->getParam('job_title');
         $phone_number = $this->getRequest()->getParam('phone_number');
         $is_active = $this->getRequest()->getParam('is_active');
+
         if ($validFormKey && $this->getRequest()->isPost()) {
             $currentCustomerDataObject = $this->getCustomerDataObject($userId);
             $customerCandidateDataObject = $this->populateNewCustomerDataObject(
@@ -211,7 +215,7 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
             }
         }
 
-        return $resultRedirect->setPath('companyaccount/account/edit?id=' . $userId);
+        return $resultRedirect->setPath("companyaccount/account/edit?id={$userId}");
     }
 
     /**
@@ -234,12 +238,12 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
     private function getScopeConfig()
     {
         if (!($this->scopeConfig instanceof \Magento\Framework\App\Config\ScopeConfigInterface)) {
-            return ObjectManager::getInstance()->get(
+            //TODO: Use of object manager
+            $this->scopeConfig = ObjectManager::getInstance()->get(
                 \Magento\Framework\App\Config\ScopeConfigInterface::class
             );
-        } else {
-            return $this->scopeConfig;
         }
+        return $this->scopeConfig;
     }
 
     /**
@@ -354,6 +358,7 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
     private function getCustomerMapper()
     {
         if ($this->customerMapper === null) {
+            //TODO: Use of object manager
             $this->customerMapper = ObjectManager::getInstance()->get('Magento\Customer\Model\Customer\Mapper');
         }
         return $this->customerMapper;
@@ -370,9 +375,8 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
 
     public function updateEnterShippingAddress($userId)
     {
-        if ((int)$this->getRequest()->getParam('enable_enter_shipping_address') > 0)
-            $this->_helper->updateEnterShippingAddress($userId, (int)$this->getRequest()->getParam('enable_enter_shipping_address'));
-        else
-            $this->_helper->updateEnterShippingAddress($userId, 0);
+        $enableEnter = (int)$this->getRequest()->getParam('enable_enter_shipping_address');
+        $enableEnterFinal = $enableEnter > 0 ? $enableEnter : 0;
+        $this->_helper->updateEnterShippingAddress($userId, $enableEnterFinal);
     }
 }

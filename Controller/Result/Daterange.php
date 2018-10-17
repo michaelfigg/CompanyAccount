@@ -9,7 +9,6 @@ use Magento\Framework\Controller\ResultFactory;
 
 class Daterange extends \Magento\Framework\App\Action\Action
 {
-
     /**
      * @var Magento\Framework\View\Result\PageFactory
      */
@@ -46,9 +45,8 @@ class Daterange extends \Magento\Framework\App\Action\Action
         \Tigren\CompanyAccount\Helper\Data $helper,
         \Magento\Sales\Model\Order\Config $orderConfig,
         \Magento\Framework\Registry $registry
-    )
-    {
-
+    ){
+        parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
         $this->resultJsonFactory = $resultJsonFactory;
         $this->resultFactory = $resultFactory;
@@ -58,7 +56,6 @@ class Daterange extends \Magento\Framework\App\Action\Action
         $this->helper = $helper;
         $this->_orderConfig = $orderConfig;
         $this->_registry = $registry;
-        return parent::__construct($context);
     }
 
 

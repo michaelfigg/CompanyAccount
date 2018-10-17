@@ -48,10 +48,7 @@ class Index extends \Magento\Framework\App\Action\Action
         \Magento\Framework\Api\FilterBuilder $filterBuilder,
         \Magento\Framework\Api\Search\FilterGroupBuilder $filterGroupBuilder,
         \Magento\Catalog\Helper\Category $catalogCategory
-//        \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
-//        \Magento\Sales\Api\OrderItemRepositoryInterface $orderItemRepository
-    )
-    {
+    ){
         parent::__construct($context);
         $this->_resultPageFactory = $resultPageFactory;
         $this->_accountAddressManagement = $accountAddressManagement;

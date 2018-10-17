@@ -8,18 +8,20 @@ class NewAddress extends \Magento\Backend\App\Action
     protected $resultForwardFactory;
     protected $_datetime;
     protected $_accountAddressManagement;
+    private $accountAddressFactory;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory,
         \Magento\Framework\Stdlib\DateTime\DateTime $dateTime,
-        \Tigren\CompanyAccount\Api\AccountAddressManagementInterface $accountAddressManagement
-    )
-    {
-        $this->resultForwardFactory = $resultForwardFactory;
-        $this->_datetime            = $dateTime;
-        $this->_accountAddressManagement    = $accountAddressManagement;
+        \Tigren\CompanyAccount\Api\AccountAddressManagementInterface $accountAddressManagement,
+        \Tigren\CompanyAccount\Model\AccountAddressFactory $accountAddressFactory
+    ){
         parent::__construct($context);
+        $this->resultForwardFactory = $resultForwardFactory;
+        $this->_datetime = $dateTime;
+        $this->_accountAddressManagement = $accountAddressManagement;
+        $this->accountAddressFactory = $accountAddressFactory;
     }
 
 
@@ -33,7 +35,7 @@ class NewAddress extends \Magento\Backend\App\Action
         if($data){
             try{
                 $accountId = $this->getRequest()->getParam('account_id');
-                $model = $this->_objectManager->create('\Tigren\CompanyAccount\Model\AccountAddress');
+                $model = $this->accountAddressFactory->create();
 
                 if($this->getRequest()->getParam('address_id')){
                     $model->load($this->getRequest()->getParam('address_id'));

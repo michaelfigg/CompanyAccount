@@ -6,7 +6,15 @@ namespace Tigren\CompanyAccount\Controller\Adminhtml\Account;
 
 class Delete extends \Magento\Backend\App\Action
 {
+    private $accountFactory;
 
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Tigren\CompanyAccount\Model\AccountFactory $accountFactory
+    ){
+        parent::__construct($context);
+        $this->accountFactory = $accountFactory;
+    }
     /**
      * Delete action
      *
@@ -19,7 +27,8 @@ class Delete extends \Magento\Backend\App\Action
         $resultRedirect = $this->resultRedirectFactory->create();
         if ($id) {
             try {
-                $model = $this->_objectManager->create('Tigren\CompanyAccount\Model\Account');
+                //TODO: Use of object manager
+                $model = $this->accountFactory->create();
                 $model->load($id);
                 $model->delete();
                 $this->messageManager->addSuccess(__('The account has been deleted.'));

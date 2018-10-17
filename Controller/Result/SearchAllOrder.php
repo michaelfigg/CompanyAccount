@@ -8,28 +8,19 @@ use Magento\Framework\Controller\Result\JsonFactory;
 
 class SearchAllOrder extends \Magento\Framework\App\Action\Action
 {
-
     /**
      * @var Magento\Framework\View\Result\PageFactory
      */
     protected $resultPageFactory;
-
     protected $resultJsonFactory;
-
     protected $customerSession;
-
     protected $_orderCollectionFactory;
-
     protected $helper;
-
     protected $_orderConfig;
-
     protected $_registry;
-
     protected $orderRepository;
     protected $orderItemRepository;
     protected $addressRepository;
-
     protected $searchCriteriaBuilder;
     protected $filterBuilder;
     protected $filterGroupBuilder;
@@ -52,13 +43,11 @@ class SearchAllOrder extends \Magento\Framework\App\Action\Action
         \Magento\Sales\Model\OrderRepository $orderRepository,
         \Magento\Sales\Model\Order\ItemRepository $orderItemRepository,
         \Magento\Sales\Model\Order\AddressRepository $addressRepository,
-
         \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
         \Magento\Framework\Api\FilterBuilder $filterBuilder,
         \Magento\Framework\Api\Search\FilterGroupBuilder $filterGroupBuilder
-    )
-    {
-
+    ){
+        parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
         $this->resultJsonFactory = $resultJsonFactory;
         $this->_customerFactory = $customerFactory;
@@ -73,8 +62,8 @@ class SearchAllOrder extends \Magento\Framework\App\Action\Action
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->filterBuilder = $filterBuilder;
         $this->filterGroupBuilder = $filterGroupBuilder;
-        return parent::__construct($context);
     }
+    
     public function execute()
     {
         $search = $this->getRequest()->getParam('search');

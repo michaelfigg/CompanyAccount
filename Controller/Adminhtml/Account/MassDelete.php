@@ -15,11 +15,14 @@ class MassDelete extends \Magento\Backend\App\Action
     protected $filter;
     protected $collectionFactory;
 
-    public function __construct(Context $context, Filter $filter, CollectionFactory $collectionFactory)
-    {
+    public function __construct(
+        Context $context,
+        Filter $filter,
+        CollectionFactory $collectionFactory
+    ){
+        parent::__construct($context);
         $this->filter = $filter;
         $this->collectionFactory = $collectionFactory;
-        parent::__construct($context);
     }
 
     /**

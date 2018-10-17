@@ -28,8 +28,7 @@ class InstallData implements InstallDataInterface
     public function __construct(
         CustomerSetupFactory $customerSetupFactory,
         AttributeSetFactory $attributeSetFactory
-    )
-    {
+    ){
         $this->customerSetupFactory = $customerSetupFactory;
         $this->attributeSetFactory = $attributeSetFactory;
     }

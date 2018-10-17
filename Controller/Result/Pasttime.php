@@ -9,7 +9,6 @@ use Magento\Framework\Controller\ResultFactory;
 
 class Pasttime extends \Magento\Framework\App\Action\Action
 {
-
     /**
      * @var Magento\Framework\View\Result\PageFactory
      */
@@ -49,9 +48,8 @@ class Pasttime extends \Magento\Framework\App\Action\Action
         \Magento\Sales\Model\Order\Config $orderConfig,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Stdlib\DateTime\DateTime $date
-    )
-    {
-
+    ){
+        parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
         $this->resultJsonFactory = $resultJsonFactory;
         $this->resultFactory = $resultFactory;
@@ -62,7 +60,6 @@ class Pasttime extends \Magento\Framework\App\Action\Action
         $this->_orderConfig = $orderConfig;
         $this->_registry = $registry;
         $this->date = $date;
-        return parent::__construct($context);
     }
 
 
@@ -70,17 +67,15 @@ class Pasttime extends \Magento\Framework\App\Action\Action
     {
         $value = $this->getRequest()->getParam('value');
         $role = $this->getRequest()->getParam('role');
+        $date = date_create($this->getCurrentTime());
         if ($value == '6-moths') {
-            $date = date_create($this->getCurrentTime());
             $time = date_modify($date, "-6 months");
-            $timeEx = date_format($time, "Y-m-d H:i:s");
         } elseif ($value == '1-year') {
-            $date = date_create($this->getCurrentTime());
             $time = date_modify($date, "-1 years");
-            $timeEx = date_format($time, "Y-m-d H:i:s");
         } else {
             return false;
         }
+        $timeEx = date_format($time, "Y-m-d H:i:s");
         $orders = $this->getOrderPastTime($role, $timeEx);
         $this->_registry->register('orders-past-time', $orders);
 

@@ -9,8 +9,7 @@ class Addresses extends \Magento\Backend\App\Action
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory
-    )
-    {
+    ){
         parent::__construct($context);
         $this->resultLayoutFactory = $resultLayoutFactory;
     }
@@ -24,14 +23,10 @@ class Addresses extends \Magento\Backend\App\Action
     {
         $resultLayout = $this->resultLayoutFactory->create();
         $isFilter = $this->getRequest()->getParam('filter');
-        if(isset($isFilter)){
-            $resultLayout->getLayout()->getBlock('account_edit_tab_account_addresses')
-                ->setIsFilter(true);
-        } else {
-            $resultLayout->getLayout()->getBlock('account_edit_tab_account_addresses')
-                ->setIsFilter(false);
-        }
-
+        $resultLayout
+            ->getLayout()
+            ->getBlock('account_edit_tab_account_addresses')
+            ->setIsFilter(isset($isFilter));
         return $resultLayout;
     }
 }

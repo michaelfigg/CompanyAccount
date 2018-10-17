@@ -13,19 +13,20 @@ class UpgradeData implements UpgradeDataInterface
 {
     private $customerSetupFactory;
     private $attributeSetFactory;
+    private $resourceConn;
 
     public function __construct(
         CustomerSetupFactory $customerSetupFactory,
-        AttributeSetFactory $attributeSetFactory
-    )
-    {
+        AttributeSetFactory $attributeSetFactory,
+        \Magento\Framework\App\ResourceConnection $resourceConn
+    ){
         $this->customerSetupFactory = $customerSetupFactory;
         $this->attributeSetFactory = $attributeSetFactory;
+        $this->resourceConn = $resourceConn;
     }
 
     public function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
-
         $customerSetup = $this->customerSetupFactory->create(['setup' => $setup]);
         $setup->startSetup();
 
@@ -61,7 +62,31 @@ class UpgradeData implements UpgradeDataInterface
 
         }
 
+        if (version_compare($context->getVersion(), '1.4.0', '<')) {
+            $customerSetup->updateAttribute(
+                \Magento\Customer\Model\Customer::ENTITY,
+                'account_id',                    
+                'required',
+                true
+            );
+
+            $conn = $this->getConnection();
+            $customer_entity = $conn->getTableName('customer_entity');
+            $customer_entity_int = $conn->getTableName('customer_entity_int');
+            $eav_attribute = $conn->getTableName('eav_attribute');
+            //TODO: Finish properly deleting customers with no matching account id
+            /*$this->getConnection()->execute(
+                "DELETE FROM {$customer_entity} ce
+                LEFT JOIN {$customer_entity_int} cei ON ce.entity_id = cei.entity_id
+                AND cei.attribute_id IN (SELECT attribute_id FROM ${eav_attribute} WHERE attribute_code = 'account_id')"
+            );*/
+        }
+
         $setup->endSetup();
     }
 
+    private function getConnection()
+    {
+        return $this->resourceConn->getConnection(\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION);
+    }
 }

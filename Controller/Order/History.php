@@ -29,12 +29,11 @@ class History extends \Magento\Framework\App\Action\Action implements OrderInter
         PageFactory $resultPageFactory,
         \Magento\Customer\Model\Session $customerSession,
         \Tigren\CompanyAccount\Helper\Data $helper
-    )
-    {
+    ){
+        parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
         $this->_customerSession = $customerSession;
         $this->helper = $helper;
-        parent::__construct($context);
     }
 
     /**

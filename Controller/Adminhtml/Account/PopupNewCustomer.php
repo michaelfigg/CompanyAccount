@@ -11,7 +11,6 @@ use Magento\Customer\Api\CustomerRepositoryInterface;
 
 class PopupNewCustomer extends \Magento\Backend\App\Action
 {
-
     protected $resultForwardFactory;
     protected $_datetime;
     protected $_accountManagement;
@@ -40,8 +39,8 @@ class PopupNewCustomer extends \Magento\Backend\App\Action
         \Magento\Customer\Model\CustomerFactory $customerFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\App\ResourceConnection $resource
-    )
-    {
+    ){
+        parent::__construct($context);
         $this->resultForwardFactory = $resultForwardFactory;
         $this->_datetime            = $dateTime;
         $this->_customerExtractor   = $customerExtractor;
@@ -55,7 +54,6 @@ class PopupNewCustomer extends \Magento\Backend\App\Action
         $this->_storeManager        = $storeManager;
         $this->_resource            = $resource;
         $this->_connection          = $this->_resource->getConnection('core_write');
-        parent::__construct($context);
     }
 
 

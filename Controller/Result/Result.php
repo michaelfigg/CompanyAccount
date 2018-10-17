@@ -13,11 +13,8 @@ class Result extends \Magento\Framework\App\Action\Action
      * @var PageFactory
      */
     protected $resultPageFactory;
-
     protected $resultJsonFactory;
-
     protected $resultFactory;
-
     protected $_customerFactory;
 
     /**
@@ -34,14 +31,12 @@ class Result extends \Magento\Framework\App\Action\Action
         JsonFactory $resultJsonFactory,
         ResultFactory $resultFactory,
         \Magento\Customer\Model\CustomerFactory $customerFactory
-        )
-    {
-
+    ){
+        parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
         $this->resultJsonFactory = $resultJsonFactory;
         $this->resultFactory = $resultFactory;
         $this->_customerFactory = $customerFactory;
-        return parent::__construct($context);
     }
 
     /**
@@ -50,9 +45,12 @@ class Result extends \Magento\Framework\App\Action\Action
     public function execute()
     {
         $adminId = $this->getRequest()->getParam('value');
-        $Admin = $this->_customerFactory->create()->getCollection()
+        $Admin = $this->_customerFactory->create()
+            ->getCollection()
             ->addAttributeToFilter('entity_id', ['in' => $adminId])
-            ->setOrder('entity_id', 'asc')->getFirstItem()->getData();
+            ->setOrder('entity_id', 'asc')
+            ->getFirstItem()
+            ->getData();
         $response = $Admin['lastname']." ".$Admin['firstname']."<br/>"
         .$Admin['email'];
         $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);

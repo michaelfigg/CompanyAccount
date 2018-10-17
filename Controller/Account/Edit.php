@@ -23,13 +23,12 @@ class Edit extends \Tigren\CompanyAccount\Controller\Account\AccountAbstract
         CustomerRepositoryInterface $customerRepository,
         DataObjectHelper $dataObjectHelper,
         \Tigren\CompanyAccount\Helper\Data $helper
-    )
-    {
+    ){
+        parent::__construct($context, $customerSession, $pageFactory,$helper);
         $this->session = $customerSession;
         $this->resultPageFactory = $resultPageFactory;
         $this->customerRepository = $customerRepository;
         $this->dataObjectHelper = $dataObjectHelper;
-        parent::__construct($context, $customerSession, $pageFactory,$helper);
     }
 
     /**

@@ -23,8 +23,8 @@ class Ajax extends Action
      */
     public function __construct(Context $context, PageFactory $pageFactory)
     {
-        $this->resultPageFactory = $pageFactory;
         parent::__construct($context);
+        $this->resultPageFactory = $pageFactory;
     }
 
 

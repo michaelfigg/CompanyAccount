@@ -25,19 +25,21 @@ class ToBilling extends \Tigren\CompanyAccount\Controller\Account\AccountAbstrac
         DataObjectHelper $dataObjectHelper,
         \Tigren\CompanyAccount\Helper\Data $helper,
         \Tigren\CompanyAccount\Api\AccountAddressManagementInterface $accountAddressManagement
-    )
-    {
+    ){
         parent::__construct($context, $customerSession, $pageFactory, $helper);
-        $this->_session                     = $customerSession;
-        $this->_resultPageFactory           = $resultPageFactory;
-        $this->_customerRepository          = $customerRepository;
-        $this->_dataObjectHelper            = $dataObjectHelper;
-        $this->_accountAddressManagement    = $accountAddressManagement;
+        $this->_session = $customerSession;
+        $this->_resultPageFactory = $resultPageFactory;
+        $this->_customerRepository = $customerRepository;
+        $this->_dataObjectHelper = $dataObjectHelper;
+        $this->_accountAddressManagement = $accountAddressManagement;
     }
 
     public function execute()
     {
         $resultRedirect = $this->resultRedirectFactory->create();
+        if(!$this->helper->isLoggedIn()){
+            return $resultRedirect->setPath('customer/account/login');
+        }
         $addressId = $this->getRequest()->getParam('id');
         if($addressId){
             try{

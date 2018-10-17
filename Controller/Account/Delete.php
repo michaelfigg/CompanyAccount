@@ -36,7 +36,8 @@ class Delete extends AccountAbstract
         CustomerRepositoryInterface $customerRepository,
         \Magento\Customer\Model\CustomerFactory $customerFactory,
         \Tigren\CompanyAccount\Helper\Data $helper
-    ) {
+    ){
+        parent::__construct($context,$customerSession,$pageFactory,$helper);
         $this->pageFactory = $pageFactory;
         $this->customerFactory = $customerFactory;
         $this->url = $url;
@@ -44,8 +45,6 @@ class Delete extends AccountAbstract
         $this->registry = $registry;
         $this->helper = $helper;
         $this->_customerRepository = $customerRepository;
-        parent::__construct($context,$customerSession,$pageFactory,$helper);
-
     }
 
     public function execute()
@@ -58,10 +57,8 @@ class Delete extends AccountAbstract
             $this->_customerRepository->deleteById($userId);
             $this->_messageManager->addSuccess(__('The user was removed successfully'));
         } catch (\Exception $e) {
-            $this->_messageManager->addError(__('Something went wrong when remove this user .'));
+            $this->_messageManager->addError(__('Something went wrong while deleting the user.'));
         }
         return $resultRedirect->setUrl($this->url->getUrl('companyaccount/account/listuser'));
     }
-
-
 }

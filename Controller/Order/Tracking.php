@@ -36,13 +36,13 @@ class Tracking extends Action\Action
         \Magento\Sales\Model\OrderFactory $orderFactory,
         Registry $registry,
         \Tigren\CompanyAccount\Helper\Data $helper
-    ) {
+    ){
+        parent::__construct($context);
         $this->orderFactory = $orderFactory;
         $this->resultPageFactory = $resultPageFactory;
         $this->_customerSession = $customerSession;
         $this->registry = $registry;
         $this->helper = $helper;
-        parent::__construct($context);
     }
 
     /**

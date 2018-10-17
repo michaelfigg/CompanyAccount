@@ -6,19 +6,23 @@ namespace Tigren\CompanyAccount\Controller\Adminhtml\Account;
 
 class Edit extends \Magento\Backend\App\Action
 {
-
     protected $_coreRegistry = null;
     protected $resultPageFactory;
+    private $accountFactory;
+    private $session;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \Magento\Framework\Registry $registry
-    )
-    {
+        \Magento\Framework\Registry $registry,
+        \Tigren\CompanyAccount\Model\AccountFactory $accountFactory,
+        \Magento\Backend\Model\Session $session
+    ){
+        parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
         $this->_coreRegistry = $registry;
-        parent::__construct($context);
+        $this->accountFactory = $accountFactory;
+        $this->session = $session;
     }
 
     /**
@@ -30,7 +34,7 @@ class Edit extends \Magento\Backend\App\Action
     public function execute()
     {
         $id = $this->getRequest()->getParam('account_id');
-        $account = $this->_objectManager->create('Tigren\CompanyAccount\Model\Account');
+        $account = $this->accountFactory->create();
 
         if ($id) {
             $account->load($id);
@@ -43,7 +47,7 @@ class Edit extends \Magento\Backend\App\Action
             }
         }
 
-        $data = $this->_objectManager->get('Magento\Backend\Model\Session')->getFormData(true);
+        $data = $this->session->getFormData(true);
         if (!empty($data)) {
             $account->setData($data);
         }

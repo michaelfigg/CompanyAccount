@@ -28,14 +28,14 @@ class Order extends \Magento\Framework\App\Action\Action
         \Magento\Customer\Model\Session $customerSession,
         ResultFactory $resultFactory,
         \Tigren\CompanyAccount\Block\Account\Dashboard\Info $info
-    ) {
+    ){
+        parent::__construct($context);
         $this->resultJsonFactory = $resultJsonFactory;
         $this->resultPageFactory  = $resultPageFactory;
         $this->helper = $helper;
         $this->info   = $info;
         $this->resultFactory = $resultFactory;
         $this->_customerSession = $customerSession;
-        parent::__construct($context);
     }
 
     public function execute()

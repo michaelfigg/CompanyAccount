@@ -12,10 +12,9 @@ class NewAction extends \Magento\Backend\App\Action
     public function __construct(
         \Magento\Backend\App\Action\Context $context, 
         \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
-    )
-    {
-        $this->resultForwardFactory = $resultForwardFactory;
+    ){
         parent::__construct($context);
+        $this->resultForwardFactory = $resultForwardFactory;
     }
 
     /**

@@ -12,15 +12,18 @@ class Save extends \Magento\Backend\App\Action
     protected $_customerFactory;
     protected $jsHelper;
     protected $jsonDecoder;
+    private $accountFactory;
 
     public function __construct(
         Action\Context $context,
         \Magento\Backend\Helper\Js $jsHelper,
-        \Magento\Framework\Json\DecoderInterface $jsonDecoder
-    ) {
+        \Magento\Framework\Json\DecoderInterface $jsonDecoder,
+        \Tigren\CompanyAccount\Model\AccountFactory $accountFactory
+    ){
+        parent::__construct($context);
         $this->jsHelper = $jsHelper;
         $this->jsonDecoder = $jsonDecoder;
-        parent::__construct($context);
+        $this->accountFactory = $accountFactory;
     }
 
     /**
@@ -34,7 +37,7 @@ class Save extends \Magento\Backend\App\Action
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         if ($data) {
-            $account = $this->_objectManager->create('Tigren\CompanyAccount\Model\Account');
+            $account = $this->accountFactory->create();
             $id = $this->getRequest()->getParam('account_id');
             if ($id) {
                 $account->load($id);
@@ -60,6 +63,7 @@ class Save extends \Magento\Backend\App\Action
                 );
 
                 $this->messageManager->addSuccess(__('You saved this account'));
+                //TODO: Use of object manager
                 $this->_objectManager->get('Magento\Backend\Model\Session')->setFormData(false);
                 if ($this->getRequest()->getParam('back')) {
                     return $resultRedirect->setPath('*/*/edit', ['account_id' => $account->getId(), '_current' => true]);
