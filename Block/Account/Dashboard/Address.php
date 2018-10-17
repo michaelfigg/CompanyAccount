@@ -170,7 +170,7 @@ class Address extends \Magento\Framework\View\Element\Template
         if ($this->helper->isInAvailableAccount($this->getCustomerId())) {
             $addressAccount = $this->getAccountAddressShipping($this->getIdAddressAccount());
             if (!empty($addressAccount)) {
-                return "{$addressAccount['lastname']}  $addressAccount['firstname']</br>" .
+                return "{$addressAccount['lastname']}  {$addressAccount['firstname']}</br>" .
                     "Street: {$addressAccount['street']}</br>" .
                     "City: {$addressAccount['city']}</br>" .
                     "Company: {$addressAccount['company']}</br>" .

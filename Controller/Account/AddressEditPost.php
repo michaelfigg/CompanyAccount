@@ -39,7 +39,8 @@ class AddressEditPost extends Action
         \Tigren\CompanyAccount\Model\AccountAddressFactory $accountAddressFactory,
         \Tigren\CompanyAccount\Api\AccountAddressManagementInterface $accountAddressManagement,
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
-    ) {
+    ){
+        parent::__construct($context);
         $this->checkoutSession              = $session;
         $this->jsonFactory                  = $jsonFactory;
         $this->jsonHelper                   = $jsonHelper;
@@ -52,7 +53,6 @@ class AddressEditPost extends Action
         $this->_companyAddressFactory       = $accountAddressFactory;
         $this->_accountAddressManagement    = $accountAddressManagement;
         $this->_formKeyValidator            = $formKeyValidator;
-        parent::__construct($context);
     }
 
     public function execute()
@@ -80,6 +80,7 @@ class AddressEditPost extends Action
                 } else {
                     $model->setIsBilling(0)->save();
                 }
+                
                 if(!empty($data['is_shipping_default'])) {
                     $this->_accountAddressManagement->changeToShippingDefaultAddress($model->getId());
                 } else {

@@ -39,8 +39,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Catalog\Model\ProductFactory $productFactory,
         \Tigren\CompanyAccount\Model\AccountAddressFactory $addressFactory,
         \Tigren\CompanyAccount\Model\AccountFactory $accountFactory
-    )
-    {
+    ){
+        parent::__construct($context);
         $this->_resource = $resource;
         $this->_connection = $this->_resource->getConnection('core_write');
         $this->_accountTable = $this->_resource->getTableName('tigren_comaccount_account');
@@ -58,19 +58,16 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->_productFactory = $productFactory;
         $this->addressFactory = $addressFactory;
         $this->accountFactory = $accountFactory;
-
-        parent::__construct($context);
     }
 
     public function getAccountNameById($accountId)
     {
         $account = $this->accountFactory->create()->load($accountId);
-        if ($account) {
-            $accountName = $account->getCompany();
-            return $accountName;
-        } else {
+        if(!$account){
             return null;
         }
+        $accountName = $account->getCompany();
+        return $accountName;
     }
 
     public function getAllAccountIds()
@@ -99,14 +96,14 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return null;
     }
 
+    public function isLoggedIn()
+    {
+        return $this->_customerSession->isLoggedIn();
+    }
+
     public function getCustomerId()
     {
         return $this->_customerSession->getCustomerId();
-    }
-
-    public function getCurrentAccount()
-    {
-
     }
 
     public function getCustomerCollection()
@@ -116,14 +113,18 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
     public function createAccount($company, $customerId, $is_business)
     {
-        $account = $this->_objectManager->create('Tigren\CompanyAccount\Model\Account');
-        $data = [
-            'company' => $company,
-            'customer_ids' => [$customerId],
-            'admin_ids' => [$customerId],
-            'stores' => [$this->_storeManager->getStore()->getId()]
-        ];
-        $account->setData($data)->save();
+        $account = $this->accountFactory
+            ->create()
+            ->setData(
+                [
+                    'company' => $company,
+                    'customer_ids' => [$customerId],
+                    'admin_ids' => [$customerId],
+                    'stores' => [$this->_storeManager->getStore()->getId()]
+                ]
+            );
+        $account->save();
+
         if ($accountId = $account->getId()) {
             $customer = $this->_customers->load($customerId);
             $customerData = $customer->getDataModel();

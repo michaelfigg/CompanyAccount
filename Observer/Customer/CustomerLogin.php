@@ -44,8 +44,6 @@ class CustomerLogin implements ObserverInterface
             $this->_response->create()
                 ->setRedirect($url)
                 ->sendResponse();
-            exit(0);
-            return $this;
         }
         return $this;
     }

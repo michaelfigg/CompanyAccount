@@ -27,14 +27,14 @@ class Create extends \Magento\Customer\Controller\AbstractAccount
         PageFactory $resultPageFactory,
         Registration $registration,
         \Tigren\CompanyAccount\Helper\Data $helper
-    ) {
+    ){
+        parent::__construct($context);
         $this->_customerSession = $customerSession;
         $this->pageFactory = $pageFactory;
         $this->session = $customerSession;
         $this->resultPageFactory = $resultPageFactory;
         $this->registration = $registration;
         $this->helper = $helper;
-        parent::__construct($context);
     }
 
     /**
@@ -56,12 +56,14 @@ class Create extends \Magento\Customer\Controller\AbstractAccount
             $resultRedirect->setPath('customer/account/login');
             return $resultRedirect;
         }
-        if ($this->session->isLoggedIn() && !$this->helper->isInAvailableAccount($this->session->getCustomerId())) {
+
+        if (!$this->helper->isInAvailableAccount($this->session->getCustomerId())) {
             $resultRedirect = $this->resultRedirectFactory->create();
             $resultRedirect->setPath('customer/account/index');
             $this->messageManager->addError(__('You can not create user'));
             return $resultRedirect;
         }
+        
         /** @var \Magento\Framework\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $companyUserBlock = $resultPage->getLayout()->getBlock('customer-users-links.list-users');

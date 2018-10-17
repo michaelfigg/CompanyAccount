@@ -22,22 +22,21 @@ class AddressEdit extends \Magento\Customer\Controller\AbstractAccount
         PageFactory $resultPageFactory,
         Registration $registration,
         \Tigren\CompanyAccount\Helper\Data $helper
-    ) {
+    ){
+        parent::__construct($context);
         $this->_customerSession = $customerSession;
         $this->pageFactory = $pageFactory;
         $this->session = $customerSession;
         $this->resultPageFactory = $resultPageFactory;
         $this->registration = $registration;
         $this->helper = $helper;
-        parent::__construct($context);
     }
 
     public function execute()
     {
         $resultPage = $this->resultPageFactory->create();
         $addressSort = $this->getRequest()->getParam('add');
-        $title = 'Edit Address '.$addressSort;
-        $resultPage->getConfig()->getTitle()->prepend(__($title));
+        $resultPage->getConfig()->getTitle()->prepend(__("Edit Address: {$addressSort}"));
         $companyAddressBlock = $resultPage->getLayout()->getBlock('customer-users-links.company-address');
         if ($companyAddressBlock) {
             $companyAddressBlock->setIsHighlighted(true);

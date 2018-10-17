@@ -33,14 +33,17 @@ class Title extends \Magento\Theme\Block\Html\Title
     /**
      * Constructor
      *
-     * @param \Magento\Framework\View\Element\Context $context
+     * @param \Magento\Framework\View\Element\Template\Context $context
+     * @param \Magento\Framework\Escaper $escaper
+     * @param \Magento\Sales\Model\OrderFactory $orderFactory
+     * @param \Magento\Framework\App\RequestInterface $requestInterface
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\View\Element\Context $context,
+        \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\Escaper $escaper,
         \Magento\Sales\Model\OrderFactory $orderFactory,
-        \Magento\Framework\App\RequestInterface $requestInterface
+        \Magento\Framework\App\RequestInterface $requestInterface,
         array $data = []
     ){
         parent::__construct($context, $data);

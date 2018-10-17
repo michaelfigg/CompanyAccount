@@ -136,7 +136,8 @@ class CreatePost extends \Magento\Customer\Controller\AbstractAccount
         DataObjectHelper $dataObjectHelper,
         AccountRedirect $accountRedirect,
         \Magento\Framework\Session\SessionManagerInterface $sessionManager
-    ) {
+    ){
+        parent::__construct($context);
         $this->session = $customerSession;
         $this->scopeConfig = $scopeConfig;
         $this->storeManager = $storeManager;
@@ -155,7 +156,6 @@ class CreatePost extends \Magento\Customer\Controller\AbstractAccount
         $this->dataObjectHelper = $dataObjectHelper;
         $this->accountRedirect = $accountRedirect;
         $this->_sessionManager = $sessionManager;
-        parent::__construct($context);
     }
 
     /**
@@ -224,6 +224,7 @@ class CreatePost extends \Magento\Customer\Controller\AbstractAccount
                     $addressData[$attributeCode] = $value;
             }
         }
+
         $addressDataObject = $this->addressDataFactory->create();
         $this->dataObjectHelper->populateWithArray(
             $addressDataObject,
@@ -231,12 +232,10 @@ class CreatePost extends \Magento\Customer\Controller\AbstractAccount
             '\Magento\Customer\Api\Data\AddressInterface'
         );
         $addressDataObject->setRegion($regionDataObject);
+        $addressDataObject
+            ->setIsDefaultBilling($this->getRequest()->getParam('default_billing', false))
+            ->setIsDefaultShipping($this->getRequest()->getParam('default_shipping', false));
 
-        $addressDataObject->setIsDefaultBilling(
-            $this->getRequest()->getParam('default_billing', false)
-        )->setIsDefaultShipping(
-            $this->getRequest()->getParam('default_shipping', false)
-        );
         return $addressDataObject;
     }
 
@@ -249,13 +248,6 @@ class CreatePost extends \Magento\Customer\Controller\AbstractAccount
      */
     public function execute()
     {
-         $job_title = $this->getRequest()->getParam('job_title');
-         $phone_number = $this->getRequest()->getParam('phone_number');
-         $is_active = $this->getRequest()->getParam('is_active');
-         $this->_sessionManager->setJobTitle($job_title);
-         $this->_sessionManager->setPhoneNumber($phone_number);
-         $this->_sessionManager->setIsActive($is_active);
-
         /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         if (!$this->registration->isAllowed()) {
@@ -263,7 +255,19 @@ class CreatePost extends \Magento\Customer\Controller\AbstractAccount
             return $resultRedirect;
         }
 
-        if (!$this->getRequest()->isPost() && !$this->formKeyValidator->validate($this->getRequest())) {
+        $this->_sessionManager->setJobTitle(
+            $this->getRequest()->getParam('job_title')
+        );
+        $this->_sessionManager->setPhoneNumber(
+            $this->getRequest()->getParam('phone_number')
+        );
+        $this->_sessionManager->setIsActive(
+            $this->getRequest()->getParam('is_active')
+        );
+
+        //NOT post AND NOT valid? then redirect to create
+        //TODO: shouldn't this be OR instead of AND?
+        if (!$this->getRequest()->isPost() && !$this->formKeyValidator->validate($this->getRequest())) { 
             $url = $this->urlModel->getUrl('*/*/create', ['_secure' => true]);
             $resultRedirect->setUrl($this->_redirect->error($url));
             return $resultRedirect;
@@ -282,8 +286,11 @@ class CreatePost extends \Magento\Customer\Controller\AbstractAccount
 
             $this->checkPasswordConfirmation($password, $confirmation);
 
-            $customer = $this->accountManagement
-                ->createAccount($customer, $password, $redirectUrl);
+            $customer = $this->accountManagement->createAccount(
+                $customer,
+                $password,
+                $redirectUrl
+            );
 
             if ($this->getRequest()->getParam('is_subscribed', false)) {
                 $this->subscriberFactory->create()->subscribeCustomerById($customer->getId());
@@ -294,19 +301,17 @@ class CreatePost extends \Magento\Customer\Controller\AbstractAccount
                 [
                     'account_controller' => $this,
                     'customer' => $customer
-                  ]
+                ]
             );
 
             $confirmationStatus = $this->accountManagement->getConfirmationStatus($customer->getId());
             if ($confirmationStatus === AccountManagementInterface::ACCOUNT_CONFIRMATION_REQUIRED) {
                 $email = $this->customerUrl->getEmailConfirmationUrl($customer->getEmail());
                 // @codingStandardsIgnoreStart
-                $this->messageManager->addSuccess(
-                    __(
-                        'You must confirm your account. Please check your email for the confirmation link or <a href="%1">click here</a> for a new link.',
-                        $email
-                    )
-                );
+                $this->messageManager->addSuccess(__(
+                    'You must confirm your account. Please check your email for the confirmation link or <a href="%1">click here</a> for a new link.',
+                    $email
+                ));
                 // @codingStandardsIgnoreEnd
                 $url = $this->urlModel->getUrl('*/*/listuser', ['_secure' => true]);
                 $resultRedirect->setUrl($this->_redirect->success($url));
@@ -316,15 +321,16 @@ class CreatePost extends \Magento\Customer\Controller\AbstractAccount
                 $resultRedirect->setUrl($this->_redirect->success($url));
             }
             return $resultRedirect;
+
         } catch (StateException $e) {
             $url = $this->urlModel->getUrl('customer/account/forgotpassword');
             // @codingStandardsIgnoreStart
-            $message = __(
+            $this->messageManager->addError(__(
                 'There is already an account with this email address. If you are sure that it is your email address, <a href="%1">click here</a> to get your password and access your account.',
                 $url
-            );
+            ));
             // @codingStandardsIgnoreEnd
-            $this->messageManager->addError($message);
+
         } catch (InputException $e) {
             $this->messageManager->addError($this->escaper->escapeHtml($e->getMessage()));
             foreach ($e->getErrors() as $error) {

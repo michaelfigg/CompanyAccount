@@ -10,6 +10,8 @@ class ApiConnection
     protected $collectionFactory;
     protected $accountFactory;
 
+    private $apiClient;
+
     public function __construct(
         \Tigren\CompanyAccount\Helper\DataApi $helperApi,
         \Tigren\CompanyAccount\Helper\Data $helper,
@@ -25,79 +27,109 @@ class ApiConnection
 
     public function getAccessToken()
     {
-        $client = '';
-        if($this->_helperApi->isAllow()){
-            $params = array('scope' => 'all');
-            $client = new Client($this->_helperApi->getClientId(), $this->_helperApi->getClientSecret());
-            $token = $client->getAccessToken(ApiScopeInterface::API_TOKEN_ENDPOINT, ApiScopeInterface::API_GRANT_TYPE, $params);
-            if(isset($token['result']['access_token'])) {
-                $client->setAccessTokenType(Client::ACCESS_TOKEN_BEARER);
-                $client->setAccessToken($token['result']['access_token']);
-            } else {
+        if(!$this->_helperApi->isAllow()){
+            return false;
+        }
+
+        if(empty($this->apiClient)){
+            $client = new Client(
+                $this->_helperApi->getClientId(),
+                $this->_helperApi->getClientSecret()
+            );
+            $token = $client->getAccessToken(
+                ApiScopeInterface::API_TOKEN_ENDPOINT,
+                ApiScopeInterface::API_GRANT_TYPE,
+                ['scope' => 'all']
+            );
+
+            if(!isset($token['result']['access_token'])){
                 return false;
             }
+
+            $client->setAccessTokenType(Client::ACCESS_TOKEN_BEARER);
+            $client->setAccessToken($token['result']['access_token']);
+            $this->apiClient = $client;
         }
-        return $client;
+        
+        return $this->apiClient;
     }
 
+
+    /**
+     * Badly named, more like an account sync (updating the managers) as far as I can tell from optimising the code
+     * @return bool
+     */
     public function getAccountDetail()
     {
+        if(!$this->_helper->isLoggedIn() || !$this->_helperApi->isAllow()){
+            return false;
+        }
+
         $customerId = $this->_helper->getCustomerId();
         $accountId = $this->_helper->isInAvailableAccount($customerId);
-        //$accountId = 536887;
-        if($accountId && $this->getAccessToken()){
-            $requestUrl     = ApiScopeInterface::API_URL_ACCOUNT . $accountId;
-            $parameters     = array();
-            $http_method    = Client::HTTP_METHOD_GET;
-            $http_headers   = array('Accept' => ApiScopeInterface::API_ACCEPT_HEADER);
-            $request = $this->getAccessToken();
-            $response = $request->fetch($requestUrl, $parameters, $http_method, $http_headers);
-            $response = $response['result'];
 
-            if(!empty($response)){
-                $data = $this->accountFactory->create();
-                $data->load($accountId);
-                $data->setPrimaryManager(implode('&',$response['PrimaryManager']));
-                $data->setSecondaryManager(implode('&',$response['SecondaryManager']));
-                $data->save();
-            }
+        if(!$accountId){
+            return false;
         }
+
+        $client = $this->getAccessToken();
+        $response = $client->fetch(
+            ApiScopeInterface::API_URL_ACCOUNT . $accountId,
+            [],
+            Client::HTTP_METHOD_GET,
+            ['Accept' => ApiScopeInterface::API_ACCEPT_HEADER]
+        );
+
+        if($response['code'] != 200 || empty($response['result']) || !is_set($response['result']['PrimaryManager']) || !is_set($response['result']['SecondaryManager'])){
+            return [];
+        }
+
+        $data = $this->accountFactory->create();
+        $data->load($accountId);
+        $data->setPrimaryManager(implode('&', $response['result']['PrimaryManager']));
+        $data->setSecondaryManager(implode('&', $response['result']['SecondaryManager']));
+        $data->save();
 
         return true;
     }
+
     public function getListOrder($skip)
     {
-        $response = '';
-        if($this->getAccessToken()){
-            $requestUrl     = ApiScopeInterface::API_URL_SALE_ORDERS . '?&$orderby=Date%20desc&$skip='. $skip;
-            $parameters     = array();
-            $http_method    = Client::HTTP_METHOD_GET;
-            $http_headers   = array('Accept' => ApiScopeInterface::API_ACCEPT_HEADER);
-            $request = $this->getAccessToken();
-            $response = $request->fetch($requestUrl, $parameters, $http_method, $http_headers);
-
-            if(!empty($response)){
-                $response = $response['result'];
-            }
+        if(!$this->_helper->isLoggedIn() || !$this->_helper->isAllow()){
+            return [];
         }
 
-        return $response;
+        $client = $this->getAccessToken();
+        $response = $client->fetch(
+            ApiScopeInterface::API_URL_SALE_ORDERS . '?&$orderby=Date%20desc&$skip='. $skip,
+            [],
+            Client::HTTP_METHOD_GET,
+            ['Accept' => ApiScopeInterface::API_ACCEPT_HEADER]
+        );
+
+        if($response['code'] != 200 || empty($response['result'])){
+            return [];
+        }
+        return $response['result'];
     }
 
     public function getOrderDetail($orderId)
     {
-        $response = '';
-        if($this->getAccessToken()){
-            $requestUrl     = ApiScopeInterface::API_URL_SALE_ORDERS . '/'. $orderId;
-            $parameters     = array();
-            $http_method    = Client::HTTP_METHOD_GET;
-            $http_headers   = array('Accept' => ApiScopeInterface::API_ACCEPT_HEADER);
-            $request = $this->getAccessToken();
-            $response = $request->fetch($requestUrl, $parameters, $http_method, $http_headers);
-            $response = $response['result'];
+        if(!$this->_helper->isLoggedIn() || !$this->_helper->isAllow()){
+            return [];
         }
 
-        return $response;
-    }
+        $client = $this->getAccessToken();
+        $response = $client->fetch(
+            ApiScopeInterface::API_URL_SALE_ORDERS . '/'. $orderId,
+            [],
+            Client::HTTP_METHOD_GET,
+            ['Accept' => ApiScopeInterface::API_ACCEPT_HEADER]
+        );
 
+        if($response['code'] != 200 || empty($response['result'])){
+            return [];
+        }
+        return $response['result'];
+    }
 }

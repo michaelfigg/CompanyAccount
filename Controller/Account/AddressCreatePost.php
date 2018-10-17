@@ -23,6 +23,7 @@ class AddressCreatePost extends Action
     protected $_companyAccountHelper;
     protected $_accountAddressManagement;
     protected $_formKeyValidator;
+    private $accountAddressFactory;
 
     public function __construct(
         Context $context,
@@ -36,7 +37,8 @@ class AddressCreatePost extends Action
         RedirectFactory $redirectFactory,
         \Tigren\CompanyAccount\Helper\Data $companyAccountHelper,
         \Tigren\CompanyAccount\Api\AccountAddressManagementInterface $accountAddressManagement,
-        \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
+        \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
+        \Tigren\CompanyAccount\Model\AccountAddressFactory $accountAddressFactory
     ){
         parent::__construct($context);
         $this->checkoutSession = $session;
@@ -50,6 +52,7 @@ class AddressCreatePost extends Action
         $this->_companyAccountHelper = $companyAccountHelper;
         $this->_accountAddressManagement = $accountAddressManagement;
         $this->_formKeyValidator = $formKeyValidator;
+        $this->accountAddressFactory = $accountAddressFactory;
     }
 
     public function execute()
@@ -63,8 +66,7 @@ class AddressCreatePost extends Action
             try{
                 $customerId = $this->_currentCustomer->getCustomerId();
                 $accountId = $this->_companyAccountHelper->getAccountIdByCustomer($customerId);
-                //TODO: Don't use object manager
-                $model = $this->_objectManager->create('\Tigren\CompanyAccount\Model\AccountAddress');
+                $model = $this->accountAddressFactory->create();
 
                 $model->setData($this->getRequest()->getParams());
                 $model->setStreet($data['street'][0]. ' ' .$data['street'][1]);
