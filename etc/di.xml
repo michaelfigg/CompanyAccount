@@ -30,8 +30,6 @@
     <preference for="Magento\Sales\Block\Order\View" type="Tigren\CompanyAccount\Block\Order\View"/>
     <preference for="Magento\Sales\Block\Order\Totals" type="Tigren\CompanyAccount\Block\Order\Totals"/>
     <preference for="Magento\Customer\Controller\Account\Edit" type="Tigren\CompanyAccount\Controller\Account\AccountInformation"/>
-    <!--<preference for="Magento\Backend\Block\Widget\Grid\Column\Renderer\Checkbox"-->
-    <!--type="Tigren\CompanyAccount\Plugin\Backend\Widget\Grid\Column\Renderer\CheckboxBackend" />-->
 
     <virtualType name="AccountGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
         <arguments>
@@ -72,13 +70,6 @@
         </arguments>
     </type>
     <type name="Magento\Sales\Api\OrderRepositoryInterface">
-        <plugin name="addExtensionAttributeOrderItem"
-                type="Tigren\CompanyAccount\Model\Plugin\Sales\OrderRepository"/>
+        <plugin name="addExtensionAttributeOrderItem" type="Tigren\CompanyAccount\Plugin\Sales\OrderRepository"/>
     </type>
-
-    <!-- <type name="Magento\Backend\Block\Widget\Grid\Column\Renderer\Checkbox">
-        <plugin name="checkboxBackend"
-                type="Tigren\CompanyAccount\Plugin\Backend\Widget\Grid\Column\Renderer\CheckboxBackend"/>
-    </type> -->
-
 </config>

@@ -13,12 +13,11 @@
                 <argument translate="true" name="title" xsi:type="string">My Profile</argument>
             </action>
         </referenceBlock>
-
         <referenceBlock name="customer_edit">
             <action method="setTemplate">
                 <argument name="template" xsi:type="string">Tigren_CompanyAccount::customer/form/edit-profile.phtml</argument>
             </action>
         </referenceBlock>
-
+        <move element="page.main.title" destination="content" before="-"/>
     </body>
 </page>

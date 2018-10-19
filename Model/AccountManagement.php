@@ -103,8 +103,7 @@ class AccountManagement implements \Tigren\CompanyAccount\Api\AccountManagementI
         \Magento\Customer\Model\Customer $customer,
         \Magento\Framework\App\ResourceConnection $resource
 
-    )
-    {
+    ){
         $this->_resource = $resource;
         $this->_connection = $this->_resource->getConnection('core_write');
         $this->_accountAdminTable = $this->_resource->getTableName('tigren_comaccount_account_admin');
@@ -126,7 +125,6 @@ class AccountManagement implements \Tigren\CompanyAccount\Api\AccountManagementI
         $this->registry = $registry;
         $this->_customerCollectionFactory = $customerCollectionFactory;
         $this->_customers = $customer;
-
     }
 
     /**

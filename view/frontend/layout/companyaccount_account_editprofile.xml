@@ -12,5 +12,6 @@
             <block class="Tigren\CompanyAccount\Block\Account\EditProfile" name="account_edit" template="company/editprofile.phtml" cacheable="false">
             </block>
         </referenceContainer>
+        <move element="page.main.title" destination="content" before="-"/>
     </body>
 </page>

@@ -152,11 +152,17 @@ class Account extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
     
     protected function _afterDelete(AbstractModel $object) {
-        $conditionAdmin = ['account_id = ?' => $object->getId()];
-        $conditionCustomer = ['value = ?' => $object->getId()];
-        $connection = $this->_connection;
-        $connection->delete($this->_accountAdminTable, $conditionAdmin);
-        $connection->delete($this->_customEntityIntTable, $conditionCustomer);
+        $customer_entity = $this->_connection->getTable('customer_entity');
+        
+        $this->_connection->query(
+            "DELETE FROM ${customer_entity}
+            WHERE entity_id IN (
+                SELECT entity_id FROM customer_entity_int cei
+                LEFT JOIN eav_attribute ea ON cei.attribute_id = ea.attribute_id
+                WHERE ea.attribute_code = 'account_id' AND cei.value = ?
+            )",
+            [$object->getId()]
+        );
         
         return parent::_afterDelete($object);
     }

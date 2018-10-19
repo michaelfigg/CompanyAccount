@@ -20,5 +20,6 @@
                 </block>
             </block>
         </referenceContainer>
+        <move element="page.main.title" destination="content" before="-"/>
     </body>
 </page>

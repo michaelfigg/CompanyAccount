@@ -8,5 +8,6 @@
                 <block name="customer.form.register.fields.before" as="form_fields_before" />
             </block>
         </referenceContainer>
+        <move element="page.main.title" destination="content" before="-"/>
     </body>
 </page>

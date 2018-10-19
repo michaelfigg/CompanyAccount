@@ -63,23 +63,27 @@ class UpgradeData implements UpgradeDataInterface
         }
 
         if (version_compare($context->getVersion(), '1.4.0', '<')) {
+            $conn = $this->getConnection();
+            $customer_entity = $conn->getTableName('customer_entity');
+            $customer_entity_int = $conn->getTableName('customer_entity_int');
+            $eav_attribute = $conn->getTableName('eav_attribute');
+
+            //Delete all customers with no account_id set
+            $this->getConnection()->query(
+                "DELETE FROM {$customer_entity}
+                WHERE entity_id NOT IN (
+                    SELECT DISTINCT cei.entity_id FROM {$customer_entity_int} cei
+                    LEFT JOIN {$eav_attribute} ea ON cei.attribute_id = ea.attribute_id
+                    WHERE ea.attribute_code = 'account_id'
+                )"
+            );
+            
             $customerSetup->updateAttribute(
                 \Magento\Customer\Model\Customer::ENTITY,
                 'account_id',                    
                 'required',
                 true
             );
-
-            $conn = $this->getConnection();
-            $customer_entity = $conn->getTableName('customer_entity');
-            $customer_entity_int = $conn->getTableName('customer_entity_int');
-            $eav_attribute = $conn->getTableName('eav_attribute');
-            //TODO: Finish properly deleting customers with no matching account id
-            /*$this->getConnection()->execute(
-                "DELETE FROM {$customer_entity} ce
-                LEFT JOIN {$customer_entity_int} cei ON ce.entity_id = cei.entity_id
-                AND cei.attribute_id IN (SELECT attribute_id FROM ${eav_attribute} WHERE attribute_code = 'account_id')"
-            );*/
         }
 
         $setup->endSetup();

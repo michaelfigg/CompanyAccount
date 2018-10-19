@@ -5,5 +5,6 @@
         <referenceContainer name="content">
             <block class="Tigren\CompanyAccount\Block\Customer\Address\Edit" name="account_address_edit" template="Tigren_CompanyAccount::customer/address/edit.phtml" cacheable="false"/>
         </referenceContainer>
+        <move element="page.main.title" destination="content" before="-"/>
     </body>
 </page>

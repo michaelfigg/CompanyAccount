@@ -10,10 +10,4 @@
     <event name="user_create_success">
         <observer name="assign_admin_account" instance="Tigren\CompanyAccount\Observer\Customer\CreateUserSuccess"/>
     </event>
-    <!--<event name="layout_generate_blocks_after">-->
-        <!--<observer name="remove_block" instance="Tigren\CompanyAccount\Observer\RemoveBlock"/>-->
-    <!--</event>-->
-    <!--<event name="checkout_onepage_controller_success_action">-->
-        <!--<observer name="save_address_company" instance="Tigren\CompanyAccount\Observer\Customer\SaveAddressCompany"/>-->
-    <!--</event>-->
 </config>

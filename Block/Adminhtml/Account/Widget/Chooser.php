@@ -74,22 +74,6 @@ class Chooser extends \Magento\Backend\Block\Widget\Grid\Extended
             }";
     }
 
-
-    // protected function _addColumnFilterToCollection($column)
-    // {
-    //     if ($column->getId() == 'in_banners') {
-    //         $selected = $this->getSelectedBanners();
-    //         if ($column->getFilter()->getValue()) {
-    //             $this->getCollection()->addFieldToFilter('banner_id', ['in' => $selected]);
-    //         } else {
-    //             $this->getCollection()->addFieldToFilter('banner_id', ['nin' => $selected]);
-    //         }
-    //     } else {
-    //         parent::_addColumnFilterToCollection($column);
-    //     }
-    //     return $this;
-    // }
-
     /**
      * Prepare products collection, defined collection filters (category, product type)
      *
@@ -207,21 +191,6 @@ class Chooser extends \Magento\Backend\Block\Widget\Grid\Extended
      */
     public function getSelectedCustomerIds()
     {
-        // $accountId = $this->getRequest()->getParam('account_id');
-        // $account = $this->_accountFactory->create()->load($accountId);
-        // $customerIds = $account->getCustomerIds();
-
-        // if (!$customerIds) {
-        //     return [];
-        // }
-
-        // $customerIdArr = [];
-
-        // foreach ($customerIds as $customerId) {
-        //     $customerIdArr[$customerId] = ['id' => $customerId];
-        // }
-
-        // return $customerIdArr;
         return [];
     }
 }

@@ -14,5 +14,6 @@
         <referenceContainer name="content">
             <block class="Tigren\CompanyAccount\Block\Order\Tracking" name="companyaccount_order_tracking" cacheable="false" template="order/tracking.phtml" />
         </referenceContainer>
+        <move element="page.main.title" destination="content" before="-"/>
     </body>
 </page>

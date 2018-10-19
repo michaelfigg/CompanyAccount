@@ -21,5 +21,6 @@
                 <block name="form.additional.info" as="form_additional_info"/>
             </block>
         </referenceContainer>
+        <move element="page.main.title" destination="content" before="-"/>
     </body>
 </page>

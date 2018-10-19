@@ -16,6 +16,6 @@
                 <argument translate="true" name="title" xsi:type="string">Manage Users</argument>
             </action>
         </referenceBlock>
-
+        <move element="page.main.title" destination="content" before="-"/>
     </body>
 </page>

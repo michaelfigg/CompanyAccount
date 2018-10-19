@@ -22,13 +22,19 @@ class PrepareSave implements ObserverInterface
     {
         $customer = $observer->getCustomer();
         $params = $observer->getEvent()->getRequest()->getParams();
-        if (!empty($params['customer']['account_id'])) {
-            $account_id = $params['customer']['account_id'];
-            $account = $this->accountFactory->create();
-            $account->load($account_id);
-            if ($account->getId()) {
-               $customer->setCustomAttribute('account_id',$account_id);
-            }
+
+        if(empty($params['customer']['account_id'])){
+            throw new \Magento\Framework\Exception\LocalizedException(__('Account ID is required'));
         }
+        
+        $account_id = $params['customer']['account_id'];
+        $account = $this->accountFactory->create();
+        $account->load($account_id);
+
+        if (!$account->getId()) {
+            throw new \Magento\Framework\Exception\LocalizedException(__('Account does not exist'));
+        }
+        
+        $customer->setCustomAttribute('account_id', $account_id);
     }
 }

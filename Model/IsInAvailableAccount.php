@@ -22,11 +22,8 @@ class IsInAvailableAccount implements ConfigProviderInterface
     public function getConfig()
     {
         $config = [];
-        if (!empty($this->_currentCustomer->getCustomerId()) && !empty($this->_companyAccountHelper->isInAvailableAccount($this->_currentCustomer->getCustomerId()))) {
-            $config['checkAccount'] = true;
-        } else {
-            $config['checkAccount'] = false;
-        }
+        $config['checkAccount'] = !empty($this->_currentCustomer->getCustomerId()) &&
+            !empty($this->_companyAccountHelper->isInAvailableAccount($this->_currentCustomer->getCustomerId()));
 
         return $config;
     }

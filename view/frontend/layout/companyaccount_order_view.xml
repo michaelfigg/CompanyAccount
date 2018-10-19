@@ -38,5 +38,6 @@
             <!--<block class="Magento\Sales\Block\Order\Info" as="info" name="sales.order.info" after="sales.order.view"/>-->
         </referenceContainer>
         <block class="Magento\Framework\View\Element\Template" name="additional.product.info" template="Magento_Theme::template.phtml"/>
+        <move element="page.main.title" destination="content" before="-"/>
     </body>
 </page>

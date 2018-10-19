@@ -1,11 +1,7 @@
 <?php
 
-namespace Tigren\CompanyAccount\Model\Plugin\Sales;
+namespace Tigren\CompanyAccount\Plugin\Sales;
 
-/**
- * Class OrderRepository
- * @package Tigren\CompanyAccount\Model\Plugin\Sales
- */
 class OrderRepository
 {
     /**
@@ -32,18 +28,17 @@ class OrderRepository
         \Tigren\CompanyAccount\Helper\Data $caHelper,
         \Magento\Sales\Api\Data\OrderItemExtensionFactory $orderItemExtensionFactory,
         \Magento\Sales\Api\Data\OrderExtensionFactory $orderExtensionFactory
-    ) {
+    ){
         $this->caHelper = $caHelper;
         $this->orderItemExtensionFactory = $orderItemExtensionFactory;
         $this->orderExtensionFactory = $orderExtensionFactory;
-
     }
-    public function afterGet
-    (
+
+    public function afterGet(
         \Magento\Sales\Api\OrderRepositoryInterface $subject,
         \Magento\Sales\Api\Data\OrderInterface $order
-    ) {
-        foreach ($order->getItems() as $item) {
+    ){
+        foreach ($order->getItems() as $item){
             $this->addExtensionDataForItem($item);
         }
         $this->addExtensionDataForOrder($order);

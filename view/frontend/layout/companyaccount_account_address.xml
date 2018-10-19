@@ -10,5 +10,6 @@
         <referenceContainer name="content">
             <block class="Tigren\CompanyAccount\Block\Customer\Address" name="company_account_address" template="Tigren_CompanyAccount::customer/account/address.phtml" cacheable="false"/>
         </referenceContainer>
+        <move element="page.main.title" destination="content" before="-"/>
     </body>
 </page>
