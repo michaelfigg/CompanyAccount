@@ -49,6 +49,9 @@ class User extends \Magento\Framework\View\Element\Template
      */
     protected function _prepareLayout()
     {
+        if(!$this->_customerSession->isLoggedIn()){
+            return;
+        }
         $customer = $this->_customerRepositoryInterface->getById($this->getCustomerId());
         if (!empty($customer->getCustomAttribute('is_business'))) {
             $attrIsBusiness = $customer->getCustomAttribute('is_business')->getValue();

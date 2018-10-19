@@ -259,6 +259,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
     public function isInAvailableAccount($customerId)
     {
+        if(empty($customerId)){
+            return false;
+        }
         $select = $this->getSelect()->from(['acd' => $this->_accountAdminTable], 'account_id')
             ->join(['acs' => $this->_accountStoreTable], 'acd.account_id = acs.account_id')
             ->where('acs.store_id = ' . $this->getStoreId() . ' AND admin_id=' . $customerId);
