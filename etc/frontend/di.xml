@@ -9,7 +9,4 @@
             </argument>
         </arguments>
     </type>
-    <type name="Magento\Customer\Model\Registration">
-        <plugin name="CompanyAccount::disableRegistration" type="Tigren\CompanyAccount\Plugin\Customer\DisableRegistration"/>
-    </type>
 </config>

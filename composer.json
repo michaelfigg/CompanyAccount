@@ -1,7 +1,7 @@
 {
     "name": "stockinthechannel/companyaccount",
     "type": "magento2-module",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "Stockinthechannel CompanyAccount module",
     "license": "proprietary",
     "require": {
