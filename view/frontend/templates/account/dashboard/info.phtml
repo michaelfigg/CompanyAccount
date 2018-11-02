@@ -7,8 +7,11 @@
 // @codingStandardsIgnoreFile
 
 /** @var \Tigren\CompanyAccount\Block\Account\Dashboard\Info $block */
+
+$account = $block->getAccount();
+//TODO: Change default image
+$logoImgLink = !empty($account->getLogoImageLink()) ? $account->getLogoImageLink() : 'https://i.imgur.com/Bbl96RE.png'
 ?>
-<?php $account = $block->getAccount(); ?>
 <div class="block block-dashboard-info">
     <div class="block-title"><strong><?= $block->escapeHtml(__('Account Information')) ?></strong></div>
     <div class="block-content">
@@ -18,9 +21,7 @@
                     <div class="box-content">
                         <img title="<?php echo $account->getCompany() ?>"
                              alt="<?php echo $account->getCompany() ?>"
-                             src="<?php
-                             echo !empty($account->getLogoImageLink()) ? $account->getLogoImageLink() : 'http://www.logo-maker.net/images/common/company-logo8.gif'
-                             ?>"
+                             src="<?php echo $logoImgLink ?>"
                              height="40px"/>
                     </div>
                 </div>

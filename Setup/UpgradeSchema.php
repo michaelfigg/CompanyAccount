@@ -222,7 +222,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 null,
                 'default' => null,
                 'nullable' => true,
-                'comment' =>'Manager Profile'
+                'comment' =>'Manager Profile Image Link'
             ]
         );
     }

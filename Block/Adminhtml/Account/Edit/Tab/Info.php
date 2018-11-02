@@ -154,8 +154,8 @@ class Info extends \Magento\Backend\Block\Widget\Form\Generic
             'text',
             [
                 'name' => 'manager_profile',
-                'label' => __('Manager Profile'),
-                'title' => __('Manager Profile'),
+                'label' => __('Manager Profile Image Link'),
+                'title' => __('Manager Profile Image Link'),
             ]
         );
         
