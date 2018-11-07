@@ -2,6 +2,9 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <update handle="customer_account"/>
+    <head>
+        <css src="https://fonts.googleapis.com/icon?family=Material+Icons" src_type="url" />
+    </head>
     <body>
         <referenceBlock name="customer-account-navigation-orders-link" remove="true"/>
         <referenceBlock name="customer-account-navigation-address-link" remove="true"/>

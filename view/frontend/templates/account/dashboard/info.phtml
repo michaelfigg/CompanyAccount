@@ -9,8 +9,8 @@
 /** @var \Tigren\CompanyAccount\Block\Account\Dashboard\Info $block */
 
 $account = $block->getAccount();
-//TODO: Change default image
-$logoImgLink = !empty($account->getLogoImageLink()) ? $account->getLogoImageLink() : 'https://i.imgur.com/Bbl96RE.png'
+$default_img_url = $block->getViewFileUrl('Tigren_CompanyAccount::images/company_default.png');
+$logoImgLink = !empty($account->getLogoImageLink()) ? $account->getLogoImageLink() : $default_img_url
 ?>
 <div class="block block-dashboard-info">
     <div class="block-title"><strong><?= $block->escapeHtml(__('Account Information')) ?></strong></div>
@@ -26,7 +26,7 @@ $logoImgLink = !empty($account->getLogoImageLink()) ? $account->getLogoImageLink
                     </div>
                 </div>
                 <div class="box-company-detail-info">
-                    <h2><?= 'Hello '. $block->escapeHtml($block->getName()) ?><br></h2>
+                    <h2><?= 'Hello '. $block->escapeHtml($block->getName()) ?>, <br></h2>
                     <p><?= __($block->getTitleWelcomeCompany($account->getCompany()))?></p>
                 </div>
             </div>

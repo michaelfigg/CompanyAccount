@@ -17,7 +17,7 @@
             </container>
 
             <block class="Magento\Framework\View\Element\Template" name="dashboard-menu" template="Tigren_CompanyAccount::account/dashboard/menu.phtml"/>
-            <block class="Tigren\CompanyAccount\Block\Account\Dashboard\Info" name="public-notes" template="Tigren_CompanyAccount::account/dashboard/plublic-notes.phtml" after="-"/>
+            <block class="Tigren\CompanyAccount\Block\Account\Dashboard\Info" name="public-notes" template="Tigren_CompanyAccount::account/dashboard/public-notes.phtml" after="dashboard.top"/>
         </referenceContainer>
 
         <referenceBlock name="customer_account_dashboard_top">
