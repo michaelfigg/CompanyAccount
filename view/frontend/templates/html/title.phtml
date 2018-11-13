@@ -12,14 +12,14 @@
 $cssClass = $block->getCssClass() ? ' ' . $block->getCssClass() : '';
 $title = '';
 if (trim($block->getPageHeading())) {
-    $title = '<span class="base" data-ui-id="page-title-wrapper" ' .  $block->getAddBaseAttribute() . '>'
+    $title = '<span class="b2b-base" data-ui-id="b2b-page-title-wrapper" ' .  $block->getAddBaseAttribute() . '>'
         . $block->escapeHtml($block->getPageHeading()) . '</span>';
 }
 ?>
 <?php if ($title): ?>
-<div class="page-title-wrapper<?= /* @escapeNotVerified */ $cssClass ?>">
-    <h1 class="page-title"
-        <?php if ($block->getId()): ?> id="<?= /* @escapeNotVerified */ $block->getId() ?>" <?php endif; ?>
+<div class="b2b-page-title-wrapper<?= /* @escapeNotVerified */ $cssClass ?>">
+    <h1 class="b2b-page-title"
+        <?php if ($block->getId()): ?> id="b2b-<?= /* @escapeNotVerified */ $block->getId() ?>" <?php endif; ?>
         <?php if ($block->getAddBaseAttributeAria()): ?>
             aria-labelledby="<?= /* @escapeNotVerified */ $block->getAddBaseAttributeAria() ?>"
         <?php endif; ?>>

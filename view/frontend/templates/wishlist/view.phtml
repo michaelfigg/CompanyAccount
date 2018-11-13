@@ -11,20 +11,15 @@
 
 <?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()) : ?>
     <?= ($block->getChildHtml('wishlist.rss.link')) ?>
-    <form class="form-wishlist-items" id="wishlist-view-form"
+    <form class="b2b-form-wishlist-items" id="b2b-wishlist-view-form"
           data-mage-init='{"wishlist":{
           "addToCartUrl":<?= /* @noEscape */ $block->getItemAddToCartParams("%item%") ?>,
           "addAllToCartUrl":<?= /* @noEscape */ $block->getAddAllToCartParams() ?>,
           "commentString":""},
           "validation": {}}' action="<?= $block->escapeUrl($block->getUrl('wishlist/index/update', ['wishlist_id' => $block->getWishlistInstance()->getId()])) ?>" method="post">
-        <div class="actions-toolbar">
-            <div class="primary">
+        <div class="b2b-actions-toolbar">
+            <div class="b2b-primary">
                 <?= $block->getChildHtml('control_buttons') ?>
-            </div>
-            <div class="secondary">
-                <a href="<?= $block->escapeUrl($block->getBackUrl()) ?>" class="action back">
-                    <span><?= $block->escapeHtml(__('Back')) ?></span>
-                </a>
             </div>
         </div>
         <?= $block->getChildHtml('top') ?>
@@ -33,13 +28,13 @@
             <?php $block->getChildBlock('items')->setItems($block->getWishlistItems()); ?>
             <?= $block->getChildHtml('items') ?>
         <?php else: ?>
-            <div class="message info empty"><span><?= $block->escapeHtml(__('You have no items in your wish list.')) ?></span></div>
+            <div class="b2b-message empty"><span><?= $block->escapeHtml(__('You have no items in your wish list.')) ?></span></div>
         <?php endif ?>
         <?= $block->getChildHtml('bottom') ?>
 
     </form>
-    <script id="form-tmpl" type="text/x-magento-template">
-        <form id="wishlist-hidden-form" method="post" action="<%- data.url %>" class="no-display">
+    <script id="b2b-form-tmpl" type="text/x-magento-template">
+        <form id="b2b-wishlist-hidden-form" method="post" action="<%- data.url %>" class="b2b-no-display">
             <% if (data.qty) { %>
             <input name="qty" value="<%- data.qty %>">
             <% } %>

@@ -148,10 +148,10 @@ class Address extends \Magento\Framework\View\Element\Template
             if (!empty($infoManageAccount[0]['manager_profile'])) {
                 $managerInfo .= '<image src="' . $infoManageAccount[0]['manager_profile'] . '"/>';
             }
-            $managerInfo .= '</div><div class="manager-info"><strong>Account Manager</strong>';
-            $managerInfo .= "{$name}<br/>Email: {$infoManageAccount[0]['manager_email']}<br />";
+            $managerInfo .= '</div><div class="manager-info"><strong>Your Account Manager</strong><br />';
+            $managerInfo .= "<strong>Name:</strong>{$name}<br/><strong>Email:</strong> {$infoManageAccount[0]['manager_email']}<br />";
             if(!empty($infoManageAccount[0]['manager_telephone'])){
-                $managerInfo .= "Phone: {$infoManageAccount[0]['manager_telephone']}<br/>";
+                $managerInfo .= "<strong>Phone:</strong> {$infoManageAccount[0]['manager_telephone']}<br/>";
             }
             $managerInfo .= '</div>';
             return $managerInfo;

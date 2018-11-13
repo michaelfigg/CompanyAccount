@@ -2,42 +2,42 @@
 <?php $_orders = $block->getOrders(); ?>
 <?= $block->getChildHtml('info') ?>
 <?php if ($_orders && count($_orders)): ?>
-    <div class="table-wrapper orders-history">
-        <table class="data table table-order-items history" id="my-orders-table">
-            <caption class="table-caption"><?= /* @escapeNotVerified */ __('Orders') ?></caption>
+    <div class="b2b-orders-history">
+        <table class="b2b-table-order-items" id="b2b-my-orders-table">
+            <caption class="b2b-table-caption"><?= /* @escapeNotVerified */ __('Orders') ?></caption>
             <thead>
             <tr>
-                <th scope="col" class="col id"><?= /* @escapeNotVerified */ __('Order #') ?></th>
-                <th scope="col" class="col date"><?= /* @escapeNotVerified */ __('Date') ?></th>
+                <th scope="col" class="b2b-col id"><?= /* @escapeNotVerified */ __('Order #') ?></th>
+                <th scope="col" class="b2b-col date"><?= /* @escapeNotVerified */ __('Date') ?></th>
                 <?= /* @noEscape */ $block->getChildHtml('extra.column.header') ?>
-                <th scope="col" class="col shipping"><?= /* @escapeNotVerified */ __('Ship To') ?></th>
-                <th scope="col" class="col total"><?= /* @escapeNotVerified */ __('Order Total') ?></th>
-                <th scope="col" class="col status"><?= /* @escapeNotVerified */ __('Status') ?></th>
-                <th scope="col" class="col actions"><?= /* @escapeNotVerified */ __('Action') ?></th>
+                <th scope="col" class="b2b-col shipping"><?= /* @escapeNotVerified */ __('Ship To') ?></th>
+                <th scope="col" class="b2b-col total"><?= /* @escapeNotVerified */ __('Order Total') ?></th>
+                <th scope="col" class="b2b-col status"><?= /* @escapeNotVerified */ __('Status') ?></th>
+                <th scope="col" class="b2b-col actions"><?= /* @escapeNotVerified */ __('Action') ?></th>
             </tr>
             </thead>
             <tbody>
             <?php foreach ($_orders as $_order): ?>
                 <tr>
-                    <td data-th="<?= $block->escapeHtml(__('Order #')) ?>" class="col id"><?= /* @escapeNotVerified */ $_order->getExtOrderId() ?></td>
-                    <td data-th="<?= $block->escapeHtml(__('Date')) ?>" class="col date"><?= /* @escapeNotVerified */ $block->formatDate($_order->getCreatedAt()) ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Order #')) ?>" class="b2b-col id"><?= /* @escapeNotVerified */ $_order->getExtOrderId() ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Date')) ?>" class="b2b-col date"><?= /* @escapeNotVerified */ $block->formatDate($_order->getCreatedAt()) ?></td>
                     <?php $extra = $block->getChildBlock('extra.container'); ?>
                     <?php if ($extra): ?>
                         <?php $extra->setOrder($_order); ?>
                         <?= /* @noEscape */ $extra->getChildHtml() ?>
                     <?php endif; ?>
-                    <td data-th="<?= $block->escapeHtml(__('Ship To')) ?>" class="col shipping"><?= $_order->getShippingAddress() ? $block->escapeHtml($_order->getShippingAddress()->getName()) : '&nbsp;' ?></td>
-                    <td data-th="<?= $block->escapeHtml(__('Order Total')) ?>" class="col total"><?= /* @escapeNotVerified */ $_order->formatPrice($_order->getGrandTotal()) ?></td>
-                    <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status"><?= /* @escapeNotVerified */ $_order->getStatusLabel() ?></td>
-                    <td data-th="<?= $block->escapeHtml(__('Actions')) ?>" class="col actions">
-                        <a href="<?= /* @escapeNotVerified */ $block->getViewUrl($_order) ?>" class="action view">
+                    <td data-th="<?= $block->escapeHtml(__('Ship To')) ?>" class="b2b-col shipping"><?= $_order->getShippingAddress() ? $block->escapeHtml($_order->getShippingAddress()->getName()) : '&nbsp;' ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Order Total')) ?>" class="b2b-col total"><?= /* @escapeNotVerified */ $_order->formatPrice($_order->getGrandTotal()) ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="b2b-col status"><?= /* @escapeNotVerified */ $_order->getStatusLabel() ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Actions')) ?>" class="b2b-col actions">
+                        <a href="<?= /* @escapeNotVerified */ $block->getViewUrl($_order) ?>" class="b2b-view">
                             <span><?= /* @escapeNotVerified */ __('View Order') ?></span>
                         </a>
                         <?php if ($this->helper('Magento\Sales\Helper\Reorder')->canReorder($_order->getEntityId())) : ?>
                             <a href="#" data-post='<?php /* @escapeNotVerified */ echo
                             $this->helper(\Magento\Framework\Data\Helper\PostHelper::class)
                                 ->getPostData($block->getReorderUrl($_order))
-                            ?>' class="action order">
+                            ?>' class="b2b-order">
                                 <span><?= /* @escapeNotVerified */ __('Reorder') ?></span>
                             </a>
                         <?php endif ?>
@@ -48,5 +48,5 @@
         </table>
     </div>
 <?php else: ?>
-    <div class="message info empty"><span><?= /* @escapeNotVerified */ __('You have placed no orders.') ?></span></div>
+    <div class="b2b-message empty"><span><?= /* @escapeNotVerified */ __('You have placed no orders.') ?></span></div>
 <?php endif ?>

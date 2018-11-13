@@ -8,38 +8,29 @@
 
 ?>
 <?php /** @var  $block \Magento\Sales\Block\Order\View*/?>
-<div class="order-details-items ordered">
+<div class="b2b-order-details-items">
     <?php $_order = $block->getOrder() ?>
 
-    <div class="order-title">
-        <strong><?= /* @escapeNotVerified */ __('Order Detail') ?></strong>
+        <legend class="b2b-legend">
+            <span><?= /* @escapeNotVerified */ __('Order Detail') ?></span>
+        </legend>
         <?php if ($_order->getTracksCollection()->count()) : ?>
             <?= $block->getChildHtml('tracking-info-link') ?>
         <?php endif; ?>
-    </div>
-
     <?= $block->getChildHtml('order_items') ?>
     <?= $block->getChildHtml('company_order_items') ?>
 
     <?php if ($this->helper('Magento\GiftMessage\Helper\Message')->isMessagesAllowed('order', $_order) && $_order->getGiftMessageId()): ?>
-        <div class="block block-order-details-gift-message">
-            <div class="block-title"><strong><?= /* @escapeNotVerified */ __('Gift Message for This Order') ?></strong></div>
+        <div class="b2b-block-order-details-gift-message">
+            <div class="b2b-block-title"><strong><?= /* @escapeNotVerified */ __('Gift Message for This Order') ?></strong></div>
             <?php $_giftMessage = $this->helper('Magento\GiftMessage\Helper\Message')->getGiftMessageForEntity($_order); ?>
-            <div class="block-content">
-                <dl class="item-options">
-                    <dt class="item-sender"><strong class="label"><?= /* @escapeNotVerified */ __('From') ?></strong><?= $block->escapeHtml($_giftMessage->getSender()) ?></dt>
-                    <dt class="item-recipient"><strong class="label"><?= /* @escapeNotVerified */ __('To') ?></strong><?= $block->escapeHtml($_giftMessage->getRecipient()) ?></dt>
-                    <dd class="item-message"><?= /* @escapeNotVerified */ $this->helper('Magento\GiftMessage\Helper\Message')->getEscapedGiftMessage($_order) ?></dd>
+            <div class="b2b-block-content">
+                <dl class="b2b-item-options">
+                    <dt class="b2b-item-sender"><strong class="b2b-label"><?= /* @escapeNotVerified */ __('From') ?></strong><?= $block->escapeHtml($_giftMessage->getSender()) ?></dt>
+                    <dt class="b2b-item-recipient"><strong class="b2b-label"><?= /* @escapeNotVerified */ __('To') ?></strong><?= $block->escapeHtml($_giftMessage->getRecipient()) ?></dt>
+                    <dd class="b2b-item-message"><?= /* @escapeNotVerified */ $this->helper('Magento\GiftMessage\Helper\Message')->getEscapedGiftMessage($_order) ?></dd>
                 </dl>
             </div>
         </div>
     <?php endif; ?>
-
-    <div class="actions-toolbar">
-        <div class="secondary">
-            <a class="action back" href="<?= /* @escapeNotVerified */ $block->getBackUrl() ?>">
-                <span><?= /* @escapeNotVerified */ $block->getBackTitle() ?></span>
-            </a>
-        </div>
-    </div>
 </div>

@@ -4,56 +4,52 @@
     }
 </script>
 
-<div class="actions-toolbar top">
-    <div class="primary">
-        <button class="action submit primary" onclick="window.open('<?php /* @escapeNotVerified */
+<div class="b2b-actions-toolbar">
+    <div class="b2b-primary">
+        <button class="b2b-action" onclick="window.open('<?php /* @escapeNotVerified */
         echo $block->getActionUrl('addressCreate') ?>','_self')" title="<?php /* @escapeNotVerified */
         echo __('Add Address') ?>"><span "><?php /* @escapeNotVerified */
             echo __('Add Address') ?></span></button>
     </div>
-    <div class="secondary">
-        <a class="action back"
-           href="<?= $block->getUrl('customer/account/') ?>"><span><?= $block->escapeHtml(__('Back')) ?></span></a>
-    </div>
 </div>
 
-<div class="block block-addresses-default">
-    <div class="block-content">
+<div class="b2b-block-addresses-default">
+    <div class="b2b-block-content">
         <?php if (!empty($block->getBillingAddressCompanyDefault())): ?>
-            <div class="box box-address-billing">
-                <strong class="box-title">
+            <div class="b2b-box-address-billing">
+                <legend class="b2b-legend">
                     <span><?= $block->escapeHtml(__('Billing Address')) ?></span>
-                </strong>
-                <div class="box-content">
+                </legend>
+                <div class="b2b-box-content">
                     <address>
                         <?= $block->getBillingAddressCompanyDefault() ?>
                     </address>
                 </div>
             </div>
         <?php else: ?>
-            <div class="box box-billing-address">
-                <strong class="box-title"><span><?= $block->escapeHtml(__('Billing Address')) ?></span></strong>
-                <div class="box-content">
+            <div class="b2b-box-billing-address">
+                <legend class="b2b-legend"><span><?= $block->escapeHtml(__('Billing Address')) ?></span></legend>
+                <div class="b2b-box-content">
                     <p><?= $block->escapeHtml(__('You have no default billing address in your address book.')) ?></p>
                 </div>
             </div>
         <?php endif ?>
 
         <?php if (!empty($block->getShippingAddressCompanyDefault())): ?>
-            <div class="box box-address-shipping">
-                <strong class="box-title">
+            <div class="b2b-box-address-shipping">
+                <legend class="b2b-legend">
                     <span><?= $block->escapeHtml(__('Shipping Address')) ?></span>
-                </strong>
-                <div class="box-content">
+                </legend>
+                <div class="b2b-box-content">
                     <address>
                         <?= $block->getShippingAddressCompanyDefault() ?>
                     </address>
                 </div>
             </div>
         <?php else: ?>
-            <div class="box box-shipping-address">
-                <strong class="box-title"><span><?= $block->escapeHtml(__('Shipping Address')) ?></span></strong>
-                <div class="box-content">
+            <div class="b2b-box-shipping-address">
+                <legend class="b2b-legend"><span><?= $block->escapeHtml(__('Shipping Address')) ?></span></legend>
+                <div class="b2b-box-content">
                     <p><?= $block->escapeHtml(__('You have no default shipping address in your address book.')) ?></p>
                 </div>
             </div>
@@ -62,76 +58,76 @@
 </div>
 <?php $listAddress = $block->getListAddress(); ?>
 <?php if (!$listAddress->getSize()): ?>
-    <div style="margin-top: 10px" class="message info empty">
+    <div style="margin-top: 10px" class="b2b-message info empty">
         <span><?php echo __('There are no other addresses.'); ?></span></div>
 <?php endif ?>
-<div class="a-section a-spacing-double-large">
-    <div class="a-row a-spacing-micro address-row">
+<hr class="b2b-clear-both-invisible">
+<div class="b2b-a-section a-spacing-double-large">
+    <div class="b2b-address-row">
         <?php if ($listAddress && $listAddress->getSize()): ?>
             <?php $add = 1; ?>
             <?php foreach ($listAddress as $address): ?>
-                <div class="address-column">
-                    <div id="ya-myab-display-address-block-0" class="a-box a-spacing-none normal-desktop-address-tile">
-                        <div class="a-box-inner a-padding-none">
-
-                            <div class="a-section address-section-no-default">
-                                <div class="a-row a-spacing-small">
-                                    <ul class="a-unordered-list a-nostyle a-vertical">
+                <div class="b2b-address-column">
+                    <div id="b2b-ya-myab-display-address-block-0" class="b2b-a-box">
+                        <div class="b2b-a-box-inner">
+                            <div class="b2b-a-section">
+                                <div class="b2b-a-row">
+                                    <ul class="b2b-a-unordered-list">
                                         <li>
-                                            <span class="">
-                                                <h5 class="a-text-bold name">Address <?= $add ?></h5>
+                                            <span class="b2b-saved-address">
+                                                <legend class="b2b-legend"><span>Address <?= $add ?></span></legend>
                                             </span>
                                         </li>
                                         <li>
-                                            <span class="a-list-item">
-                                                <span class="id-addr-ux-search-text">
+                                            <span class="b2b-a-list-item">
+                                                <span class="b2b-id-addr-ux-search-text">
                                                     <?php echo $address->getFirstname() . ' ' . $address->getLastname(); ?>
                                                 </span>
                                             </span>
                                         </li>
                                         <li>
-                                            <span class="a-list-item">
-                                                <span id="address-ui-widgets-AddressLineOne"
-                                                      class="id-addr-ux-search-text">
+                                            <span class="b2b-a-list-item">
+                                                <span id="b2b-address-ui-widgets-AddressLineOne"
+                                                      class="b2b-id-addr-ux-search-text">
                                                     <?php echo $address->getStreet() ?>
                                                 </span>
                                             </span>
                                         </li>
                                         <li>
-                                            <span class="a-list-item">
-                                                <span id="address-ui-widgets-City" class="id-addr-ux-search-text">
+                                            <span class="b2b-a-list-item">
+                                                <span id="b2b-address-ui-widgets-City" class="b2b-id-addr-ux-search-text">
                                                     <?php echo $address->getCity() ?>
                                                 </span>
                                             </span>
                                         </li>
                                         <li>
-                                            <span class="a-list-item">
-                                                <span id="address-ui-widgets-CityStatePostalCode"
-                                                      class="id-addr-ux-search-text">
+                                            <span class="b2b-a-list-item">
+                                                <span id="b2b-address-ui-widgets-CityStatePostalCode"
+                                                      class="b2b-id-addr-ux-search-text">
                                                     <?php echo $block->getCountryName($address->getCountryId()) ?>
                                                 </span>
                                             </span>
                                         </li>
                                         <li>
-                                            <span class="a-list-item"><span id="address-ui-widgets-Company"
-                                                                            class="id-addr-ux-search-text">
+                                            <span class="b2b-a-list-item"><span id="b2b-address-ui-widgets-Company"
+                                                                            class="b2b-id-addr-ux-search-text">
                                                 <span>
                                                     <?php echo $address->getCompany() ?>
                                                 </span>
                                             </span>
                                         </li>
                                         <li>
-                                            <span class="a-list-item">
-                                                <span id="address-ui-widgets-CityStatePostalCode"
-                                                      class="id-addr-ux-search-text">
+                                            <span class="b2b-a-list-item">
+                                                <span id="b2b-address-ui-widgets-CityStatePostalCode"
+                                                      class="b2b-id-addr-ux-search-text">
                                                     Zip/Postal Code: <?php echo $address->getPostcode() ?>
                                                 </span>
                                             </span>
                                         </li>
                                         <li>
-                                            <span class="a-list-item">
-                                                <span id="address-ui-widgets-PhoneNumber"
-                                                      class="id-addr-ux-search-text">
+                                            <span class="b2b-a-list-item">
+                                                <span id="b2b-address-ui-widgets-PhoneNumber"
+                                                      class="b2b-id-addr-ux-search-text">
                                                     Telephone : <?php echo $address->getTelephone() ?>
                                                 </span>
                                             </span>
@@ -140,14 +136,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="ya-myab-edit-address-desktop-row-0" class="a-row edit-address-desktop-link">
-                            <a id="ya-myab-address-edit-btn-0" class="a-link-normal"
+                        <div id="b2b-ya-myab-edit-address-desktop-row-0" class="b2b-a-row edit-address-desktop-link">
+                            <a id="b2b-ya-myab-address-edit-btn-0" class="b2b-a-link-normal"
                                href="<?php echo $block->getActionUrl('addressEdit', $address->getId(), $add) ?>">Edit </a>
-                            <a id="ya-myab-address-delete-btn-0"
+                            <a id="b2b-ya-myab-address-delete-btn-0"
                                onclick="return ConfirmAddressDelete();"
-                               class="a-link-normal action delete"
+                               class="b2b-delete"
                                href="<?php echo $block->getActionUrl('deleteAddress', $address->getId()) ?>">
-                                <span class="a-declarative" data-action="a-modal"
+                               <span class="b2b-a-declarative" data-action="a-modal"
                                       data-a-modal="{&quot;name&quot;:&quot;deleteAddressModal-0&quot;,&quot;width&quot;:&quot;400&quot;,&quot;header&quot;:&quot;Confirm Deletion&quot;}">Delete</span>
                             </a>
                         </div>

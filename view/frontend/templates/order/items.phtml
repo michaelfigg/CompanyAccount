@@ -13,12 +13,12 @@ $odItems = $_order->getAllItems();
 $_helper = $this->helper('Magento\Catalog\Helper\Output');
 $_productCollection = $block->getLoadedProductCollection();
 ?>
-    <div class="order-table-content">
-        <div class="order-table-1">
+    <div class="b2b-order-table-content">
+        <div class="b2b-order-table-1">
             <table>
                 <tr>
-                    <th><?= __('Delivery Address') ?></th>
-                    <th><?= __('Payment Method') ?></th>
+                    <th><legend class="b2b-legend"><span><?= __('Delivery Address') ?></span></legend></th>
+                    <th><legend class="b2b-legend"><span><?= __('Payment Method') ?></span></legend></th>
                 </tr>
                 <tr>
                     <td><?= $block->getFormattedAddress($_order->getShippingAddress()) ?></td>
@@ -26,42 +26,57 @@ $_productCollection = $block->getLoadedProductCollection();
                 </tr>
             </table>
         </div>
-        <div class="order-table-2">
+        <div class="b2b-order-table-2">
             <table style="margin-bottom: -15px">
-                <th><?= __('Payment Method') ?></th>
+                <th><legend class="b2b-legend"><span><?= __('Payment Method') ?></span></legend></th>
             </table>
             <?= $totals ?>
         </div>
-    </div><div class="clearfix"></div>
-    <div class="order-delevired">
-        <div class="order-delevired-col-8">
-            <h2 class="order-title-delevired">Order Items</h2>
-            <div class="" style="width: 100%;clear: both;overflow: hidden;">
-                <div class="order-products wrapper">
-                    <ol class="order-products order-product-items">
-                        <div class="order-product-item-info">
+    </div><div class="b2b-clearfix"></div>
+    <div class="b2b-order-delevired">
+        <div class="b2b-order-delevired-col-8">
+            <div class="b2b-order-delevired-col-4">
+                <div class="b2b-actions-toolbar">
+                    <div class="b2b-secondary">
+                    <button class="b2b-track-package action"><a class="b2b-action-button"
+                                                     href="<?php echo $block->getUrlTracking($_order) ?>">Track
+                            Package</a></button>
+                    <?php if (!empty($block->isModuleEnabled())): ?>
+                        <button class="b2b-replace-items action"><a class="b2b-action-button"
+                                                         href="<?php echo $block->getRmaLink($_order); ?>">Return or
+                                Replace Items</a></button>
+                    <?php endif; ?>
+                    </div>
+                </div>
+                    <hr>
+                </div>
+            <legend class="b2b-legend"><span>Order Items</span></legend>
+            <div class="b2b-" style="width: 100%;clear: both;overflow: hidden;">
+                <div class="b2b-order-products wrapper">
+                    <ol class="b2b-order-products">
+                        <div class="b2b-order-product-item-info">
                             <?php foreach ($_productCollection as $_product): ?>
                                 <?php foreach ($odItems as $odItem): ?>
                                     <?php $_product = $block->getProductId($odItem->getProductId()); ?>
-                                    <div class="box-order-product">
-                                        <div class="order-image" style="float: left">
+                                    <div class="b2b-box-order-product">
+                                        <div class="b2b-order-image" style="float: left">
                                             <a href="<?= $_product->getProductUrl() ?>"
-                                               class="product photo product-item-photo">
-                                                <img class="order-image-product"
+                                               class="b2b-product-item-photo">
+                                                <img class="b2b-order-image-product"
                                                      src="<?php echo $block->getProductImageUrl($_product, 'category'); ?>"
                                                      alt="" width="160px" height="auto"> </a>
                                         </div>
-                                        <div class="order-product details order-product-item-details">
-                                            <div class="order-name order-product-item-name">
-                                                <strong class="order-name order-product-item-name">
-                                                    <a class="order-product-item-link"
+                                        <div class="b2b-order-product-item-details">
+                                            <div class="b2b-order-product-item-name">
+                                                <strong class="b2b-order-product-item-name">
+                                                    <a class="b2b-order-product-item-link"
                                                        href="<?= /* @escapeNotVerified */
                                                        $_product->getProductUrl() ?>">
                                                         <?= /* @escapeNotVerified */
                                                         $_helper->productAttribute($_product, $_product->getName(), 'name') ?>
                                                     </a>
                                                 </strong>
-                                                <span class="order-price">
+                                                <span class="b2b-order-price">
                                                 <?php echo /* @escapeNotVerified */
                                                 $block->getProductPrice($_product); ?>
                                             </span>
@@ -80,40 +95,29 @@ $_productCollection = $block->getLoadedProductCollection();
                                                            echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
                                                     <?php echo $block->getBlockHtml('formkey') ?>
                                                     <button type="submit" title="<?php echo __('Buy it again'); ?>"
-                                                            class="action tocart primary button btn-cart pull-left-none">
-                                                        <span class="buy-it-again"><?php /* @escapeNotVerified */
+                                                            class="b2b-primary">
+                                                        <span class="b2b-buy-it-again"><?php /* @escapeNotVerified */
                                                             echo __('Buy it again') ?></span>
                                                     </button>
                                                 </form>
                                             <?php else: ?>
                                                 <?php if ($_product->getIsSalable()): ?>
-                                                    <div class="stock available"><span><?php /* @escapeNotVerified */
+                                                    <div class="b2b-available"><span><?php /* @escapeNotVerified */
                                                             echo __('In stock') ?></span></div>
                                                 <?php else: ?>
-                                                    <div class="stock unavailable"><span><?php /* @escapeNotVerified */
+                                                    <div class="b2b-unavailable"><span><?php /* @escapeNotVerified */
                                                             echo __('Out of stock') ?></span></div>
                                                 <?php endif; ?>
                                             <?php endif; ?>
                                         </div>
-                                        <div class="clearfix"></div>
+                                        <div class="b2b-clearfix"></div>
                                     </div>
                                 <?php endforeach; ?>
                             <?php endforeach; ?>
                         </div>
                     </ol>
                 </div>
-                <div class="order-delevired-col-4">
-                    <button class="track-package"><a class="action-button"
-                                                     href="<?php echo $block->getUrlTracking($_order) ?>">Track
-                            Package</a></button>
-                    <?php if (!empty($block->isModuleEnabled())): ?>
-                        <button class="replace-items"><a class="action-button"
-                                                         href="<?php echo $block->getRmaLink($_order); ?>">Return or
-                                Replace Items</a></button>
-                    <?php endif; ?>
-                    <hr>
-                </div>
-                <div class="clearfix"></div>
+                <div class="b2b-clearfix"></div>
             </div>
         </div>
     </div>

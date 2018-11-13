@@ -11,7 +11,8 @@
 <?php $account = $block->getAccount(); ?>
 
 <?php if ($account): ?>
-    <div class="company-public-notes">
+    <div class="b2b-company-public-notes">
+        <i class="material-icons">error_outline</i>
         <p><?= $account->getPublicNotes() ?></p>
     </div>
-<?php endif ?>
+<?php endif; ?>

@@ -2,25 +2,32 @@
 $tracking = $block->getOrderTracking();
 ?>
 <?php if (count($tracking)): ?>
-    <div class="w3-container">
-        <table class="w3-table-all w3-hoverable">
+    <div class="b2b-w3-container">
+        <table class="b2b-w3-table-all w3-hoverable">
             <thead>
-            <tr class="w3-light-grey">
+            <tr class="b2b-w3-light-grey">
                 <th>Title</th>
+                <th>Description</th>
+                <th>Carrier</th>
                 <th>Tracking Number</th>
             </tr>
             </thead>
-            <?php foreach ($tracking as $key => $value): ?>
+            <?php foreach ($tracking as $track): ?>
                 <tr>
-                    <td><?php echo $key; ?></td>
-                    <td><?php echo $value ?></td>
+                    <td><?php echo $track["title"]; ?></td>
+                    <td><?php echo $track["description"]; ?></td>
+                    <td><?php echo $track["carrier"]; ?></td>
+                    <td><?php echo $track["number"]; ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
     </div>
 <?php else: ?>
-    <div class="message info empty"><span><?php echo __('No Tracking Information Available'); ?></span></div>
+    <div class="b2b-message empty"><span><?php echo __('No Tracking Information Available'); ?></span></div>
 <?php endif ?>
-<div class="tracking-buttom-back">
-    <button><a href="<?php echo $block->getBackUrl() ?>">Back</a></button>
+<br/>
+<div class="b2b-tracking-buttom-back b2b-actions-toolbar">
+    <div class="b2b-secondary">
+        <button class="action"><a href="<?php echo $block->getBackUrl() ?>">Back</a></button>
+    </div>
 </div>

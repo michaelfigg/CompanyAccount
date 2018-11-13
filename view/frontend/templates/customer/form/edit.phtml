@@ -11,31 +11,30 @@
 <?php
 //    $enableEnterShippingAddress = $block->getCustomer()->getCustomAttribute('enable_enter_shipping_address')->getValue();
 ?>
-<form class="form form-edit-user form-edit-account" action="<?php /* @escapeNotVerified */
-echo $block->getUrl('companyaccount/account/editPost') ?>" method="post" id="form-validate"
+<form class="b2b-form-edit-account" action="<?php /* @escapeNotVerified */
+echo $block->getUrl('companyaccount/account/editPost') ?>" method="post" id="b2b-form-validate"
       enctype="multipart/form-data" data-hasrequired="<?php /* @escapeNotVerified */
 echo __('* Required Fields') ?>" autocomplete="off">
-    <fieldset class="fieldset info">
+    <fieldset class="b2b-fieldset">
         <?php echo $block->getBlockHtml('formkey') ?>
-        <legend class="legend"><span><?php /* @escapeNotVerified */
+        <legend class="b2b-legend"><span><?php /* @escapeNotVerified */
                 echo __($block->getUserTitleEdit()) ?></span>
             <?php if ($block->isAdminOfAccount() == 1): ?>
-                <span class="user-permission" style="margin-left: 20px"><?php /* @escapeNotVerified */ echo __('Admin') ?></span>
+                <span class="b2b-user-permission" style="margin-left: 20px"><?php /* @escapeNotVerified */ echo __('Admin') ?></span>
             <?php else: ?>
-                <span class="user-permission" style="margin-left: 20px"><?php /* @escapeNotVerified */ echo __('User') ?></span>
+                <span class="b2b-user-permission" style="margin-left: 20px"><?php /* @escapeNotVerified */ echo __('User') ?></span>
             <?php endif; ?>
         </legend>
-        <br>
         <?php echo $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Name')->setObject($block->getCustomer())->toHtml() ?>
 
-        <div class="field" style="display: none">
-            <label class="label" for="enable_enter_shipping_address">
+        <div class="b2b-field" style="display: none">
+            <label class="b2b-label" for="enable_enter_shipping_address">
                 <span><?php /* @escapeNotVerified */
                     echo __('Enable Enter Shipping Address') ?></span>
             </label>
-            <div class="control">
-                <select id="enable_enter_shipping_address" name="enable_enter_shipping_address"
-                        title="<?= $block->escapeHtml(__('Enable Enter Shipping Address')) ?>" class="validate-select">
+            <div class="b2b-control">
+                <select id="b2b-enable_enter_shipping_address" name="enable_enter_shipping_address"
+                        title="<?= $block->escapeHtml(__('Enable Enter Shipping Address')) ?>" class="b2b-validate-select">
                     <option value="1"><?= $block->escapeHtml(__('Enable.')) ?></option>
                     <option value="0" selected><?= $block->escapeHtml(__('Disable.')) ?></option>
                 </select>
@@ -55,29 +54,29 @@ echo __('* Required Fields') ?>" autocomplete="off">
             <?php echo $_gender->setGender($block->getCustomer()->getGender())->toHtml() ?>
         <?php endif ?>
         <?php if ($block->isAdminOfAccount() == 0): ?>
-            <div class="field">
-                <label for="job_title" class="label"><span><?php /* @escapeNotVerified */
+            <div class="b2b-field">
+                <label for="job_title" class="b2b-label"><span><?php /* @escapeNotVerified */
                         echo __('Job Title') ?></span></label>
-                <div class="control">
-                    <input type="text" name="job_title" id="job_title" value="<?php echo $block->getUserJobTitle(); ?>"
+                <div class="b2b-control">
+                    <input type="text" name="job_title" id="b2b-job_title" value="<?php echo $block->getUserJobTitle(); ?>"
                            title="<?php /* @escapeNotVerified */
-                           echo __('Job Title') ?>" class="input-text">
+                           echo __('Job Title') ?>" class="b2b-input-text">
                 </div>
             </div>
-            <div class="field required">
-                <label for="phone_number" class="label"><span><?php /* @escapeNotVerified */
+            <div class="b2b-field b2b-required">
+                <label for="phone_number" class="b2b-label"><span><?php /* @escapeNotVerified */
                         echo __('Phone') ?></span></label>
-                <div class="control">
-                    <input type="text" name="phone_number" id="phone_number"
+                <div class="b2b-control">
+                    <input type="text" name="phone_number" id="b2b-phone_number"
                            value="<?php echo $block->getUserPhoneNumber(); ?>" title="<?php /* @escapeNotVerified */
-                    echo __('Phone') ?>" class="input-text" data-validate="{required:true}">
+                    echo __('Phone') ?>" class="b2b-input-text" data-validate="{required:true}">
                 </div>
             </div>
         <?php endif ?>
-        <div class="field required" style="display: none">
-            <label for="is_active" class="label"><span><?php /* @escapeNotVerified */
+        <div class="b2b-field b2b-required" style="display: none">
+            <label for="is_active" class="b2b-label"><span><?php /* @escapeNotVerified */
                     echo __('Active') ?></span></label>
-            <select name="is_active" id="is_active" title="<?php /* @escapeNotVerified */
+            <select name="is_active" id="b2b-is_active" title="<?php /* @escapeNotVerified */
             echo __('Active') ?>">
                 <option value="1"
                     <?php if ($block->getUserIsActive() == 1): ?>
@@ -93,11 +92,12 @@ echo __('* Required Fields') ?>" autocomplete="off">
                 </option>
             </select>
         </div>
-        <div class="field required">
-            <label for="is_admin" class="label"><span><?php /* @escapeNotVerified */
+        <hr class="b2b-clear-both-invisible">
+        <div class="b2b-field b2b-required">
+            <label for="is_admin" class="b2b-label"><span><?php /* @escapeNotVerified */
                     echo __('Permissions') ?></span></label>
-            <div class="control">
-                <select name="is_admin" id="is-admin" data-role="is-admin" title="<?php /* @escapeNotVerified */
+            <div class="b2b-control">
+                <select name="is_admin" id="b2b-is-admin" data-role="is-admin" title="<?php /* @escapeNotVerified */
                 echo __('Is Admin') ?>">
                     <option value="0"
                         <?php if ($block->isAdminOfAccount() == 0): ?> selected="selected"<?php endif; ?>
@@ -111,55 +111,54 @@ echo __('* Required Fields') ?>" autocomplete="off">
             </div>
         </div>
 
-        <div class="field required email">
-            <label for="email" class="label"><span><?php /* @escapeNotVerified */
+        <div class="b2b-field b2b-required">
+            <label for="email" class="b2b-label"><span><?php /* @escapeNotVerified */
                     echo __('Email') ?></span></label>
-            <div class="control">
-                <input type="text" name="email" id="email"
+            <div class="b2b-control">
+                <input type="text" name="email" id="b2b-email"
                        value="<?php echo $block->getUserEmail(); ?>" title="<?php /* @escapeNotVerified */
-                echo __('Email') ?>" class="input-text" data-validate="{required:true}">
+                echo __('Email') ?>" class="b2b-input-text" data-validate="{required:true}">
             </div>
         </div>
         <div style="display: none">
-            <div class="field choice">
-                <input type="checkbox" checked="checked" name="change_email" id="change-email" data-role="change-email" value="1" title="<?= $block->escapeHtmlAttr(__('Change Email')) ?>" class="checkbox" />
-                <label class="label" for="change-email"><span><?= $block->escapeHtml(__('Change Email')) ?></span></label>
+            <div class="b2b-field">
+                <input type="checkbox" checked="checked" name="change_email" id="b2b-change-email" data-role="change-email" value="1" title="<?= $block->escapeHtmlAttr(__('Change Email')) ?>" class="b2b-checkbox" />
+                <label class="b2b-label" for="change-email"><span><?= $block->escapeHtml(__('Change Email')) ?></span></label>
             </div>
-            <div class="field choice">
-                <input type="checkbox" checked="checked" name="change_password" id="change-password" data-role="change-password" value="1" title="<?= $block->escapeHtmlAttr(__('Change Password')) ?>"<?php if ($block->getChangePassword()): ?> checked="checked"<?php endif; ?> class="checkbox" />
-                <label class="label" for="change-password"><span><?= $block->escapeHtml(__('Change Password')) ?></span></label>
+            <div class="b2b-field">
+                <input type="checkbox" checked="checked" name="change_password" id="b2b-change-password" data-role="change-password" value="1" title="<?= $block->escapeHtmlAttr(__('Change Password')) ?>"<?php if ($block->getChangePassword()): ?> checked="checked"<?php endif; ?> class="b2b-checkbox" />
+                <label class="b2b-label" for="change-password"><span><?= $block->escapeHtml(__('Change Password')) ?></span></label>
             </div>
         </div>
     </fieldset>
 
-    <fieldset class="fieldset password" style="display: block">
-        <legend class="legend"><span data-title="change-email-password"><?php /* @escapeNotVerified */
+    <fieldset class="b2b-fieldset" style="display: block">
+        <legend class="b2b-legend"><span data-title="change-email-password"><?php /* @escapeNotVerified */
                 echo __('Change Password') ?></span></legend>
-        <br>
-        <div class="field password current required">
-            <label class="label" for="current-password"><span><?php /* @escapeNotVerified */
+        <div class="b2b-field b2b-required">
+            <label class="b2b-label" for="current-password"><span><?php /* @escapeNotVerified */
                     echo __('Current Password') ?></span></label>
-            <div class="control">
-                <input type="password" class="input-text" name="current_password" id="current-password"
+            <div class="b2b-control">
+                <input type="password" class="b2b-input-text" name="current_password" id="b2b-current-password"
                        data-input="current-password" autocomplete="off"/>
             </div>
         </div>
-        <div class="field new password required" data-container="new-password"
+        <div class="b2b-field b2b-required" data-container="new-password"
              data-mage-init='{"passwordStrengthIndicator": {}}'>
-            <label class="label" for="password"><span><?php /* @escapeNotVerified */
+            <label class="b2b-label" for="password"><span><?php /* @escapeNotVerified */
                     echo __('New Password') ?></span></label>
-            <div class="control">
-                <input type="password" class="input-text" name="password" id="password"
+            <div class="b2b-control">
+                <input type="password" class="b2b-input-text" name="password" id="b2b-password"
                        data-password-min-length="<?php echo $block->escapeHtml($block->getMinimumPasswordLength()) ?>"
                        data-password-min-character-sets="<?php echo $block->escapeHtml($block->getRequiredCharacterClassesNumber()) ?>"
                        data-input="new-password"
                        data-validate="{required:true, 'validate-customer-password':true}"
                        autocomplete="off"/>
-                <div id="password-strength-meter-container" data-role="password-strength-meter">
-                    <div id="password-strength-meter" class="password-strength-meter">
+                <div id="b2b-password-strength-meter-container" data-role="password-strength-meter">
+                    <div id="b2b-password-strength-meter" class="b2b-password-strength-meter">
                         <?php /* @escapeNotVerified */
                         echo __('Password Strength'); ?>:
-                        <span id="password-strength-meter-label" data-role="password-strength-meter-label">
+                        <span id="b2b-password-strength-meter-label" data-role="password-strength-meter-label">
                             <?php /* @escapeNotVerified */
                             echo __('No Password'); ?>
                         </span>
@@ -167,29 +166,24 @@ echo __('* Required Fields') ?>" autocomplete="off">
                 </div>
             </div>
         </div>
-        <div class="field confirm password required" data-container="confirm-password">
-            <label class="label" for="password-confirmation"><span><?php /* @escapeNotVerified */
+        <div class="b2b-field b2b-required" data-container="confirm-password">
+            <label class="b2b-label" for="password-confirmation"><span><?php /* @escapeNotVerified */
                     echo __('Confirm New Password') ?></span></label>
-            <div class="control">
-                <input type="password" class="input-text" name="password_confirmation" id="password-confirmation"
+            <div class="b2b-control">
+                <input type="password" class="b2b-input-text" name="password_confirmation" id="b2b-password-confirmation"
                        data-input="confirm-password"
                        autocomplete="off"/>
             </div>
         </div>
         <?php echo $block->getChildHtml('form_additional_info'); ?>
     </fieldset>
-    <div class="actions-toolbar">
-        <div class="primary">
-            <button type="submit" class="action save primary" title="<?php /* @escapeNotVerified */
+    <div class="b2b-actions-toolbar">
+        <div class="b2b-primary">
+            <button type="submit" class="b2b-action save primary" title="<?php /* @escapeNotVerified */
             echo __('Save') ?>"><span><?php /* @escapeNotVerified */
                     echo __('Save') ?></span></button>
         </div>
-        <input type="hidden" name="userId" id="userId" value="<?php echo $block->getUserId() ?>">
-        <div class="secondary">
-            <a class="action back"
-               href="<?php echo $block->escapeUrl($block->getBackUrl()) ?>"><span><?php /* @escapeNotVerified */
-                    echo __('Go back') ?></span></a>
-        </div>
+        <input type="hidden" name="userId" id="b2b-userId" value="<?php echo $block->getUserId() ?>">
     </div>
 </form>
 <script>
@@ -208,7 +202,7 @@ echo __('* Required Fields') ?>" autocomplete="off">
                         errorClass = error.prop('class');
                     error.insertAfter(element.parent());
                     dobElement.find('.validate-custom').addClass(errorClass)
-                        .after('<div class="' + errorClass + '"></div>');
+                        .after('<div class="b2b-' + errorClass + '"></div>');
                 }
                 else {
                     error.insertAfter(element);

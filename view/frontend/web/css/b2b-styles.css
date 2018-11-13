@@ -1,0 +1,556 @@
+/*Colors*/
+#b2b-profile {
+    color: #008bff;
+}
+#b2b-orders {
+    color: #ff8600;
+}
+#b2b-description {
+    color: #a0a0a0;
+}
+#b2b-location {
+    color: #f00;
+}
+#b2b-users {
+    color: #f59;
+}
+#b2b-company {
+    color: #2d2d2d;
+}
+#b2b-rma {
+    color: #10b727;
+}
+#b2b-wishlist {
+    color: #dad715;
+}
+.b2b-account-block .b2b-box-content h6{
+    color: #333;
+}
+.b2b-actions-toolbar .b2b-action.secondary, .b2b-actions-toolbar .b2b-secondary .action {
+    background: #ddd;
+    border: 1px solid #d0d0d0;
+    border-radius: 2px;
+    color: #333;
+}
+
+
+/*Global Styles*/
+.b2b-block-title {
+    margin-bottom: 1em;
+}
+.b2b-box-company-detail-info {
+    line-height: 30px;
+    font-size: 13px;
+}
+/*Dashboard*/
+.b2b-box-logo-company {
+    float:left;
+}
+.b2b-box-company-detail-info {
+    float: left;
+}
+.companyaccount-account-profile .b2b-block-dashboard-addresses {
+    float: left;
+    width: 35%;
+    border: 1px solid #ddd;
+    padding: 2% 5%;
+    border-radius: 2px;
+    background: #f9f9f9;
+    box-shadow: inset 3px 3px 10px #fff;
+    margin-bottom: 2em;
+    margin: 2%;
+}
+#b2b-rma-new-form .b2b-block {
+    border: 1px solid #ddd;
+    padding: 2% 5%;
+    border-radius: 2px;
+    background: #f9f9f9;
+    box-shadow: inset 3px 3px 10px #fff;
+    margin-bottom: 2em;
+}
+#b2b-rma-new-form .block {
+    border: 1px solid #ddd;
+    padding: 2% 5%;
+    border-radius: 2px;
+    background: #f9f9f9;
+    box-shadow: inset 3px 3px 10px #fff;
+    margin-bottom: 2em;
+}
+.customer-account-edit .field.field-name-firstname.required {
+    clear: both;
+}
+.customer-account-edit legend.b2b-legend{
+    float: left;
+}
+.customer-account-edit .b2b-fieldset:nth-child(2) .b2b-field {
+    clear: both;
+}
+.b2b-box-company-detail-info h4 {
+    margin: 0;
+}
+.b2b-box-logo-company img {
+    max-height: 80px;
+}
+.manager-image img {
+    max-height: 80px;
+}
+.manager-image {
+    float: right;
+}
+.manager-info {
+    float: right;
+    margin-right: 10px;
+    text-align: right;
+    font-size: 13px;
+}
+.dashboard-top {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+}
+.b2b-block-dashboard-menu {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+.b2b-company-public-notes {
+    background: #84bf4e;
+    color: #fff;
+    padding: 10px;
+}
+.b2b-company-public-notes i {
+    float: left;
+    margin-right: 10px;
+    position: relative;
+    top: -2px;
+}
+.b2b-company-public-notes p {
+    margin: 0;
+}
+.b2b-b2b-block-dashboard-menu {
+    margin-top: 3em;
+}
+.b2b-account-block {
+    width: 25%;
+    float: left;
+}
+.b2b-clear-both{
+    clear: both;
+}
+.b2b-account-block .b2b-box-content {
+    padding: 5%;
+}
+.b2b-account-block .b2b-box-content i, .b2b-account-block .b2b-box-content h6 {
+    float: left;
+    margin: 0px;
+}
+.b2b-account-block .b2b-box-content h6 {
+    font-size: 13px;
+    margin-top: 5px;
+}
+.b2b-account-block .b2b-box-content i {
+    margin-right: 10px;
+}
+.b2b-account-block .b2b-box-content hr {
+    margin-top: 0px;
+    border-color: #f5f5f5;
+    margin-bottom: 10px;
+}
+.b2b-account-block .b2b-box-content p {
+    font-size: 12px;
+}
+.b2bQuickLinks span {
+    width: 100%;
+    display: block;
+    font-size: 12px;
+    line-height: 25px;
+}
+.b2bQuickLinks a {
+    text-decoration: underline;
+    color: #4e4e4e;
+}
+.b2b-account-block .b2b-box-content .b2bQuickLinks i {
+    margin-right: 5px;
+    font-size: 13px;
+    margin-top: 6px;
+}
+a.b2b-menu-item{
+    display: block;
+    height: 30px;
+}
+.b2b-box-container {
+    border: 1px solid #ddd;
+    padding: 5%;
+    border-radius: 2px;
+    background: #f9f9f9;
+    box-shadow: inset 3px 3px 10px #fff;
+}
+.b2b-actions-toolbar {
+    margin-bottom: 2em;
+}
+.b2b-actions-toolbar .b2b-primary {
+    text-align: right;
+}
+.b2b-actions-toolbar .action, .b2b-actions-toolbar .b2b-action, .b2b-actions-toolbar .action.primary {
+    background: #1979c3;
+    border: 1px solid #1979c3;
+    color: #fff;
+    box-shadow: 0px 0px 0px;
+    font-size: 14px;
+    padding: 7px 15px;
+    cursor: pointer;
+    line-height: 1.6rem;
+    margin: 0;
+}
+.wishlist-index-index .b2b-form-wishlist-items .products-grid.wishlist .box-tocart .field.qty .control {
+    display: inline-block;
+}
+.wishlist-index-index .b2b-form-wishlist-items .products-grid.wishlist .box-tocart .field.qty label {
+    display: inline-block;
+    margin-right: 10px;
+}
+.b2b-form-wishlist-items .products-grid.wishlist .product-item .fieldset .field.qty {
+    width: 100%;
+    float: unset;
+    padding-bottom: 10px;
+}
+.b2b-form-wishlist-items .products-grid.wishlist .product-item .box-tocart .stock{
+    margin: 0px;
+}
+fieldset.b2b-fieldset {
+    border: 1px solid #ddd;
+    padding: 2% 5%;
+    border-radius: 2px;
+    background: #f9f9f9;
+    box-shadow: inset 3px 3px 10px #fff;
+    margin-bottom: 2em;
+}
+legend.b2b-legend span{
+    border-bottom: 1px solid #333;
+    font-weight: 600;
+    font-size: 13px;
+}
+legend.b2b-legend {
+    margin-bottom: 1em;
+}
+.b2b-fieldset .field-name-firstname, .b2b-field-name-firstname {
+    margin-right: 2%;
+}
+.b2b-fieldset .field-name-firstname, .b2b-fieldset .field-name-lastname,  .b2b-field-name-lastname, .b2b-field-name-firstname {
+    width: 49%;
+    float: left;
+}
+.b2b-clear-both-invisible {
+    clear: both;
+    margin: 0;
+    border: none;
+}
+.b2b-field.b2b-required {
+    margin-top: 10px;
+}
+.b2b-block-dashboard-addresses .b2b-box-company-detail-info {
+    line-height: 20px;
+}
+.b2b-block-contact {
+    clear: both;
+    padding-top: 2em;
+}
+#b2b-accountId {
+    max-width: 300px;
+    font-size: 13px;
+}
+.b2b-block-contact, .b2b-block-payment-info {
+    padding-top: 2em;
+    display: block;
+    float: left;
+    width: 35%;
+    border: 1px solid #ddd;
+    padding: 2% 5%;
+    border-radius: 2px;
+    background: #f9f9f9;
+    box-shadow: inset 3px 3px 10px #fff;
+    margin-bottom: 2em;
+    margin: 2%;
+}
+.b2b-user-item {
+    float: left;
+    border: 1px solid #ddd;
+    padding: 2% 0%;
+    border-radius: 2px;
+    background: #f9f9f9;
+    box-shadow: inset 3px 3px 10px #fff;
+    margin-bottom: 2em;
+    width: 100%;
+}
+.b2b-user-item .b2b-actions-toolbar {
+    margin-right: 5%;
+}
+.b2b-box-content, .b2b-block-content {
+    font-size: 13px;
+}
+.b2b-box-admin-account .b2b-controls {
+    margin-top: 1em;
+}
+.b2b-user-item .b2b-user-image {
+    float: left;
+    margin-right: 10px;
+}
+.b2b-col-fullname {
+    font-size: 13px;
+    float: left;
+}
+.b2b-sub-user {
+    float: right;
+    padding: 0px;
+    margin: 0px;
+}
+.b2b-col-actions .b2b-sub-user {
+    text-align: right;
+}
+.b2b-actions-toolbar.b2b-col-actions li {
+    padding-top: 10px;
+}
+.b2b-block-addresses-default .b2b-box-address-billing, .b2b-block-addresses-default .b2b-box-address-shipping {
+    float: left;
+    width: 50%;
+    border: 1px solid #ddd;
+    padding: 2% 5%;
+    border-radius: 2px;
+    background: #f9f9f9;
+    box-shadow: inset 3px 3px 10px #fff;
+    margin-bottom: 2em;
+    width: 48%;
+    margin: 1%;
+}
+.b2b-a-unordered-list {
+    margin: 0;
+    padding: 0;
+    color: #333;
+    font-size: 13px;
+}
+.b2b-address-column {
+    float: left;
+    width: 50%;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    padding: 2% 5%;
+    border-radius: 2px;
+    background: #f9f9f9;
+    box-shadow: inset 3px 3px 10px #fff;
+    margin-bottom: 2em;
+    width: 47%;
+    margin: 1%;
+}
+.b2b-tag-top-right {
+    float: right;
+}
+.b2b-tag-top {
+    border: 1px solid #ddd;
+    padding: 1% 2.5%;
+    border-radius: 2px;
+    background: #f9f9f9;
+    box-shadow: inset 3px 3px 10px #fff;
+    margin-bottom: 2em;
+    width: 95%;
+    margin: 1%;
+}
+.b2b-filterdate {
+    clear: both;
+    margin-bottom: 2em;
+}
+.b2b-filterdate .b2b-field {
+    float: left;
+    width: 50%;
+}
+.b2b-filterdate .b2b-field .b2b-control, .b2b-filterdate .b2b-field .b2b-control input {
+    width: 100%;
+    display: block;
+    max-width: 100% !important;
+}
+.b2b-orders-input {
+    width: 80%;
+    float: left;
+}
+.b2b-filterdate .b2b-field:first-child {
+    margin-right: 2%;
+}
+.b2b-filterdate .b2b-field {
+    float: left;
+    width: 48%;
+}
+#b2b-date_range_orders-button {
+    float: right;
+    width: 20%;
+}
+#b2b-date_range_orders-button button {
+    margin-top: 20px;
+    float: right;
+    margin-left: 10px;
+}
+td.b2b-col.actions {
+    text-decoration: underline;
+}
+.b2b-table-wrapper.orders-history {
+    font-size: 13px;
+}
+.b2b-table-wrapper.orders-history th{
+    font-weight: 600;
+}
+.order-status {
+    float: right;
+    border: 2px solid #8125a7;
+    color: #8e0bad;
+}
+.companyaccount-order-view .order-links .item strong {
+    border: none;
+    padding: 0;
+}
+.b2b-order-table-2 {
+    margin-top: 10px;
+}
+.b2b-order-table-1 th, .b2b-order-table-2 th, .b2b-order-table-1 td {
+    width: 50%;
+    padding: 0;
+}
+.b2b-order-delevired {
+    margin-top: 10px;
+}
+ol.b2b-order-products .b2b-order-image {
+    width: 75px;
+    margin-right: 20px;
+}
+
+ol.b2b-order-products {
+    padding: 0;
+}
+.b2b-unavailable {
+    color: #da1414;
+}
+strong.b2b-order-product-item-name {
+    font-weight: 600;
+}
+.b2b-order-delevired-col-4 {
+    text-align: right;
+}
+form#b2b-quote-api-view-form th, form#b2b-quote-api-view-form td {
+    font-size: 12px;
+}
+.b2b-fullname {
+    margin-bottom: 5px;
+}
+.b2b-fullname b {
+    font-weight: 600;
+    border-bottom: 1px solid;
+}
+.b2b-rma-new-step2 .b2b-rma-one-item .b2b-item-description input[type=checkbox] {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    float: left;
+}
+.b2b-rma-new-step2 .b2b-rma-one-item .b2b-image {
+    width: 75px;
+    margin-left: 20px;
+    float: left;
+}
+.b2b-rma-new-step2 .b2b-rma-one-item {
+    border: none;
+    border-bottom: 1px solid #ddd;
+}
+.b2b-rma-new-step2 .b2b-rma-one-item {
+    position: relative;
+}
+.b2b-rma-new-step2 .b2b-rma-one-item .b2b-item-description b {
+    font-weight: 600;
+    font-size: 13px;
+    float: left;
+    padding-top: 10px;
+}
+.b2b-rma-new-step2 .b2b-rma-one-item:last-child {
+    border-bottom: 0;
+}
+.b2b-block-additional {
+    margin-top: 1em;
+}
+.box.box-rma-information th, .box.box-rma-information td {
+    padding: 0;
+    font-size: 13px;
+    line-height: 20px;
+}
+.box.box-rma-shipping-information {
+    font-size: 13px;
+    line-height: 20px;
+}
+.box.box-rma-shipping-information .box-title {
+    border-bottom: 1px solid;
+    font-weight: 600;
+}
+.b2b-item-options {
+    clear: both;
+}
+.b2b-item-options .field .control {
+    padding-right: 10px;
+    margin-top: 10px;
+}
+.b2b-item-options .field {
+    float: left;
+    width: 33%;
+}
+.b2b-item-options .b2b-control {
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+.b2b-item-options .b2b-label {
+    font-size: 12px;
+}
+.b2b-box-rma-information, div#rma-view-request-comments, div#b2b-product-rma-requested {
+    border: 1px solid #ddd;
+    padding: 2% 5%;
+    border-radius: 2px;
+    background: #f9f9f9;
+    box-shadow: inset 3px 3px 10px #fff;
+    margin-bottom: 2em;
+}
+.b2b-box-rma-information th, .b2b-box-rma-information td {
+    padding: 5px;
+}
+.b2b-box-rma-information th {
+    font-weight: 600;
+}
+#b2b-product-rma-requested {
+    margin: 0;
+    margin-top: 20px;
+}
+#b2b-product-rma-requested .table th {
+    font-weight: 600;
+}
+#b2b-product-rma-requested .table {
+    font-size: 13px;
+}
+#rma-view-request-comments {
+    margin-top: 10px;
+}
+#attachment {
+    margin-top: 10px;
+}
+.rma-view .actions-toolbar .primary {
+    float: right;
+}
+.b2b-box-rma-information tr:nth-child(odd) {
+    background: #f5f5f5;
+}
+.b2b-info {
+    border: none;
+    margin-bottom: 20px;
+}
+.b2b-field.b2b-field-name-lastname.b2b-required {
+    margin-top: 0;
+}
+.rma-rma-list .history th, .rma-rma-list .history td {
+    font-size: 13px;
+}
+.rma-rma-list .history th {
+    font-weight: 600;
+}
+.rma-rma-list .history td a {
+    text-decoration: underline;
+}

@@ -8,35 +8,34 @@
 
 /** @var \Magento\Customer\Block\Account\Dashboard\Address $block */
 ?>
-<div class="block block-dashboard-addresses ">
-    <div class="block-title">
-        <strong><?= $block->escapeHtml(__('Account Information')) ?></strong>
-        <a href="#" class="action action-edit"><?= $block->escapeHtml(__('Edit')) ?></a>
-    </div>
-    <div class="block-content">
-        <div class="block-dashboard-info">
-            <div class="box-logo-company">
-                <div class="box-content">
+<div class="b2b-block-dashboard-addresses ">
+    <legend class="b2b-legend">
+        <span><?= $block->escapeHtml(__('Account Information')) ?></span>
+        <a href="#" class="b2b-action-edit"><?= $block->escapeHtml(__('Edit')) ?></a>
+    </legend>
+    <div class="b2b-block-content">
+        <div class="b2b-block-dashboard-info">
+            <div class="b2b-box-logo-company">
+                <div class="b2b-box-content">
                     <img title=""
                          alt=""
                          src="<?= $block->getAccountImage() ?>"
                          height="40px"/>
                 </div>
             </div>
-            <div class="box-company-detail-info">
+            <div class="b2b-box-company-detail-info">
                 <?= $block->getAccountInfo() ?>
             </div>
-
         </div>
     </div>
 </div>
-<div class="block block-dashboard-addresses">
-    <div class="block-title">
-        <strong><?= $block->escapeHtml(__('Company Address')) ?></strong>
-    </div>
-    <div class="block-content">
-        <div class="box box-billing-address">
-            <div class="box-content">
+<div class="b2b-block-dashboard-addresses">
+    <legend class="b2b-legend">
+        <span><?= $block->escapeHtml(__('Company Address')) ?></span>
+    </legend>
+    <div class="b2b-block-content">
+        <div class="b2b-box-billing-address">
+            <div class="b2b-box-content">
                 <address>
                     <?= $block->getLegalAddress() ?>
                 </address>
@@ -44,37 +43,38 @@
         </div>
     </div>
 </div>
-<div class="block block-contact">
-    <div class="block-title">
-        <strong><?= $block->escapeHtml(__('Contacts')) ?></strong>
-    </div>
-    <div class="block-content">
-        <div class="box-admin-account">
-            <label class="label">
+<hr class="b2b-clear-both-invisible">
+<div class="b2b-block-contact">
+    <legend class="b2b-legend">
+        <span><?= $block->escapeHtml(__('Contacts')) ?></span>
+    </legend>
+    <div class="b2b-block-content">
+        <div class="b2b-box-admin-account">
+            <label class="b2b-label">
                 <span><?= $block->escapeHtml(__('Company Administrator')) ?></span>
             </label>
-            <div class="controls">
+            <div class="b2b-controls">
                 <address>
-                    <select id="accountId">
+                    <select id="b2b-accountId">
                         <option>Select Admin</option>
                         <?php foreach ($block->getAllAdminAccount() as $admin): ?>
                             <option value = "<?php echo $admin['entity_id']; ?>"><?php echo $admin['lastname']." ".$admin['firstname']; ?></option>
                         <?php endforeach; ?>
                     </select>
                     <br/><br/>
-                    <div id="dataResponse"></div>
+                    <div id="b2b-dataResponse"></div>
                 </address>
             </div>
         </div>
     </div>
 </div>
-<div class="block block-payment-info">
-    <div class="block-title">
-        <strong><?= $block->escapeHtml(__('Payment Information')) ?></strong>
-    </div>
-    <div class="block-content">
-        <div class="box box-billing-address">
-            <label class="label">
+<div class="b2b-block-payment-info">
+    <legend class="b2b-legend">
+        <span><?= $block->escapeHtml(__('Payment Information')) ?></span>
+    </legend>
+    <div class="b2b-block-content">
+        <div class="b2b-box-billing-address">
+            <label class="b2b-label">
                 <?php if (!empty($block->availablePayOnAccount())): ?>
                     <span><?= $block->escapeHtml(__('Can Pay on Account')) ?></span>
                 <?php else: ?>
@@ -85,16 +85,10 @@
     </div>
 </div>
 
-<div class="actions-toolbar">
-    <div class="secondary">
-        <a class="action back" href="<?php echo $this->getUrl('customer/account')?>"><span><?= $block->escapeHtml(__('Back')) ?></span></a>
-    </div>
-</div>
-
 <script>
     require(['jquery'],function(){
         jQuery(document).ready(function() {
-            jQuery('#accountId').change(function(){
+            jQuery('#b2b-accountId').change(function(){
                 var value = jQuery(this).val();
                 var url = "<?php echo $block->getBaseUrl().'companyaccount/result/result/' ?>";
                 jQuery.ajax({
@@ -104,7 +98,7 @@
                     showLoader: true,
                     cache: false
                 }).done(function(response) {
-                    jQuery('#dataResponse').html(response);
+                    jQuery('#b2b-dataResponse').html(response);
                 });
                 return false;
             });

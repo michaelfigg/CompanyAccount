@@ -12,21 +12,20 @@ $account = $block->getAccount();
 $default_img_url = $block->getViewFileUrl('Tigren_CompanyAccount::images/company_default.png');
 $logoImgLink = !empty($account->getLogoImageLink()) ? $account->getLogoImageLink() : $default_img_url
 ?>
-<div class="block block-dashboard-info">
-    <div class="block-title"><strong><?= $block->escapeHtml(__('Account Information')) ?></strong></div>
-    <div class="block-content">
+<div class="b2b-block-dashboard-info">
+    <div class="b2b-block-content-account-information">
         <?php if ($account): ?>
-            <div class="box box-company-info">
-                <div class="box-logo-company">
-                    <div class="box-content">
+            <div class="b2b-box-company-info">
+                <div class="b2b-box-logo-company">
+                    <div class="b2b-box-content">
                         <img title="<?php echo $account->getCompany() ?>"
                              alt="<?php echo $account->getCompany() ?>"
                              src="<?php echo $logoImgLink ?>"
                              height="40px"/>
                     </div>
                 </div>
-                <div class="box-company-detail-info">
-                    <h2><?= 'Hello '. $block->escapeHtml($block->getName()) ?>, <br></h2>
+                <div class="b2b-box-company-detail-info">
+                    <h4><?= 'Hello '. $block->escapeHtml($block->getName()) ?>, <br></h4>
                     <p><?= __($block->getTitleWelcomeCompany($account->getCompany()))?></p>
                 </div>
             </div>

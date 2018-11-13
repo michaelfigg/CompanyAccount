@@ -2,29 +2,29 @@
     $listAccounts = $block->getAllAccount();
 ?>
 
-<!--<div class="field choice company">-->
-<!--    <input type="checkbox" name="is_company" title="Register as a Company" id="is_company" class="checkbox">-->
-<!--    <label for="is_company" class="label"><span>Register as a Company</span></label>-->
+<!--<div class="b2b-field choice company">-->
+<!--    <input type="checkbox" name="is_company" title="Register as a Company" id="b2b-is_company" class="b2b-checkbox">-->
+<!--    <label for="is_company" class="b2b-label"><span>Register as a Company</span></label>-->
 <!--</div>-->
 
 <?php /*if(count($listAccounts)){*/ ?>
-<!--    <div class="field field-company-account required">-->
-<!--        <label class="label">-->
+<!--    <div class="b2b-field field-company-account b2b-required">-->
+<!--        <label class="b2b-label">-->
 <!--            <span>Company Name</span>-->
 <!--        </label>-->
-<!--        <div class="control">-->
+<!--        <div class="b2b-control">-->
 <!--            --><?php //foreach ($listAccounts as $account){ ?>
-<!--                <input type="checkbox" id="company---><!--" name="company[]" value="--><!--" title="--><!--" class="input-text required-entry" data-validate="{required:true}" autocomplete="off" aria-required="true"> <label for="company---><!--">--><!--</label><br/>-->
+<!--                <input type="checkbox" id="b2b-company---><!--" name="company[]" value="--><!--" title="--><!--" class="b2b-input-text required-entry" data-validate="{required:true}" autocomplete="off" aria-required="true"> <label for="company---><!--">--><!--</label><br/>-->
 <!--            --><?php //} ?>
 <!--        </div>-->
 <!--    </div>-->
 <?php /*}else{*/ ?>
-    <div class="field field-company-account required" id="add_company">
-        <label class="label" for="company">
+    <div class="b2b-field-company-account b2b-required" id="b2b-add_company">
+        <label class="b2b-label" for="company">
             <span>Company Name</span>
         </label>
-        <div class="control">
-            <input type="text" id="company" name="company" value="" title="Company Account" class="input-text required-entry" data-validate="{required:true}" autocomplete="off" aria-required="true">
+        <div class="b2b-control">
+            <input type="text" id="b2b-company" name="company" value="" title="Company Account" class="b2b-input-text required-entry" data-validate="{required:true}" autocomplete="off" aria-required="true">
         </div>
     </div>
 <?php /*}*/ ?>

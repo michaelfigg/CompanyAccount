@@ -52,7 +52,12 @@ class Tracking extends \Magento\Framework\View\Element\Template
         foreach ($order->getShipmentsCollection() as $shipment) {
             if(empty($shipment)) continue;
             foreach ($shipment->getAllTracks() as $tracking){
-                $arrTracking[$tracking->getTitle()] = $tracking->getNumber();
+                $arrTracking[] = [
+                    "title" => $tracking->getTitle(),
+                    "number" => $tracking->getNumber(),
+                    "carrier" => $tracking->getCarrierCode(),
+                    "description" => $tracking->getDescription()
+                ];
             }
         }
         return $arrTracking;
