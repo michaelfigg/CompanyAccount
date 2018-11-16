@@ -29,7 +29,7 @@
                 type="Tigren\CompanyAccount\Model\Data\AccountAddress"/>
 
     <preference for="Tigren\CompanyAccount\Api\Data\AccountPaymentInterface"
-+                type="Tigren\CompanyAccount\Model\Data\AccountPayment"/>
+                type="Tigren\CompanyAccount\Model\Data\AccountPayment"/>
 
     <preference for="Magento\Sales\Block\Order\Items" type="Tigren\CompanyAccount\Block\Order\Items"/>
     <preference for="Magento\Sales\Block\Order\View" type="Tigren\CompanyAccount\Block\Order\View"/>
