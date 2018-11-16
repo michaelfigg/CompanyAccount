@@ -10,7 +10,7 @@
 ?>
 <?php $account = $block->getAccount(); ?>
 
-<?php if ($account): ?>
+<?php if ($account && !empty($account->getPublicNotes())): ?>
     <div class="b2b-company-public-notes">
         <i class="material-icons">error_outline</i>
         <p><?= $account->getPublicNotes() ?></p>
