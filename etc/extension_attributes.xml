@@ -8,4 +8,7 @@
     <extension_attributes for="Magento\Sales\Api\Data\OrderInterface">
         <attribute code="account_id" type="int" />
     </extension_attributes>
+    <extension_attributes for="Magento\Customer\Api\Data\CustomerInterface">
+        <attribute code="url_login_external" type="string" />
+    </extension_attributes>
 </config>

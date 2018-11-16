@@ -60,7 +60,7 @@ class User extends \Magento\Framework\View\Element\Template
                     'company-profile',
                     'Magento\Framework\View\Element\Html\Link\Current',
                     [
-                        'label' => 'Company Details',
+                        'label' => 'Company Profile',
                         'path' => 'companyaccount/account/profile'
                     ]
                 );

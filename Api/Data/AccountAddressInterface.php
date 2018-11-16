@@ -24,6 +24,7 @@ interface AccountAddressInterface
     const SUFFIX = 'suffix';
     const VAT_ID = 'vat_id';
     const IS_BILLING = 'is_billing';
+    const IS_SHIPPING_DEFAULT = 'is_shipping_default';
 
     /**
      * Get ID
@@ -324,4 +325,19 @@ interface AccountAddressInterface
      * @return $this
      */
     public function setIsBilling($isBilling);
+
+    /**
+     * Get Is Shipping Default
+     *
+     * @return boolean|null
+     */
+    public function getIsShippingDefault();
+
+    /**
+     * Set Is Shipping Default
+     *
+     * @param boolean $isShippingDefault
+     * @return $this
+     */
+    public function setIsShippingDefault($isShippingDefault);
 }

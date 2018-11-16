@@ -16,6 +16,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     protected $_accountStoreTable;
     protected $_accountAdminTable;
     protected $_accountAddressTable;
+    protected $_customerLoginExternalTable;
     protected $_baseUrl;
     protected $_eavAttribute;
     protected $_customerFactory;
@@ -24,6 +25,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     protected $_productFactory;
     protected $addressFactory;
     protected $accountFactory;
+    /**
+     * @var \Magento\Customer\Api\CustomerRepositoryInterface
+     */
+    protected $_customerRepositoryInterface;
 
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
@@ -38,7 +43,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Catalog\Helper\ImageFactory $imageHelperFactory,
         \Magento\Catalog\Model\ProductFactory $productFactory,
         \Tigren\CompanyAccount\Model\AccountAddressFactory $addressFactory,
-        \Tigren\CompanyAccount\Model\AccountFactory $accountFactory
+        \Tigren\CompanyAccount\Model\AccountFactory $accountFactory,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface
     ){
         parent::__construct($context);
         $this->_resource = $resource;
@@ -47,6 +53,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->_accountStoreTable = $this->_resource->getTableName('tigren_comaccount_account_store');
         $this->_accountAdminTable = $this->_resource->getTableName('tigren_comaccount_account_admin');
         $this->_accountAddressTable = $this->_resource->getTableName('tigren_comaccount_account_address');
+        $this->_customerLoginExternalTable = $this->_resource->getTableName('tigren_comaccount_customer_login_external');
         $this->_objectManager = $objectManager;
         $this->_storeManager = $storeManager;
         $this->_customerSession = $customerSession;
@@ -58,6 +65,102 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->_productFactory = $productFactory;
         $this->addressFactory = $addressFactory;
         $this->accountFactory = $accountFactory;
+        $this->_customerRepositoryInterface = $customerRepositoryInterface;
+    }
+
+    public function checkCustomerExternelLogin(){
+
+    }
+
+    /**
+     * @param $email
+     * @return bool
+     */
+    public function getCustomerByEmail($email)
+    {
+        try {
+            $customer = $this->_customerRepositoryInterface->get($email, $this->getWebsiteId());
+            if ($customer->getId()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getWebsiteId()
+    {
+        return $this->_storeManager->getStore()->getWebsiteId();
+    }
+
+    public function insertCustomerExternal($customerEmail, $token)
+    {
+        if (!empty($customerEmail) && !empty($token)) {
+            $dataInsert = [
+                'customer_email' => $customerEmail,
+                'customer_token' => $token
+            ];
+            $this->_connection->insert($this->_customerLoginExternalTable, $dataInsert);
+        }
+    }
+
+    public function getCreatedAtCustomerExternalByToken($token)
+    {
+        $created_at = null;
+        if (!empty($token)) {
+        $select = $this->getSelect()->from(['alx' => $this->_customerLoginExternalTable], 'created_at')
+        ->where('alx.customer_token = "' . $token . '"');
+        $created_at = $this->_connection->fetchOne($select);
+        }
+        return $created_at;
+    }
+
+    public function isPortalEnabled()
+    {
+        return $this->scopeConfig->getValue(
+            'company_account/portal/enable',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $this->getStore()->getId()
+        );
+    }
+
+    public function getTimeExternalLogin()
+    {
+        return $this->scopeConfig->getValue(
+            'company_account/portal/token_expiration',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $this->getStore()->getId()
+        );
+    }
+
+    public function getResponse($url, $email, $token, $message)
+    {
+        $result = [];
+        $result['urlLogin'] = $url . '?email=' . urlencode($email) . '&&token=' . $token;
+        $result['message'] = $message;
+        return $result;
+    }
+
+    public function getStore()
+    {
+        return $this->_storeManager->getStore();
+    }
+
+    public function randString()
+    {
+        $length = 10;
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $size = strlen($chars);
+        $str = null;
+        for ($i = 0; $i < $length; $i++) {
+            $str .= $chars[rand(0, $size - 1)];
+        }
+        return $str;
     }
 
     public function getAccountNameById($accountId)
@@ -199,6 +302,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $customer->updateData($customerData)->save();
         }
     }
+
 
     public function getBaseUrl()
     {

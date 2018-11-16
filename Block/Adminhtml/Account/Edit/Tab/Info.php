@@ -158,6 +158,54 @@ class Info extends \Magento\Backend\Block\Widget\Form\Generic
                 'title' => __('Manager Profile Image Link'),
             ]
         );
+
+        $fieldset->addField(
+            'credit_limit', 'text', [
+                'name' => 'credit_limit',
+                'label' => __('Credit Limit'),
+                'title' => __('Credit Limit'),
+            ]
+        );
+
+        $fieldset->addField(
+            'credit_terms', 'text', [
+                'name' => 'credit_terms',
+                'label' => __('Credit Terms'),
+                'title' => __('Credit Terms'),
+            ]
+        );
+
+        $fieldset->addField(
+            'balance', 'text', [
+                'name' => 'balance',
+                'label' => __('Balance'),
+                'title' => __('Balance'),
+            ]
+        );
+
+        $fieldset->addField(
+            'account_number', 'text', [
+                'name' => 'account_number',
+                'label' => __('Account Number'),
+                'title' => __('Account Number'),
+            ]
+        );
+
+        $fieldset->addField(
+            'portal_source', 'text', [
+                'name' => 'portal_source',
+                'label' => __('Portal Source'),
+                'title' => __('Portal Source'),
+            ]
+        );
+
+        $fieldset->addField(
+            'portal_username', 'text', [
+                'name' => 'portal_username',
+                'label' => __('Portal Username'),
+                'title' => __('Portal Username'),
+            ]
+        );
         
         if (!$this->_storeManager->hasSingleStore()) {
             $field = $fieldset->addField(

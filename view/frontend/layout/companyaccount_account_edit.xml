@@ -13,7 +13,7 @@
         </referenceBlock>
         <referenceBlock name="page.main.title">
             <action method="setPageTitle">
-                <argument translate="true" name="title" xsi:type="string">Manage Users</argument>
+                <argument translate="true" name="title" xsi:type="string">Edit User Information</argument>
             </action>
         </referenceBlock>
         <referenceContainer name="content">

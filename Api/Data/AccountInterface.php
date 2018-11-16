@@ -13,6 +13,10 @@ namespace Tigren\CompanyAccount\Api\Data;
  */
 interface AccountInterface
 {
+    const KEY_ADDRESSES_SHIPPING_ACCOUNT = 'address_shipping';
+    const KEY_ADDRESSES_BILLING_ACCOUNT = 'address_billing';
+    const KEY_PAYMENT_OPTION_ACCOUNT = 'payment_options';
+
     /**
      * Get account id.
      *
@@ -27,6 +31,21 @@ interface AccountInterface
      * @return $this
      */
     public function setAccountId($accountId);
+
+    /**
+     * Get account number.
+     *
+     * @return string|null
+     */
+    public function getAccountNumber();
+
+    /**
+     * Set account number
+     *
+     * @param string $accountNumber
+     * @return $this
+     */
+    public function setAccountNumber($accountNumber);
 
     /**
      * Get company name
@@ -72,6 +91,7 @@ interface AccountInterface
      * @return $this
      */
     public function setTax($tax);
+
     /**
      * Get logo image link
      *
@@ -86,6 +106,7 @@ interface AccountInterface
      * @return $this
      */
     public function setLogoImageLink($logoImageLink);
+
     /**
      * Get pay on account.
      *
@@ -100,6 +121,7 @@ interface AccountInterface
      * @return $this
      */
     public function setPayOnAccount($payOnAccount);
+
     /**
      * Get account group id.
      *
@@ -114,6 +136,7 @@ interface AccountInterface
      * @return $this
      */
     public function setAccountGroupId($accountGroupId);
+
     /**
      * Get public notes
      *
@@ -128,6 +151,7 @@ interface AccountInterface
      * @return $this
      */
     public function setPublicNotes($publicNotes);
+
     /**
      * Get manager first name
      *
@@ -142,6 +166,7 @@ interface AccountInterface
      * @return $this
      */
     public function setManagerFirstName($managerFirstName);
+
     /**
      * Get manager last name
      *
@@ -156,6 +181,7 @@ interface AccountInterface
      * @return $this
      */
     public function setManagerLastName($managerLastName);
+
     /**
      * Get manager telephone
      *
@@ -170,6 +196,7 @@ interface AccountInterface
      * @return $this
      */
     public function setManagerTelephone($managerTelephone);
+
     /**
      * Get manager email
      *
@@ -184,6 +211,7 @@ interface AccountInterface
      * @return $this
      */
     public function setManagerEmail($managerEmail);
+
     /**
      * Get manager profile
      *
@@ -198,5 +226,125 @@ interface AccountInterface
      * @return $this
      */
     public function setManagerProfile($managerProfile);
+
+    /**
+     * Get portal source
+     *
+     * @return string|null
+     */
+    public function getPortalSource();
+
+    /**
+     * Set portal source
+     *
+     * @param string $portalSource
+     * @return $this
+     */
+    public function setPortalSource($portalSource);
+
+    /**
+     * Get portal username
+     *
+     * @return string|null
+     */
+    public function getPortalUsername();
+
+    /**
+     * Set portal username
+     *
+     * @param string $portalUsername
+     * @return $this
+     */
+    public function setPortalUsername($portalUsername);
+
+    /**
+     * Get credit limit
+     *
+     * @return float|null
+     */
+    public function getCreditLimit();
+
+    /**
+     * Set credit limit
+     *
+     * @param float $creditLimit
+     * @return $this
+     */
+    public function setCreditLimit($creditLimit);
+
+    /**
+     * Get credit terms
+     *
+     * @return float|null
+     */
+    public function getCreditTerms();
+
+    /**
+     * Set credit terms
+     *
+     * @param float $creditTerms
+     * @return $this
+     */
+    public function setCreditTerms($creditTerms);
+
+    /**
+     * Get balance
+     *
+     * @return float|null
+     */
+    public function getBalance();
+
+    /**
+     * Set balance
+     *
+     * @param float $balance
+     * @return $this
+     */
+    public function setBalance($balance);
+
+    /**
+     * Get account payment options.
+     *
+     * @return \Tigren\CompanyAccount\Api\Data\AccountPaymentInterface|null
+     */
+    public function getPaymentOptions();
+
+    /**
+     * Set account payment options.
+     *
+     * @param \Tigren\CompanyAccount\Api\Data\AccountPaymentInterface $paymentOptions
+     * @return $this
+     */
+    public function setPaymentOptions(\Tigren\CompanyAccount\Api\Data\AccountPaymentInterface $paymentOptions);
+
+    /**
+     * Get account addresses.
+     *
+     * @return \Tigren\CompanyAccount\Api\Data\AccountAddressInterface|null
+     */
+    public function getAddressShipping();
+
+    /**
+     * Set account addresses.
+     *
+     * @param \Tigren\CompanyAccount\Api\Data\AccountAddressInterface $address
+     * @return $this
+     */
+    public function setAddressShipping(\Tigren\CompanyAccount\Api\Data\AccountAddressInterface $address);
+
+    /**
+     * Get account addresses.
+     *
+     * @return \Tigren\CompanyAccount\Api\Data\AccountAddressInterface|null
+     */
+    public function getAddressBilling();
+
+    /**
+     * Set account addresses.
+     *
+     * @param \Tigren\CompanyAccount\Api\Data\AccountAddressInterface $address
+     * @return $this
+     */
+    public function setAddressBilling(\Tigren\CompanyAccount\Api\Data\AccountAddressInterface $address);
 
 }

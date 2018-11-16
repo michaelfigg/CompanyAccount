@@ -43,6 +43,12 @@
             <resource ref="Magento_Customer::manage" />
         </resources>
     </route>
+    <route url="/V1/customer/verify" method="POST">
+        <service class="Tigren\CompanyAccount\Api\AccountManagementInterface" method="verify" />
+        <resources>
+            <resource ref="Magento_Customer::manage" />
+        </resources>
+    </route>
 
     <!--Address Curl-->
     <route url="/V1/account/address/byAccount/:accountId" method="GET">

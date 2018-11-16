@@ -80,10 +80,10 @@ class Address extends Template
         return $this->_addresses;
     }
 
-    public function getActionUrl($action, $userId = null, $addressSort = null)
+    public function getActionUrl($action, $userId = null)
     {
         $actionUrl = $this->getUrl('companyaccount/account/' . $action);
-        $url = $userId ? $actionUrl . '?id=' . $userId . '&&add=' . $addressSort : $actionUrl;
+        $url = $userId ? $actionUrl . '?id=' . $userId : $actionUrl;
         return $url;
     }
 

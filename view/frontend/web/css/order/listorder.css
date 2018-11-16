@@ -5,22 +5,10 @@
 }
 .tag-top{
     width: 100%;
-    overflow: hidden;
 }
 .tag-top-left{
     float: left;
-    width: 25%;
-    display: flex;
-    display: -ms-flexbox;
 }
-.tag-top-left .field .label{
-    margin-right: 15px;
-}
-.tag-top-left .field .label span{
-    margin-top: 5px;
-    display: block;
-}
-
 .field-search-all{
     width: 50%;
 }
@@ -36,8 +24,8 @@ input.orders-required-entry{
     float: left;
 }
 .field-overview-required{
-    width: 100%;
-    float: left;
+    width: 50%;
+    float: right;
 }
 .date_range_buttom{
     width: 50%;
@@ -45,20 +33,6 @@ input.orders-required-entry{
 }
 .orders-input{
     /*width: 35%;*/
-    display: flex;
-    display: -ms-flexbox;
-}
-.orders-input .field{
-    display: flex;
-    display: -ms-flexbox;
-    margin-right: 20px;
-}
-.orders-input .field .label{
-    margin-right: 10px;
-}
-.orders-input .field .label span{
-    margin-top: 5px;
-    display: block;
 }
 .orders-button{
     /*width: 15%;*/
@@ -93,10 +67,8 @@ input.orders-required-entry{
     float: left;
 }
 .field-overview-required{
-    width: 100%;
-    float: left;
-    display: flex;
-    display: -webkit-flex;
+    width: 50%;
+    float: right;
 }
 .date_range_buttom{
     width: 50%;
@@ -177,33 +149,4 @@ input[type="text"], input[type="password"], input[type="url"], input[type="tel"]
 .tracking-buttom-back {
     margin-left: 15px;
     margin-top: 10px;
-}
-
-.tag-top-right{
-    padding-left: 20px;
-}
-
-@media (max-width: 768px){
-    .tag-top-left {
-        float: inherit;
-        width: 100%;
-        display: inherit;
-        margin-bottom: 15px;
-    }
-    .field-overview-required{
-        display: inherit;
-        margin-bottom: 15px;
-    }
-    .orders-input {
-        margin-bottom: 15px;
-    }
-    #order_content tr {
-        border-bottom: 1px solid #888;
-    }
-
-    .tag-top-right{
-        padding-left: 0;
-    }
-
-
 }

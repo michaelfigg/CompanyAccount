@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <company_account>
+            <general>
+                <active>1</active>
+            </general>
+            <portal>
+                <enable>0</enable>
+                <token_expiration>3</token_expiration>
+            </portal>
+        </company_account>
+    </default>
+</config>

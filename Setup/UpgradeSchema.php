@@ -31,7 +31,18 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     6,
                     'default' => 0,
                     'nullable' => false,
-                    'comment' =>'Is Billing Address'
+                    'comment' => 'Is Billing Address'
+                ]
+            );
+            $connection->addColumn(
+                $table,
+                'is_shipping_default',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+                    6,
+                    'default' => 0,
+                    'nullable' => false,
+                    'comment' => 'Is Shipping Default Address'
                 ]
             );
         }
@@ -47,7 +58,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     null,
                     'default' => '',
                     'nullable' => true,
-                    'comment' =>'Company Logo'
+                    'comment' => 'Company Logo'
                 ]
             );
         }
@@ -62,6 +73,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
         if (version_compare($context->getVersion(), '1.4.0', '<')){
             $this->addAccountAdminFK($installer);
+        }
+
+        if (version_compare($context->getVersion(), '1.5.0', '<')){
+            $this->upgrade150($installer);
         }
 
         $installer->endSetup();
@@ -266,6 +281,217 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $installer->getTable('tigren_comaccount_account'),
             'account_id',
             \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+        );
+    }
+
+    private function upgrade150($installer)
+    {
+        $setup = $installer;
+        $connection = $setup->getConnection();
+        $accountTable = $setup->getTable('tigren_comaccount_account');
+
+        //Tigren version 1.3.4
+        $externalLoginTable = $connection
+            ->newTable($installer->getTable('tigren_comaccount_customer_login_external'))
+            ->addColumn(
+                'id',
+                Table::TYPE_INTEGER,
+                null,
+                ['identity' => true, 'nullable' => false, 'primary' => true, 'unsigned' => true],
+                'Number ID'
+            )
+            ->addColumn(
+                'customer_email',
+                Table::TYPE_TEXT,
+                255,
+                ['nullable' => false],
+                'Customer Email'
+            )
+            ->addColumn(
+                'customer_token',
+                Table::TYPE_TEXT,
+                255,
+                ['nullable' => false],
+                'Customer Token'
+            )
+            ->addColumn(
+                'created_at',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+                null,
+                ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT],
+                'Created At'
+            )
+            ->addColumn(
+                'updated_at',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+                null,
+                ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT_UPDATE],
+                'Updated At'
+            )
+            ->setComment('Customer login external');
+        $connection->createTable($externalLoginTable);
+
+        //Tigren version 1.3.5
+        $connection->addColumn(
+            $accountTable,
+            'portal_source',
+            [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                null,
+                'default' => null,
+                'nullable' => true,
+                'comment' => 'Portal Source'
+            ]
+        );
+        $connection->addColumn(
+            $accountTable,
+            'portal_username',
+            [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                null,
+                'default' => null,
+                'nullable' => true,
+                'comment' => 'Portal Username'
+            ]
+        );
+        $connection->addColumn(
+            $accountTable,
+            'credit_limit',
+            [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                null,
+                'default' => null,
+                'nullable' => true,
+                'comment' => 'Credit Limit'
+            ]
+        );
+        $connection->addColumn(
+            $accountTable,
+            'credit_terms',
+            [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                null,
+                'default' => null,
+                'nullable' => true,
+                'comment' => 'Credit Terms'
+            ]
+        );
+        $connection->addColumn(
+            $accountTable,
+            'balance',
+            [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                null,
+                'default' => null,
+                'nullable' => true,
+                'comment' => 'Balance'
+            ]
+        );
+        $connection->addColumn(
+            $accountTable,
+            'payment_options',
+            [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                null,
+                'default' => null,
+                'nullable' => true,
+                'comment' => 'Payment Options'
+            ]
+        );
+
+        //Tigren version 1.3.6
+        $connection->changeColumn(
+            $accountTable,
+            'balance',
+            'balance',
+            ['type' => Table::TYPE_DECIMAL, 'length' => '10,3', 'nullable' => true, 'default' => null],
+            'Balance'
+        );
+        $connection->changeColumn(
+            $accountTable,
+            'credit_limit',
+            'credit_limit',
+            ['type' => Table::TYPE_DECIMAL, 'length' => '10,3', 'nullable' => true, 'default' => null],
+            'Credit Limit'
+        );
+        $connection->changeColumn(
+            $accountTable,
+            'credit_terms',
+            'credit_terms',
+            ['type' => Table::TYPE_NUMERIC, 'length' => '10,3', 'nullable' => true, 'default' => null],
+            'Credit Terms'
+        );
+
+        //Tigren version 1.3.7
+        $connection->dropColumn(
+            $accountTable,
+            'payment_options'
+        );
+        $connection->addColumn(
+            $accountTable,
+            'account_number',
+            [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                null,
+                'default' => null,
+                'nullable' => true,
+                'comment' => 'Account Number'
+            ]
+        );
+
+        $payOptsTable = $connection
+            ->newTable($installer->getTable('tigren_comaccount_payment_options'))
+            ->addColumn(
+                'option_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                null,
+                ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+                'Id'
+            )
+            ->addColumn(
+                'account_id',
+                Table::TYPE_INTEGER,
+                11,
+                ['unsigned' => true, 'nullable' => false, 'primary' => true]
+            )
+            ->addColumn(
+                'credit_card',
+                \Magento\Framework\DB\Ddl\Table::TYPE_BOOLEAN,
+                null,
+                ['nullable' => true, 'default' => 0],
+                'Credit Card'
+            )
+            ->addColumn(
+                'leasing',
+                \Magento\Framework\DB\Ddl\Table::TYPE_BOOLEAN,
+                null,
+                ['nullable' => true, 'default' => 0],
+                'Leasing'
+            )
+            ->addColumn(
+                'on_account',
+                \Magento\Framework\DB\Ddl\Table::TYPE_BOOLEAN,
+                null,
+                ['nullable' => true, 'default' => 0],
+                'On Account'
+            )
+            ->addForeignKey(
+                $installer->getFkName('tigren_comaccount_payment_options', 'account_id', 'tigren_comaccount_account', 'account_id'),
+                'account_id',
+                $accountTable,
+                'account_id',
+                \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+            )
+            ->setComment('Account Payment Options');
+        $installer->getConnection()->createTable($payOptsTable);
+
+        //Tigren version 1.4.0
+        $connection->changeColumn(
+            'tigren_comaccount_account',
+            'account_number',
+            'account_number',
+            ['type' => Table::TYPE_TEXT, 'nullable' => true, 'default' => null],
+            'Account Number'
         );
     }
 }

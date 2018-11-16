@@ -109,9 +109,13 @@ class AccountAddressManagement implements \Tigren\CompanyAccount\Api\AccountAddr
      * @return boolean
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function changeToBillingAddress($addressId)
+    public function changeToBillingAddress($addressId, $accountIdApi = null)
     {
-        $account_id = $this->helper->isInAvailableAccount($this->getCustomerId());
+        if (!empty($accountIdApi)) {
+            $account_id = $accountIdApi;
+        } else {
+            $account_id = $this->helper->isInAvailableAccount($this->getCustomerId());
+        }
         $addressCollection = $this->_accountAddressCollectionFactory->create()->addFieldToFilter('account_id', ['eq' => $account_id]);
         foreach ($addressCollection as $addressItem) {
             if ($addressItem->getIsBilling() == 1) {
@@ -132,9 +136,13 @@ class AccountAddressManagement implements \Tigren\CompanyAccount\Api\AccountAddr
         return true;
     }
 
-    public function changeToShippingDefaultAddress($addressId)
+    public function changeToShippingDefaultAddress($addressId, $accountIdApi = null)
     {
-        $account_id = $this->helper->isInAvailableAccount($this->getCustomerId());
+        if (!empty($accountIdApi)) {
+            $account_id = $accountIdApi;
+        } else {
+            $account_id = $this->helper->isInAvailableAccount($this->getCustomerId());
+        }
         $addressCollection = $this->_accountAddressCollectionFactory->create()->addFieldToFilter('account_id', ['eq' => $account_id]);
         foreach ($addressCollection as $addressItem) {
             if ($addressItem->getIsShippingDefault() == 1) {
@@ -154,7 +162,7 @@ class AccountAddressManagement implements \Tigren\CompanyAccount\Api\AccountAddr
         $addressUpdate->save();
         return true;
     }
-    
+
     public function getCustomerId()
     {
         return $this->_customerSession->getCustomerId();
@@ -197,10 +205,15 @@ class AccountAddressManagement implements \Tigren\CompanyAccount\Api\AccountAddr
         $addressSave->setCreatedAt($address->getCreatedAt());
         $addressSave->setUpdatedAt($address->getUpdatedAt());
         $addressSave->setIsBilling($address->getIsBilling());
+        $addressSave->setIsShippingDefault($address->getIsShippingDefault());
         $addressSave->save();
 
-        if ($address->getIsBilling())
-            $this->changeToBillingAddress($addressSave->getId());
+        if ($address->getIsBilling()) {
+            $this->changeToBillingAddress($addressSave->getId(), $addressSave->getAccountId());
+        }
+        if ($address->getIsShippingDefault()) {
+            $this->changeToShippingDefaultAddress($addressSave->getId(), $addressSave->getAccountId());
+        }
 
         return $addressSave;
     }

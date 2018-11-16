@@ -83,6 +83,21 @@ interface AccountManagementInterface
     );
 
     /**
+     * @param Data\AccountInterface $account
+     * @param Data\CustomerInterface $customer
+     * @param string|null $password
+     * @param string $redirectUrl
+     * @return \Magento\Customer\Api\Data\CustomerInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function verify(
+        \Tigren\CompanyAccount\Api\Data\AccountInterface $account,
+        \Tigren\CompanyAccount\Api\Data\CustomerInterface $customer,
+        $password = null,
+        $redirectUrl = ''
+    );
+
+    /**
      * Get all customers of account.
      *
      * @param int $accountId

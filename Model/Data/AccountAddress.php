@@ -27,6 +27,7 @@ class AccountAddress implements \Tigren\CompanyAccount\Api\Data\AccountAddressIn
     protected $_suffix;
     protected $_vatId;
     protected $_isBilling;
+    protected $_isShippingDefault;
 
     /**
      * Get ID
@@ -465,6 +466,28 @@ class AccountAddress implements \Tigren\CompanyAccount\Api\Data\AccountAddressIn
     public function setIsBilling($isBilling)
     {
         $this->_isBilling = $isBilling;
+        return $this;
+    }
+
+    /**
+     * Get Is Shipping Default
+     *
+     * @return boolean|null
+     */
+    public function getIsShippingDefault()
+    {
+        return $this->_isShippingDefault;
+    }
+
+    /**
+     * Set Is Shipping Default
+     *
+     * @param boolean $isShippingDefault
+     * @return $this
+     */
+    public function setIsShippingDefault($isShippingDefault)
+    {
+        $this->_isShippingDefault = $isShippingDefault;
         return $this;
     }
 }

@@ -42,6 +42,27 @@ class Customer extends \Magento\Customer\Model\Data\Customer implements
     }
 
     /**
+     * Get full name
+     *
+     * @return string
+     */
+    public function getFullname()
+    {
+        return $this->_get(self::FULL_NAME);
+    }
+
+    /**
+     * Set full name
+     *
+     * @param string $fullName
+     * @return $this
+     */
+    public function setFullname($fullName)
+    {
+        return $this->setData(self::FULL_NAME, $fullName);
+    }
+
+    /**
      * Get ENABLE_ENTER_SHIPPING_ADDRESS
      *
      * @return int
@@ -61,4 +82,5 @@ class Customer extends \Magento\Customer\Model\Data\Customer implements
     {
         return $this->setData(self::ENABLE_ENTER_SHIPPING_ADDRESS, $enableEnterShippingAddress);
     }
+
 }

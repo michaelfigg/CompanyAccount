@@ -13,7 +13,9 @@ namespace Tigren\CompanyAccount\Api\Data;
 interface CustomerInterface extends \Magento\Customer\Api\Data\CustomerInterface
 {
     const ACCOUNT_ID = 'account_id';
+    const FULL_NAME = 'fullname';
     const ENABLE_ENTER_SHIPPING_ADDRESS = 'enable_enter_shipping_address';
+    const URL_LOGIN_EXTERNAL = 'url_login_external';
     /**
      * Get account id
      *
@@ -35,6 +37,20 @@ interface CustomerInterface extends \Magento\Customer\Api\Data\CustomerInterface
      * @return $this
      */
     public function setAccountId($accountId);
+
+    /**
+     * Get full name
+     *
+     * @return string|null
+     */
+    public function getFullname();
+    /**
+     * Set full name
+     *
+     * @param string $fullName
+     * @return $this
+     */
+    public function setFullname($fullName);
 
     /**
      * Set enable_enter_shipping_address
