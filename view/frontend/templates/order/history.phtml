@@ -81,7 +81,7 @@ $checkAccount = $block->getAccountId();
                 <tr>
                     <td data-th="<?php echo $block->escapeHtml(__('Order #')) ?>"
                         class="b2b-col id"><?php /* @escapeNotVerified */
-                        echo $order->getExtOrderId() ?></td>
+                        echo $order->getRealOrderId() ?></td>
                     <td data-th="<?php echo $block->escapeHtml(__('Date')) ?>"
                         class="b2b-col date"><?php /* @escapeNotVerified */
                         echo $block->formatDate($order->getCreatedAt()) ?></td>
